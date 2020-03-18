@@ -63,7 +63,7 @@ export class Intro extends Component {
   _renderItem = ({ item }) => {
     const { backgroundColor, buttonText, title, image, subText, text } = item;
     return (
-      <SafeAreaView style={[styles.slide, { backgroundColor }]}>
+      <View style={[styles.slide, { backgroundColor }]}>
         {title && <Text style={styles.title}>{title}</Text>}
 
         <View style={styles.imageView}>
@@ -87,14 +87,13 @@ export class Intro extends Component {
             </View>
           )}
         </View>
-      </SafeAreaView>
+      </View>
     );
   };
 
   render() {
     return (
       <AppIntroSlider
-        style={{ backgroundColor: "red", flex: 1 }}
         dotStyle={styles.inActiveCircle}
         renderItem={this._renderItem}
         slides={slides}

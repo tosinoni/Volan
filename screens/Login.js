@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import {
   Text,
   Icon,
@@ -15,7 +15,8 @@ import {
   Row,
   Grid,
   Form,
-  View
+  View,
+  Spinner
 } from "native-base";
 import {
   ImageBackground,
@@ -25,6 +26,18 @@ import {
   TouchableHighlight
 } from "react-native";
 import SocialButtons from "../components/SocialButtons";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import ErrorMessage from "../components/ErrorMessage";
+
+const validationSchema = Yup.object().shape({
+  username: Yup.string()
+    .label("username")
+    .required("Please provide a username"),
+  password: Yup.string()
+    .label("Password")
+    .required("Please provide a password")
+});
 
 export class Login extends Component {
   constructor() {
@@ -35,6 +48,15 @@ export class Login extends Component {
   GoToSignUpPage() {
     this.props.navigation.navigate("SignUp");
   }
+
+  handleSubmit = values => {
+    console.log(values);
+    if (values.username.length > 0 && values.password.length > 0) {
+      setTimeout(() => {
+        this.props.navigation.navigate("intro");
+      }, 3000);
+    }
+  };
 
   render() {
     return (
@@ -53,39 +75,84 @@ export class Login extends Component {
           </Row>
           <Row style={styles.formRow}>
             <Form style={styles.form}>
-              <Item rounded style={styles.item}>
-                <View style={styles.inputImageContainer}>
-                  <Icon
-                    active
-                    type="FontAwesome"
-                    style={styles.inputIcon}
-                    name="user"
-                  />
-                </View>
+              <Formik
+                initialValues={{ username: "", password: "" }}
+                onSubmit={values => {
+                  this.handleSubmit(values);
+                }}
+                validationSchema={validationSchema}
+              >
+                {({
+                  handleChange,
+                  values,
+                  handleSubmit,
+                  errors,
+                  isValid,
+                  touched,
+                  handleBlur,
+                  isSubmitting
+                }) => (
+                  <Fragment>
+                    <Item rounded style={styles.item}>
+                      <View style={styles.inputImageContainer}>
+                        <Icon
+                          active
+                          type="FontAwesome"
+                          style={styles.inputIcon}
+                          name="user"
+                        />
+                      </View>
 
-                <Input
-                  style={styles.input}
-                  placeholder="Username"
-                  placeholderTextColor="white"
-                />
-              </Item>
-              <Item rounded style={styles.item}>
-                <View style={styles.inputImageContainer}>
-                  <Icon active style={styles.inputIcon} name="ios-lock" />
-                </View>
+                      <Input
+                        name="username"
+                        value={values.username}
+                        onChangeText={handleChange("username")}
+                        autoCapitalize="none"
+                        style={styles.input}
+                        placeholder="Username"
+                        placeholderTextColor="white"
+                        onBlur={handleBlur("username")}
+                        autoFocus
+                      />
+                    </Item>
+                    <ErrorMessage
+                      errorValue={touched.username && errors.username}
+                    />
 
-                <Input
-                  textContentType={"password"}
-                  style={styles.input}
-                  placeholder="Password"
-                  placeholderTextColor="white"
-                  secureTextEntry="true"
-                />
-              </Item>
+                    <Item rounded style={styles.item}>
+                      <View style={styles.inputImageContainer}>
+                        <Icon active style={styles.inputIcon} name="ios-lock" />
+                      </View>
 
-              <Button rounded light block style={styles.button}>
-                <Text style={styles.boldButton}>Log in</Text>
-              </Button>
+                      <Input
+                        textContentType={"password"}
+                        value={values.password}
+                        onChangeText={handleChange("password")}
+                        onBlur={handleBlur("password")}
+                        style={styles.input}
+                        placeholder="Password"
+                        placeholderTextColor="white"
+                        secureTextEntry="true"
+                      />
+                    </Item>
+                    <ErrorMessage
+                      errorValue={touched.password && errors.password}
+                    />
+
+                    <Button
+                      onPress={handleSubmit}
+                      rounded
+                      light
+                      block
+                      style={styles.button}
+                      disabled={!isValid || isSubmitting}
+                    >
+                      <Text style={styles.boldButton}>Log in</Text>
+                      {isSubmitting && <Spinner color="white" />}
+                    </Button>
+                  </Fragment>
+                )}
+              </Formik>
 
               <Button
                 transparent
@@ -139,7 +206,7 @@ const styles = StyleSheet.create({
   formRow: {
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
-    top: -40,
+    top: -30,
     backgroundColor: "#b82f25",
     width: "100%"
   },
@@ -218,9 +285,8 @@ const styles = StyleSheet.create({
   },
 
   signupRow: {
-    flex: 1,
     justifyContent: "center",
-    marginTop: 5
+    marginTop: 40
   },
 
   signupButton: {

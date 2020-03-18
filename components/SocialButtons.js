@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 
 export default function SocialButtons(props) {
   return (
-    <View>
+    <View style={styles.socialButtonsRow}>
       <Text style={styles.text}>or use social</Text>
 
       <Row style={styles.socialIconsRow}>
@@ -25,6 +25,11 @@ export default function SocialButtons(props) {
 }
 
 const styles = StyleSheet.create({
+  socialButtonsRow: {
+    flex: 1,
+    height: "100%"
+  },
+
   text: {
     color: "white",
     justifyContent: "center",
