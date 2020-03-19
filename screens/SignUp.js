@@ -193,7 +193,7 @@ export class SignUp extends Component {
                           style={styles.checkBox}
                           onPress={() => setFieldValue("terms", !values.terms)}
                           checked={values.terms}
-                          color="green"
+                          color="white"
                         ></CheckBox>
                         <Text style={styles.Label}>I agree to the </Text>
 
