@@ -84,154 +84,150 @@ export class SignUp extends Component {
                 style={styles.logoImage}
                 source={require("../assets/images/logo-2.png")}
               />
+            </View>
 
-              <Formik
-                initialValues={{
-                  name: "",
-                  username: "",
-                  email: "",
-                  password: "",
-                  confirmPassword: "",
-                  terms: false
-                }}
-                onSubmit={values => {
-                  this.handleSubmit(values);
-                }}
-                validationSchema={validationSchema}
-              >
-                {({
-                  setFieldValue,
-                  handleChange,
-                  values,
-                  handleSubmit,
-                  errors,
-                  isValid,
-                  touched,
-                  handleBlur,
-                  isSubmitting
-                }) => (
-                  <Fragment>
-                    <Form style={styles.form}>
-                      <Item stackedLabel style={styles.item}>
-                        <Label style={styles.Label}>Name</Label>
-                        <Input
-                          name="name"
-                          value={values.name}
-                          style={styles.input}
-                          onBlur={handleBlur("name")}
-                          onChangeText={handleChange("name")}
-                        />
-                      </Item>
-                      <ErrorMessage errorValue={touched.name && errors.name} />
-
-                      <Item stackedLabel style={styles.item}>
-                        <Label style={styles.Label}>Username</Label>
-                        <Input
-                          name="username"
-                          autoCapitalize="none"
-                          value={values.username}
-                          style={styles.input}
-                          onBlur={handleBlur("username")}
-                          onChangeText={handleChange("username")}
-                        />
-                      </Item>
-                      <ErrorMessage
-                        errorValue={touched.username && errors.username}
+            <Formik
+              initialValues={{
+                name: "",
+                username: "",
+                email: "",
+                password: "",
+                confirmPassword: "",
+                terms: false
+              }}
+              onSubmit={values => {
+                this.handleSubmit(values);
+              }}
+              validationSchema={validationSchema}
+            >
+              {({
+                setFieldValue,
+                handleChange,
+                values,
+                handleSubmit,
+                errors,
+                isValid,
+                touched,
+                handleBlur,
+                isSubmitting
+              }) => (
+                <Fragment>
+                  <Form style={styles.form}>
+                    <Item stackedLabel style={styles.item}>
+                      <Label style={styles.Label}>Name</Label>
+                      <Input
+                        name="name"
+                        value={values.name}
+                        style={styles.input}
+                        onBlur={handleBlur("name")}
+                        onChangeText={handleChange("name")}
                       />
+                    </Item>
+                    <ErrorMessage errorValue={touched.name && errors.name} />
 
-                      <Item stackedLabel style={styles.item}>
-                        <Label style={styles.Label}>Email</Label>
-                        <Input
-                          name="email"
-                          autoCapitalize="none"
-                          value={values.email}
-                          onBlur={handleBlur("email")}
-                          style={styles.input}
-                          onChangeText={handleChange("email")}
-                        />
-                      </Item>
-
-                      <ErrorMessage
-                        errorValue={touched.email && errors.email}
+                    <Item stackedLabel style={styles.item}>
+                      <Label style={styles.Label}>Username</Label>
+                      <Input
+                        name="username"
+                        autoCapitalize="none"
+                        value={values.username}
+                        style={styles.input}
+                        onBlur={handleBlur("username")}
+                        onChangeText={handleChange("username")}
                       />
+                    </Item>
+                    <ErrorMessage
+                      errorValue={touched.username && errors.username}
+                    />
 
-                      <Item stackedLabel style={styles.item}>
-                        <Label style={styles.Label}>Password</Label>
-                        <Input
-                          name="password"
-                          value={values.password}
-                          onChangeText={handleChange("password")}
-                          onBlur={handleBlur("password")}
-                          style={styles.input}
-                          secureTextEntry
-                          textContentType={"newPassword"}
-                        />
-                      </Item>
-                      <ErrorMessage
-                        errorValue={touched.password && errors.password}
+                    <Item stackedLabel style={styles.item}>
+                      <Label style={styles.Label}>Email</Label>
+                      <Input
+                        name="email"
+                        autoCapitalize="none"
+                        value={values.email}
+                        onBlur={handleBlur("email")}
+                        style={styles.input}
+                        onChangeText={handleChange("email")}
                       />
+                    </Item>
 
-                      <Item stackedLabel style={styles.item}>
-                        <Label style={styles.Label}>Confirm Password</Label>
-                        <Input
-                          value={values.confirmPassword}
-                          onChangeText={handleChange("confirmPassword")}
-                          onBlur={handleBlur("confirmPassword")}
-                          style={styles.input}
-                          secureTextEntry
-                          textContentType={"newPassword"}
-                        />
-                      </Item>
-                      <ErrorMessage
-                        errorValue={
-                          touched.confirmPassword && errors.confirmPassword
-                        }
-                      />
-                      <Item style={styles.item}>
-                        <CheckBox
-                          name="terms"
-                          style={styles.checkBox}
-                          onPress={() => setFieldValue("terms", !values.terms)}
-                          checked={values.terms}
-                          color="white"
-                        ></CheckBox>
-                        <Text style={styles.Label}>I agree to the </Text>
+                    <ErrorMessage errorValue={touched.email && errors.email} />
 
-                        <Button
-                          light
-                          transparent
-                          style={styles.signupButton}
-                          onPress={this.GoToSignUpPage}
-                        >
-                          <Text style={[styles.termsOfService, styles.bold]}>
-                            Terms of Service
-                          </Text>
-                        </Button>
-                      </Item>
-                      <ErrorMessage
-                        errorValue={touched.terms && errors.terms}
+                    <Item stackedLabel style={styles.item}>
+                      <Label style={styles.Label}>Password</Label>
+                      <Input
+                        name="password"
+                        value={values.password}
+                        onChangeText={handleChange("password")}
+                        onBlur={handleBlur("password")}
+                        style={styles.input}
+                        secureTextEntry
+                        textContentType={"newPassword"}
                       />
+                    </Item>
+                    <ErrorMessage
+                      errorValue={touched.password && errors.password}
+                    />
+
+                    <Item stackedLabel style={styles.item}>
+                      <Label style={styles.Label}>Confirm Password</Label>
+                      <Input
+                        value={values.confirmPassword}
+                        onChangeText={handleChange("confirmPassword")}
+                        onBlur={handleBlur("confirmPassword")}
+                        style={styles.input}
+                        secureTextEntry
+                        textContentType={"newPassword"}
+                      />
+                    </Item>
+                    <ErrorMessage
+                      errorValue={
+                        touched.confirmPassword && errors.confirmPassword
+                      }
+                    />
+                    <Item style={styles.item}>
+                      <CheckBox
+                        name="terms"
+                        style={styles.checkBox}
+                        onPress={() => setFieldValue("terms", !values.terms)}
+                        checked={values.terms}
+                        color="green"
+                      ></CheckBox>
+                      <Text style={styles.Label}>I agree to the </Text>
 
                       <Button
-                        rounded
                         light
-                        block
-                        disabled={!isValid || isSubmitting}
-                        style={styles.createAccount}
-                        onPress={handleSubmit}
+                        transparent
+                        style={styles.signupButton}
+                        onPress={this.GoToSignUpPage}
                       >
-                        <Text style={styles.bold}>Create Account</Text>
-                        {isSubmitting && <Spinner color="white" />}
+                        <Text style={[styles.termsOfService, styles.bold]}>
+                          Terms of Service
+                        </Text>
                       </Button>
+                    </Item>
+                    <ErrorMessage errorValue={touched.terms && errors.terms} />
 
-                      <View style={styles.socialButtons}>
-                        <SocialButtons></SocialButtons>
-                      </View>
-                    </Form>
-                  </Fragment>
-                )}
-              </Formik>
-            </View>
+                    <Button
+                      rounded
+                      light
+                      block
+                      disabled={!isValid || isSubmitting}
+                      style={styles.createAccount}
+                      onPress={handleSubmit}
+                    >
+                      <Text style={styles.bold}>Create Account</Text>
+                      {isSubmitting && <Spinner color="white" />}
+                    </Button>
+
+                    <View style={styles.socialButtons}>
+                      <SocialButtons></SocialButtons>
+                    </View>
+                  </Form>
+                </Fragment>
+              )}
+            </Formik>
           </Content>
         </Container>
       );
@@ -256,7 +252,7 @@ const styles = StyleSheet.create({
 
   logoImage: {
     width: "100%",
-    height: 100,
+    height: 70,
     resizeMode: "contain",
     flex: 1
   },
@@ -267,7 +263,7 @@ const styles = StyleSheet.create({
   },
 
   item: {
-    marginTop: 20,
+    marginTop: 10,
     height: 45,
     borderBottomWidth: 0
   },
@@ -308,7 +304,7 @@ const styles = StyleSheet.create({
   },
 
   createAccount: {
-    marginTop: 30,
+    marginTop: 20,
     borderRadius: 10,
     marginLeft: 15
   },
