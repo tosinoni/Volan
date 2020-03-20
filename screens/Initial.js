@@ -4,6 +4,7 @@ import { Asset } from "expo-asset";
 import * as Font from "expo-font";
 import * as Icon from "@expo/vector-icons";
 import { withFirebaseHOC } from "../config/Firebase";
+import { AsyncStorage } from "react-native";
 
 class Initial extends Component {
   state = {
@@ -15,10 +16,19 @@ class Initial extends Component {
       // previously
       this.loadLocalAsync();
 
-      await this.props.firebase.checkUserAuth(user => {
+      await this.props.firebase.checkUserAuth(async user => {
         if (user) {
-          // if the user has previously logged in
-          this.props.navigation.navigate("App");
+          const currentUser = await this.props.firebase.getUser(user.uid);
+
+          //   if the user has previously logged in
+          if (!currentUser || !currentUser.isExistingUser) {
+            this.props.navigation.navigate("Intro");
+            await this.props.firebase.updateUser(user.uid, {
+              isExistingUser: true
+            });
+          } else {
+            this.props.navigation.navigate("App");
+          }
         } else {
           // if the user has previously signed out from the app
           this.props.navigation.navigate("Auth");
@@ -32,8 +42,8 @@ class Initial extends Component {
   loadLocalAsync = async () => {
     return await Promise.all([
       Asset.loadAsync([
-        require("../assets/images/splash.png"),
-        require("../assets/images/icon.png")
+        require("../assets/splash.png"),
+        require("../assets/icon.png")
       ]),
       Font.loadAsync({
         ...Icon.Ionicons.font

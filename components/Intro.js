@@ -54,12 +54,6 @@ const slides = [
 ];
 
 export class Intro extends Component {
-  _onDone = () => {
-    // User finished the introduction. Show real app through
-    // navigation or simply by controlling state
-    this.setState({ showRealApp: true });
-  };
-
   _renderItem = ({ item }) => {
     const { backgroundColor, buttonText, title, image, subText, text } = item;
     return (
@@ -79,7 +73,7 @@ export class Intro extends Component {
               <Button
                 block
                 light
-                onPress={() => alert("Hi!")}
+                onPress={this.props.onDone}
                 style={styles.button}
               >
                 <Text style={styles.bold}>{buttonText}</Text>
@@ -97,7 +91,7 @@ export class Intro extends Component {
         dotStyle={styles.inActiveCircle}
         renderItem={this._renderItem}
         slides={slides}
-        onDone={this._onDone}
+        onDone={this.props.onDone}
       />
     );
   }

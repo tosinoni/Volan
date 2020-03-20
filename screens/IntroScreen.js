@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import Intro from "../components/Intro";
+import { SafeAreaView } from "react-native";
 
 export class IntroScreen extends Component {
   _onDone = () => {
-    // User finished the introduction. Show real app through
-    // navigation or simply by controlling state
-    this.setState({ showRealApp: true });
+    this.props.navigation.navigate("Home");
   };
 
   render() {
-    return <Intro onDone={this._onDone} />;
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <Intro onDone={this._onDone} />
+      </SafeAreaView>
+    );
   }
 }
 
