@@ -5,23 +5,29 @@ import { StyleSheet } from "react-native";
 import * as Facebook from "expo-facebook";
 import { withFirebaseHOC } from "../config/Firebase";
 import * as Google from "expo-google-app-auth";
+import Toast from "react-native-easy-toast";
 
 export class SocialButtons extends Component {
   loginToFacebook = async () => {
-    const appId = "580361876170911";
-    const permissions = ["public_profile", "email"]; // Permissions required, consult Facebook docs
-    await Facebook.initializeAsync(appId);
+    try {
+      const appId = "580361876170911";
+      const permissions = ["public_profile", "email"]; // Permissions required, consult Facebook docs
+      await Facebook.initializeAsync(appId);
 
-    const { type, token } = await Facebook.logInWithReadPermissionsAsync(
-      appId,
-      {
-        permissions
+      const { type, token } = await Facebook.logInWithReadPermissionsAsync(
+        appId,
+        {
+          permissions
+        }
+      );
+
+      if (type == "success") {
+        const credential = this.props.firebase.getFacebookCredentials(token);
+        this.addUserData(credential);
       }
-    );
-
-    if (type == "success") {
-      const credential = this.props.firebase.getFacebookCredentials(token);
-      this.addUserData(credential);
+    } catch (e) {
+      console.log(e);
+      this.refs.toast.show("Failed to login with Facebook", 2000);
     }
   };
 
@@ -41,6 +47,7 @@ export class SocialButtons extends Component {
       }
     } catch (e) {
       console.log(e);
+      this.refs.toast.show("Failed to login with Google", 2000);
     }
   };
 
@@ -64,7 +71,28 @@ export class SocialButtons extends Component {
       }
     } catch (e) {
       console.log(e);
+      this.showErrorMessage(e);
     }
+  };
+
+  showErrorMessage = error => {
+    let errorMessage;
+
+    switch (error.code) {
+      case "auth/account-exists-with-different-credential":
+        errorMessage = "An account with the same email exists.";
+        break;
+      case "auth/invalid-credential":
+        errorMessage = "Invalid credentials provided.";
+        break;
+      case "auth/user-not-found":
+        errorMessage = "Invalid email provided.";
+        break;
+      default:
+        errorMessage = "Sign in failed.";
+    }
+
+    this.props.showErrorToast(errorMessage);
   };
 
   render() {

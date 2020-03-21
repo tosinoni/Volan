@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import {
-  Toast,
   Text,
   Icon,
   Item,
@@ -33,6 +32,7 @@ import * as Yup from "yup";
 import ErrorMessage from "../components/ErrorMessage";
 import { SafeAreaView } from "react-native";
 import { withFirebaseHOC } from "../config/Firebase";
+import DropdownAlert from "react-native-dropdownalert";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -59,151 +59,155 @@ export class Login extends Component {
         this.props.navigation.navigate("Intro");
       }
     } catch (error) {
-      Toast.show({
-        text: error.message,
-        buttonText: "Okay",
-        type: "danger"
-      });
-      // actions.setFieldError("general", error.message);
+      console.log(error);
+      this.showErrorToast("Incorrect email or password entered");
     } finally {
       actions.setSubmitting(false);
     }
   };
 
+  showErrorToast = errorMessage => {
+    this.dropDownAlertRef.alertWithType("error", "Login failed", errorMessage);
+  };
+
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <Root>
-          <Container>
-            <Grid style={styles.gridContainer}>
-              <Row>
-                <ImageBackground
-                  style={styles.imageBackground}
-                  source={require("../assets/images/login/background.jpg")}
+        <Container>
+          <Grid style={styles.gridContainer}>
+            <Row>
+              <ImageBackground
+                style={styles.imageBackground}
+                source={require("../assets/images/login/background.jpg")}
+              >
+                <Image
+                  style={styles.titleImage}
+                  source={require("../assets/splash.png")}
+                />
+              </ImageBackground>
+            </Row>
+            <Row style={styles.formRow}>
+              <Form style={styles.form}>
+                <Formik
+                  initialValues={{ email: "", password: "" }}
+                  onSubmit={(values, actions) => {
+                    this.handleOnLogin(values, actions);
+                  }}
+                  validationSchema={validationSchema}
                 >
-                  <Image
-                    style={styles.titleImage}
-                    source={require("../assets/splash.png")}
-                  />
-                </ImageBackground>
-              </Row>
-              <Row style={styles.formRow}>
-                <Form style={styles.form}>
-                  <Formik
-                    initialValues={{ email: "", password: "" }}
-                    onSubmit={(values, actions) => {
-                      this.handleOnLogin(values, actions);
-                    }}
-                    validationSchema={validationSchema}
-                  >
-                    {({
-                      handleChange,
-                      values,
-                      handleSubmit,
-                      errors,
-                      isValid,
-                      touched,
-                      handleBlur,
-                      isSubmitting
-                    }) => (
-                      <Fragment>
-                        <Item rounded style={styles.item}>
-                          <View style={styles.inputImageContainer}>
-                            <Icon
-                              active
-                              type="FontAwesome"
-                              style={styles.inputIcon}
-                              name="user"
-                            />
-                          </View>
-
-                          <Input
-                            name="email"
-                            value={values.email}
-                            onChangeText={handleChange("email")}
-                            autoCapitalize="none"
-                            style={styles.input}
-                            placeholder="Email"
-                            placeholderTextColor="white"
-                            onBlur={handleBlur("email")}
-                            autoFocus
+                  {({
+                    handleChange,
+                    values,
+                    handleSubmit,
+                    errors,
+                    isValid,
+                    touched,
+                    handleBlur,
+                    isSubmitting
+                  }) => (
+                    <Fragment>
+                      <Item rounded style={styles.item}>
+                        <View style={styles.inputImageContainer}>
+                          <Icon
+                            active
+                            type="FontAwesome"
+                            style={styles.inputIcon}
+                            name="user"
                           />
-                        </Item>
-                        <ErrorMessage
-                          errorValue={touched.email && errors.email}
+                        </View>
+
+                        <Input
+                          name="email"
+                          value={values.email}
+                          onChangeText={handleChange("email")}
+                          autoCapitalize="none"
+                          style={styles.input}
+                          placeholder="Email"
+                          placeholderTextColor="white"
+                          onBlur={handleBlur("email")}
+                          autoFocus
                         />
+                      </Item>
+                      <ErrorMessage
+                        errorValue={touched.email && errors.email}
+                      />
 
-                        <Item rounded style={styles.item}>
-                          <View style={styles.inputImageContainer}>
-                            <Icon
-                              active
-                              style={styles.inputIcon}
-                              name="ios-lock"
-                            />
-                          </View>
-
-                          <Input
-                            textContentType={"password"}
-                            value={values.password}
-                            onChangeText={handleChange("password")}
-                            onBlur={handleBlur("password")}
-                            style={styles.input}
-                            placeholder="Password"
-                            placeholderTextColor="white"
-                            secureTextEntry="true"
+                      <Item rounded style={styles.item}>
+                        <View style={styles.inputImageContainer}>
+                          <Icon
+                            active
+                            style={styles.inputIcon}
+                            name="ios-lock"
                           />
-                        </Item>
-                        <ErrorMessage
-                          errorValue={touched.password && errors.password}
-                        />
+                        </View>
 
-                        <Button
-                          onPress={handleSubmit}
-                          rounded
-                          light
-                          block
-                          style={styles.button}
-                          disabled={!isValid || isSubmitting}
-                        >
-                          <Text style={styles.boldButton}>Log in</Text>
-                          {isSubmitting && <Spinner color="white" />}
-                        </Button>
-                      </Fragment>
-                    )}
-                  </Formik>
+                        <Input
+                          textContentType={"password"}
+                          value={values.password}
+                          onChangeText={handleChange("password")}
+                          onBlur={handleBlur("password")}
+                          style={styles.input}
+                          placeholder="Password"
+                          placeholderTextColor="white"
+                          secureTextEntry
+                        />
+                      </Item>
+                      <ErrorMessage
+                        errorValue={touched.password && errors.password}
+                      />
+
+                      <Button
+                        onPress={handleSubmit}
+                        rounded
+                        light
+                        block
+                        style={styles.button}
+                        disabled={!isValid || isSubmitting}
+                      >
+                        <Text style={styles.boldButton}>Log in</Text>
+                        {isSubmitting && <Spinner color="white" />}
+                      </Button>
+                    </Fragment>
+                  )}
+                </Formik>
+
+                <Button
+                  transparent
+                  light
+                  block
+                  style={[styles.button, styles.forgotButton]}
+                >
+                  <Text style={styles.boldButton}>Forgot your password?</Text>
+                </Button>
+
+                <View style={styles.socialButtons}>
+                  <SocialButtons
+                    showErrorToast={this.showErrorToast}
+                  ></SocialButtons>
+                </View>
+
+                <Row style={styles.signupRow}>
+                  <Text style={styles.text}>Don't have an account? </Text>
 
                   <Button
-                    transparent
                     light
-                    block
-                    style={[styles.button, styles.forgotButton]}
+                    transparent
+                    style={styles.signupButton}
+                    onPress={this.GoToSignUpPage}
                   >
-                    <Text style={styles.boldButton}>Forgot your password?</Text>
+                    <Text style={[styles.boldButton, styles.signUpText]}>
+                      Sign up
+                    </Text>
                   </Button>
-
-                  <View style={styles.socialButtons}>
-                    <SocialButtons></SocialButtons>
-                  </View>
-
-                  <Row style={styles.signupRow}>
-                    <Text style={styles.text}>Don't have an account? </Text>
-
-                    <Button
-                      light
-                      transparent
-                      style={styles.signupButton}
-                      onPress={this.GoToSignUpPage}
-                    >
-                      <Text style={[styles.boldButton, styles.signUpText]}>
-                        Sign up
-                      </Text>
-                    </Button>
-                  </Row>
-                </Form>
-              </Row>
-            </Grid>
-          </Container>
-        </Root>
+                </Row>
+              </Form>
+            </Row>
+            <DropdownAlert
+              ref={ref => (this.dropDownAlertRef = ref)}
+              showCancel
+            />
+          </Grid>
+        </Container>
       </SafeAreaView>
     );
   }
@@ -275,12 +279,12 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    marginTop: 40
+    marginTop: 30
   },
 
   forgotButton: {
     marginTop: 10,
-    marginBottom: 25
+    marginBottom: 20
   },
 
   boldButton: {
@@ -305,7 +309,10 @@ const styles = StyleSheet.create({
   },
 
   signupRow: {
+    flex: 1,
     justifyContent: "center",
+    alignItems: "center",
+
     marginTop: 40
   },
 

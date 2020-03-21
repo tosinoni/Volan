@@ -30,8 +30,8 @@ import ErrorMessage from "../components/ErrorMessage";
 import { withFirebaseHOC } from "../config/Firebase";
 import PhoneInput from "react-native-phone-input";
 import Storage from "../utils/Storage";
+import DropdownAlert from "react-native-dropdownalert";
 
-const phoneRegExp = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g;
 let phoneFn;
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -76,10 +76,35 @@ export class SignUp extends Component {
         await this.props.firebase.createNewUser(userData);
       }
     } catch (error) {
-      console.error(error);
+      this.showErrorMessage(error);
     } finally {
       actions.setSubmitting(false);
     }
+  };
+
+  showErrorMessage = error => {
+    let errorMessage;
+
+    switch (error.code) {
+      case "auth/email-already-in-use":
+        errorMessage = "Email exists already.";
+        break;
+      case "auth/invalid-email":
+        errorMessage = "Invalid email provided.";
+        break;
+
+      case "auth/weak-password":
+        errorMessage = "Weak password provided.";
+        break;
+      default:
+        errorMessage = "Registration failed. Contact Volan customer care";
+    }
+
+    this.showErrorToast(errorMessage);
+  };
+
+  showErrorToast = errorMessage => {
+    this.dropDownAlertRef.alertWithType("error", "Signup failed", errorMessage);
   };
 
   render() {
@@ -227,12 +252,18 @@ export class SignUp extends Component {
                   </Button>
 
                   <View style={styles.socialButtons}>
-                    <SocialButtons></SocialButtons>
+                    <SocialButtons
+                      showErrorToast={this.showErrorToast}
+                    ></SocialButtons>
                   </View>
                 </Form>
               </Fragment>
             )}
           </Formik>
+          <DropdownAlert
+            ref={ref => (this.dropDownAlertRef = ref)}
+            showCancel
+          />
         </Content>
       </Container>
     );

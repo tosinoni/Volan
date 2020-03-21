@@ -11,10 +11,13 @@ class Initial extends Component {
     isAssetsLoadingComplete: false
   };
 
+  componentWillMount = async () => {
+    this.loadLocalAsync();
+  };
+
   componentDidMount = async () => {
     try {
       // previously
-      this.loadLocalAsync();
 
       await this.props.firebase.checkUserAuth(async user => {
         if (user) {
@@ -46,6 +49,8 @@ class Initial extends Component {
         require("../assets/icon.png")
       ]),
       Font.loadAsync({
+        Roboto: require("native-base/Fonts/Roboto.ttf"),
+        Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
         ...Icon.Ionicons.font
       })
     ]);
