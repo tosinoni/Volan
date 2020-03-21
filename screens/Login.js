@@ -49,6 +49,7 @@ const validationSchema = Yup.object().shape({
 
 export class Login extends Component {
   GoToSignUpPage = () => this.props.navigation.navigate("Signup");
+  GoToForgotPassword = () => this.props.navigation.navigate("ForgotPassword");
 
   handleOnLogin = async (values, actions) => {
     const { email, password } = values;
@@ -176,6 +177,7 @@ export class Login extends Component {
 
                 <Button
                   transparent
+                  onPress={this.GoToForgotPassword}
                   light
                   block
                   style={[styles.button, styles.forgotButton]}

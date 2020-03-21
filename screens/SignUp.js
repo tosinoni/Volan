@@ -33,6 +33,7 @@ import Storage from "../utils/Storage";
 import DropdownAlert from "react-native-dropdownalert";
 import { Header as NavigationHeader } from "react-navigation-stack";
 import { ScrollView } from "react-native";
+import CountryPicker, { DARK_THEME } from "react-native-country-picker-modal";
 
 let phoneFn;
 const validationSchema = Yup.object().shape({
@@ -61,6 +62,17 @@ const validationSchema = Yup.object().shape({
 });
 
 export class SignUp extends Component {
+  constructor() {
+    super();
+
+    this.onPressFlag = this.onPressFlag.bind(this);
+    this.selectCountry = this.selectCountry.bind(this);
+    this.state = {
+      visible: false,
+      cca2: "US"
+    };
+  }
+
   handleOnSignup = async (values, actions) => {
     const { name, email, password } = values;
 
@@ -107,6 +119,19 @@ export class SignUp extends Component {
 
   showErrorToast = errorMessage => {
     this.dropDownAlertRef.alertWithType("error", "Signup failed", errorMessage);
+  };
+
+  onPressFlag = () => {
+    this.setState({ visible: true });
+  };
+
+  selectCountry = country => {
+    this.phone.selectCountry(country.cca2.toLowerCase());
+    this.setState({ cca2: country.cca2 });
+  };
+
+  setVisible = visible => {
+    this.setState({ visible });
   };
 
   render() {
@@ -186,11 +211,25 @@ export class SignUp extends Component {
                       <PhoneInput
                         ref={ref => {
                           phoneFn = ref;
+                          this.phone = ref;
                         }}
+                        onPressFlag={this.onPressFlag}
                         onChangePhoneNumber={handleChange("phoneNumber")}
                         style={styles.input}
                         textStyle={styles.phoneInput}
                         autoFormat={true}
+                      />
+                      <CountryPicker
+                        theme={DARK_THEME}
+                        placeholder
+                        onClose={() => this.setVisible(false)}
+                        onOpen={() => this.setVisible(true)}
+                        onSelect={country => {
+                          this.selectCountry(country);
+                        }}
+                        modalProps={{
+                          visible: this.state.visible
+                        }}
                       />
                     </Item>
                     <ErrorMessage

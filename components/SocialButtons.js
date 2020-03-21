@@ -27,7 +27,7 @@ export class SocialButtons extends Component {
       }
     } catch (e) {
       console.log(e);
-      this.showErrorMessage(e);
+      if (e.code !== "-3") this.showErrorMessage(e);
     }
   };
 
@@ -46,8 +46,8 @@ export class SocialButtons extends Component {
         this.addUserData(credential);
       }
     } catch (e) {
-      console.log(e);
-      this.showErrorMessage(e);
+      console.log(e.code);
+      if (e.code !== "-3") this.showErrorMessage(e);
     }
   };
 
