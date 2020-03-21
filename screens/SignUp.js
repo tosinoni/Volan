@@ -114,9 +114,9 @@ export class SignUp extends Component {
       <ScrollView>
         <Container>
           <Content
-            resetScrollToCoords={{ x: 0, y: 0 }}
             automaticallyAdjustContentInsets={false}
             keyboardShouldPersistTaps="handled"
+            resetScrollToCoords={{ x: 0, y: 0 }}
             extraHeight={Platform.select({ android: 200, ios: 280 })}
             style={Platform.select({ android: styles.content })}
             contentContainerStyle={Platform.select({ ios: styles.content })}
@@ -193,7 +193,10 @@ export class SignUp extends Component {
                         autoFormat={true}
                       />
                     </Item>
-                    <ErrorMessage errorValue={errors.phoneNumber} />
+                    <ErrorMessage
+                      style={{ marginTop: 5 }}
+                      errorValue={errors.phoneNumber}
+                    />
 
                     <Item stackedLabel style={styles.item}>
                       <Label style={styles.Label}>Password</Label>

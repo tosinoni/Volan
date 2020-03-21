@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Intro from "../components/Intro";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
+import { StatusBar } from "react-native";
 
 export class IntroScreen extends Component {
   _onDone = () => {
@@ -9,7 +10,7 @@ export class IntroScreen extends Component {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={styles.safeView}>
         <Intro onDone={this._onDone} />
       </SafeAreaView>
     );
@@ -17,3 +18,10 @@ export class IntroScreen extends Component {
 }
 
 export default IntroScreen;
+
+const styles = StyleSheet.create({
+  safeView: {
+    flex: 1,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+  }
+});

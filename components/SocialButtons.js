@@ -11,7 +11,7 @@ export class SocialButtons extends Component {
   loginToFacebook = async () => {
     try {
       const appId = "580361876170911";
-      const permissions = ["public_profile", "email"]; // Permissions required, consult Facebook docs
+      const permissions = ["public_profile", "email", "user_friends"]; // Permissions required, consult Facebook docs
       await Facebook.initializeAsync(appId);
 
       const { type, token } = await Facebook.logInWithReadPermissionsAsync(
@@ -27,7 +27,7 @@ export class SocialButtons extends Component {
       }
     } catch (e) {
       console.log(e);
-      this.refs.toast.show("Failed to login with Facebook", 2000);
+      this.showErrorMessage(e);
     }
   };
 
@@ -47,7 +47,7 @@ export class SocialButtons extends Component {
       }
     } catch (e) {
       console.log(e);
-      this.refs.toast.show("Failed to login with Google", 2000);
+      this.showErrorMessage(e);
     }
   };
 

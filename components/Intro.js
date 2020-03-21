@@ -67,20 +67,20 @@ export class Intro extends Component {
         <View style={styles.descriptionView}>
           <Text style={styles.text}>{text}</Text>
           <Text style={styles.subText}>{subText}</Text>
-
-          {buttonText && (
-            <View style={styles.buttonView}>
-              <Button
-                block
-                light
-                onPress={this.props.onDone}
-                style={styles.button}
-              >
-                <Text style={styles.bold}>{buttonText}</Text>
-              </Button>
-            </View>
-          )}
         </View>
+
+        {buttonText && (
+          <View style={styles.buttonView}>
+            <Button
+              block
+              light
+              onPress={this.props.onDone}
+              style={styles.button}
+            >
+              <Text style={styles.bold}>{buttonText}</Text>
+            </Button>
+          </View>
+        )}
       </View>
     );
   };
@@ -103,19 +103,15 @@ const styles = StyleSheet.create({
   },
 
   slide: {
+    flex: 1,
     width: "100%",
+    justifyContent: "space-evenly",
     alignItems: "center",
     height: "100%"
   },
-  imageView: {
-    flex: 1,
-    justifyContent: "center",
-    paddingVertical: 50
-  },
+  imageView: {},
 
   descriptionView: {
-    flex: 1,
-    justifyContent: "center",
     paddingHorizontal: 32
   },
 
@@ -147,7 +143,6 @@ const styles = StyleSheet.create({
     padding: 16
   },
   buttonView: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center"
   },

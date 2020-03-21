@@ -26,7 +26,8 @@ import {
   Platform,
   ScrollView,
   KeyboardAvoidingView,
-  TouchableHighlight
+  TouchableHighlight,
+  StatusBar
 } from "react-native";
 import SocialButtons from "../components/SocialButtons";
 import { Formik } from "formik";
@@ -128,7 +129,6 @@ export class Login extends Component {
                           placeholder="Email"
                           placeholderTextColor="white"
                           onBlur={handleBlur("email")}
-                          autoFocus
                         />
                       </Item>
                       <ErrorMessage
@@ -212,7 +212,7 @@ export class Login extends Component {
 const styles = StyleSheet.create({
   safeView: {
     flex: 1,
-    paddingTop: Platform.OS === "android" ? 25 : 0
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
   gridContainer: {
     flex: 1,

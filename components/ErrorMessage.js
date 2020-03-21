@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const ErrorMessage = ({ errorValue }) => (
+const ErrorMessage = ({ errorValue, style }) => (
   <View style={styles.container}>
-    <Text style={styles.errorText}>{errorValue}</Text>
+    <Text style={[styles.errorText, style]}>{errorValue}</Text>
   </View>
 );
 
