@@ -100,7 +100,7 @@ export class SocialButtons extends Component {
       <View style={styles.socialButtonsRow}>
         <Text style={styles.text}>or use social</Text>
 
-        <Row style={styles.socialIconsRow}>
+        <View style={styles.socialIconsRow}>
           <Button light transparent onPress={this.loginToGoogle}>
             <Icon style={styles.socialIcon} type="AntDesign" name="google" />
           </Button>
@@ -111,7 +111,7 @@ export class SocialButtons extends Component {
               name="facebook-box"
             />
           </Button>
-        </Row>
+        </View>
       </View>
     );
   }
@@ -120,11 +120,6 @@ export class SocialButtons extends Component {
 export default withFirebaseHOC(SocialButtons);
 
 const styles = StyleSheet.create({
-  socialButtonsRow: {
-    flex: 1,
-    height: "100%"
-  },
-
   text: {
     color: "white",
     justifyContent: "center",
@@ -132,8 +127,8 @@ const styles = StyleSheet.create({
   },
 
   socialIconsRow: {
-    justifyContent: "center",
-    marginTop: 5
+    flexDirection: "row",
+    justifyContent: "center"
   },
 
   socialIcon: {

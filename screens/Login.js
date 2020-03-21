@@ -23,6 +23,7 @@ import {
   ImageBackground,
   StyleSheet,
   Image,
+  Platform,
   KeyboardAvoidingView,
   TouchableHighlight
 } from "react-native";
@@ -72,7 +73,7 @@ export class Login extends Component {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={styles.safeView}>
         <Container>
           <Grid style={styles.gridContainer}>
             <Row>
@@ -180,26 +181,19 @@ export class Login extends Component {
                   <Text style={styles.boldButton}>Forgot your password?</Text>
                 </Button>
 
-                <View style={styles.socialButtons}>
-                  <SocialButtons
-                    showErrorToast={this.showErrorToast}
-                  ></SocialButtons>
-                </View>
+                <SocialButtons
+                  showErrorToast={this.showErrorToast}
+                ></SocialButtons>
 
-                <Row style={styles.signupRow}>
+                <View style={styles.signupRow}>
                   <Text style={styles.text}>Don't have an account? </Text>
 
-                  <Button
-                    light
-                    transparent
-                    style={styles.signupButton}
-                    onPress={this.GoToSignUpPage}
-                  >
+                  <Button light transparent onPress={this.GoToSignUpPage}>
                     <Text style={[styles.boldButton, styles.signUpText]}>
                       Sign up
                     </Text>
                   </Button>
-                </Row>
+                </View>
               </Form>
             </Row>
             <DropdownAlert
@@ -214,6 +208,10 @@ export class Login extends Component {
 }
 
 const styles = StyleSheet.create({
+  safeView: {
+    flex: 1,
+    paddingTop: Platform.OS === "android" ? 25 : 0
+  },
   gridContainer: {
     backgroundColor: "#b82f25"
   },
@@ -228,21 +226,21 @@ const styles = StyleSheet.create({
   },
 
   formRow: {
+    flex: 1,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     top: -30,
-    backgroundColor: "#b82f25",
-    width: "100%"
+    backgroundColor: "#b82f25"
   },
 
   form: {
-    width: "100%",
+    flex: 1,
+    justifyContent: "space-evenly",
     paddingHorizontal: 50,
-    height: "100%"
+    paddingTop: 10
   },
 
   item: {
-    marginTop: 20,
     borderRadius: 10,
     borderLeftWidth: 2,
     borderRightWidth: 2,
@@ -278,15 +276,6 @@ const styles = StyleSheet.create({
     paddingRight: 0
   },
 
-  button: {
-    marginTop: 30
-  },
-
-  forgotButton: {
-    marginTop: 10,
-    marginBottom: 20
-  },
-
   boldButton: {
     fontWeight: "bold"
   },
@@ -302,26 +291,10 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
 
-  socialButtons: {
-    flex: 1,
+  signupRow: {
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center"
-  },
-
-  signupRow: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-
-    marginTop: 40
-  },
-
-  signupButton: {
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: 0,
-    paddingBottom: 0,
-    height: "100%"
   },
 
   signUpText: {
