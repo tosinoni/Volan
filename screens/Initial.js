@@ -11,13 +11,10 @@ class Initial extends Component {
     isAssetsLoadingComplete: false
   };
 
-  componentWillMount = async () => {
-    this.loadLocalAsync();
-  };
-
   componentDidMount = async () => {
     try {
       // previously
+      await this.loadLocalAsync();
 
       await this.props.firebase.checkUserAuth(async user => {
         if (user) {

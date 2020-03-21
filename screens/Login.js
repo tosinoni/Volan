@@ -24,6 +24,7 @@ import {
   StyleSheet,
   Image,
   Platform,
+  ScrollView,
   KeyboardAvoidingView,
   TouchableHighlight
 } from "react-native";
@@ -74,9 +75,12 @@ export class Login extends Component {
   render() {
     return (
       <SafeAreaView style={styles.safeView}>
-        <Container>
-          <Grid style={styles.gridContainer}>
-            <Row>
+        <ScrollView>
+          <Container>
+            <Content
+              contentContainerStyle={styles.gridContainer}
+              enableOnAndroid
+            >
               <ImageBackground
                 style={styles.imageBackground}
                 source={require("../assets/images/login/background.jpg")}
@@ -86,9 +90,7 @@ export class Login extends Component {
                   source={require("../assets/splash.png")}
                 />
               </ImageBackground>
-            </Row>
-            <Row style={styles.formRow}>
-              <Form style={styles.form}>
+              <Form style={[styles.form, styles.formRow]}>
                 <Formik
                   initialValues={{ email: "", password: "" }}
                   onSubmit={(values, actions) => {
@@ -195,13 +197,13 @@ export class Login extends Component {
                   </Button>
                 </View>
               </Form>
-            </Row>
-            <DropdownAlert
-              ref={ref => (this.dropDownAlertRef = ref)}
-              showCancel
-            />
-          </Grid>
-        </Container>
+              <DropdownAlert
+                ref={ref => (this.dropDownAlertRef = ref)}
+                showCancel
+              />
+            </Content>
+          </Container>
+        </ScrollView>
       </SafeAreaView>
     );
   }
@@ -213,6 +215,9 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === "android" ? 25 : 0
   },
   gridContainer: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
     backgroundColor: "#b82f25"
   },
   imageBackground: {
@@ -234,8 +239,6 @@ const styles = StyleSheet.create({
   },
 
   form: {
-    flex: 1,
-    justifyContent: "space-evenly",
     paddingHorizontal: 50,
     paddingTop: 10
   },

@@ -111,154 +111,171 @@ export class SignUp extends Component {
 
   render() {
     return (
-      <View style={styles.content}>
-        <View style={styles.logoImageBackground}>
-          <Image
-            style={styles.logoImage}
-            source={require("../assets/images/logo-2.png")}
-          />
-        </View>
+      <ScrollView>
+        <Container>
+          <Content
+            resetScrollToCoords={{ x: 0, y: 0 }}
+            automaticallyAdjustContentInsets={false}
+            keyboardShouldPersistTaps="handled"
+            extraHeight={Platform.select({ android: 200, ios: 280 })}
+            style={Platform.select({ android: styles.content })}
+            contentContainerStyle={Platform.select({ ios: styles.content })}
+            enableOnAndroid
+          >
+            <View style={styles.logoImageBackground}>
+              <Image
+                style={styles.logoImage}
+                source={require("../assets/images/logo-2.png")}
+              />
+            </View>
 
-        <Formik
-          initialValues={{
-            name: "",
-            email: "",
-            phoneNumber: "",
-            password: "",
-            confirmPassword: "",
-            terms: false
-          }}
-          onSubmit={(values, actions) => {
-            this.handleOnSignup(values, actions);
-          }}
-          validationSchema={validationSchema}
-        >
-          {({
-            setFieldValue,
-            handleChange,
-            values,
-            handleSubmit,
-            errors,
-            isValid,
-            touched,
-            handleBlur,
-            isSubmitting
-          }) => (
-            <Fragment>
-              <Form style={styles.form}>
-                <Item stackedLabel style={styles.item}>
-                  <Label style={styles.Label}>Name</Label>
-                  <Input
-                    name="name"
-                    value={values.name}
-                    style={styles.input}
-                    onBlur={handleBlur("name")}
-                    onChangeText={handleChange("name")}
-                  />
-                </Item>
-                <ErrorMessage errorValue={touched.name && errors.name} />
+            <Formik
+              initialValues={{
+                name: "",
+                email: "",
+                phoneNumber: "",
+                password: "",
+                confirmPassword: "",
+                terms: false
+              }}
+              onSubmit={(values, actions) => {
+                this.handleOnSignup(values, actions);
+              }}
+              validationSchema={validationSchema}
+            >
+              {({
+                setFieldValue,
+                handleChange,
+                values,
+                handleSubmit,
+                errors,
+                isValid,
+                touched,
+                handleBlur,
+                isSubmitting
+              }) => (
+                <Fragment>
+                  <Form style={styles.form}>
+                    <Item stackedLabel style={styles.item}>
+                      <Label style={styles.Label}>Name</Label>
+                      <Input
+                        name="name"
+                        value={values.name}
+                        style={styles.input}
+                        onBlur={handleBlur("name")}
+                        onChangeText={handleChange("name")}
+                      />
+                    </Item>
+                    <ErrorMessage errorValue={touched.name && errors.name} />
 
-                <Item stackedLabel style={styles.item}>
-                  <Label style={styles.Label}>Email</Label>
-                  <Input
-                    name="email"
-                    autoCapitalize="none"
-                    value={values.email}
-                    onBlur={handleBlur("email")}
-                    style={styles.input}
-                    onChangeText={handleChange("email")}
-                  />
-                </Item>
-                <ErrorMessage errorValue={touched.email && errors.email} />
+                    <Item stackedLabel style={styles.item}>
+                      <Label style={styles.Label}>Email</Label>
+                      <Input
+                        name="email"
+                        autoCapitalize="none"
+                        value={values.email}
+                        onBlur={handleBlur("email")}
+                        style={styles.input}
+                        onChangeText={handleChange("email")}
+                      />
+                    </Item>
+                    <ErrorMessage errorValue={touched.email && errors.email} />
 
-                <Item stackedLabel style={styles.item}>
-                  <Label style={styles.Label}>Phone Number</Label>
-                  <PhoneInput
-                    ref={ref => {
-                      phoneFn = ref;
-                    }}
-                    onChangePhoneNumber={handleChange("phoneNumber")}
-                    style={styles.input}
-                    textStyle={styles.phoneInput}
-                    autoFormat={true}
-                  />
-                </Item>
-                <ErrorMessage errorValue={errors.phoneNumber} />
+                    <Item stackedLabel style={styles.item}>
+                      <Label style={styles.Label}>Phone Number</Label>
+                      <PhoneInput
+                        ref={ref => {
+                          phoneFn = ref;
+                        }}
+                        onChangePhoneNumber={handleChange("phoneNumber")}
+                        style={styles.input}
+                        textStyle={styles.phoneInput}
+                        autoFormat={true}
+                      />
+                    </Item>
+                    <ErrorMessage errorValue={errors.phoneNumber} />
 
-                <Item stackedLabel style={styles.item}>
-                  <Label style={styles.Label}>Password</Label>
-                  <Input
-                    name="password"
-                    value={values.password}
-                    onChangeText={handleChange("password")}
-                    onBlur={handleBlur("password")}
-                    style={styles.input}
-                    secureTextEntry
-                    textContentType={"newPassword"}
-                  />
-                </Item>
-                <ErrorMessage
-                  errorValue={touched.password && errors.password}
-                />
+                    <Item stackedLabel style={styles.item}>
+                      <Label style={styles.Label}>Password</Label>
+                      <Input
+                        name="password"
+                        value={values.password}
+                        onChangeText={handleChange("password")}
+                        onBlur={handleBlur("password")}
+                        style={styles.input}
+                        secureTextEntry
+                        textContentType={"newPassword"}
+                      />
+                    </Item>
+                    <ErrorMessage
+                      errorValue={touched.password && errors.password}
+                    />
 
-                <Item stackedLabel style={styles.item}>
-                  <Label style={styles.Label}>Confirm Password</Label>
-                  <Input
-                    value={values.confirmPassword}
-                    onChangeText={handleChange("confirmPassword")}
-                    onBlur={handleBlur("confirmPassword")}
-                    style={styles.input}
-                    secureTextEntry
-                    textContentType={"newPassword"}
-                  />
-                </Item>
-                <ErrorMessage
-                  errorValue={touched.confirmPassword && errors.confirmPassword}
-                />
-                <Item style={[styles.item, styles.termsRow]}>
-                  <CheckBox
-                    name="terms"
-                    style={styles.checkBox}
-                    onPress={() => setFieldValue("terms", !values.terms)}
-                    checked={values.terms}
-                    color="green"
-                  ></CheckBox>
-                  <Text style={styles.Label}>I agree to the </Text>
+                    <Item stackedLabel style={styles.item}>
+                      <Label style={styles.Label}>Confirm Password</Label>
+                      <Input
+                        value={values.confirmPassword}
+                        onChangeText={handleChange("confirmPassword")}
+                        onBlur={handleBlur("confirmPassword")}
+                        style={styles.input}
+                        secureTextEntry
+                        textContentType={"newPassword"}
+                      />
+                    </Item>
+                    <ErrorMessage
+                      errorValue={
+                        touched.confirmPassword && errors.confirmPassword
+                      }
+                    />
+                    <Item style={[styles.item, styles.termsRow]}>
+                      <CheckBox
+                        name="terms"
+                        style={styles.checkBox}
+                        onPress={() => setFieldValue("terms", !values.terms)}
+                        checked={values.terms}
+                        color="green"
+                      ></CheckBox>
+                      <Text style={styles.Label}>I agree to the </Text>
 
-                  <Button
-                    light
-                    transparent
-                    style={styles.termsButton}
-                    onPress={this.GoToSignUpPage}
-                  >
-                    <Text style={[styles.termsOfService, styles.bold]}>
-                      Terms of Service
-                    </Text>
-                  </Button>
-                </Item>
-                <ErrorMessage errorValue={touched.terms && errors.terms} />
+                      <Button
+                        light
+                        transparent
+                        style={styles.termsButton}
+                        onPress={this.GoToSignUpPage}
+                      >
+                        <Text style={[styles.termsOfService, styles.bold]}>
+                          Terms of Service
+                        </Text>
+                      </Button>
+                    </Item>
+                    <ErrorMessage errorValue={touched.terms && errors.terms} />
 
-                <Button
-                  rounded
-                  light
-                  block
-                  disabled={!isValid || isSubmitting}
-                  style={styles.createAccount}
-                  onPress={handleSubmit}
-                >
-                  <Text style={styles.bold}>Create Account</Text>
-                  {isSubmitting && <Spinner color="white" />}
-                </Button>
+                    <Button
+                      rounded
+                      light
+                      block
+                      disabled={!isValid || isSubmitting}
+                      style={styles.createAccount}
+                      onPress={handleSubmit}
+                    >
+                      <Text style={styles.bold}>Create Account</Text>
+                      {isSubmitting && <Spinner color="white" />}
+                    </Button>
 
-                <SocialButtons
-                  showErrorToast={this.showErrorToast}
-                ></SocialButtons>
-              </Form>
-            </Fragment>
-          )}
-        </Formik>
-        <DropdownAlert ref={ref => (this.dropDownAlertRef = ref)} showCancel />
-      </View>
+                    <SocialButtons
+                      showErrorToast={this.showErrorToast}
+                    ></SocialButtons>
+                  </Form>
+                </Fragment>
+              )}
+            </Formik>
+            <DropdownAlert
+              ref={ref => (this.dropDownAlertRef = ref)}
+              showCancel
+            />
+          </Content>
+        </Container>
+      </ScrollView>
     );
   }
 }
@@ -286,7 +303,8 @@ const styles = StyleSheet.create({
   form: {
     flex: 1,
     justifyContent: "space-evenly",
-    width: "100%"
+    width: "100%",
+    height: "100%"
   },
 
   item: {
