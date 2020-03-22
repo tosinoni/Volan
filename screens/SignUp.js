@@ -220,7 +220,6 @@ export class SignUp extends Component {
                         autoFormat={true}
                       />
                       <CountryPicker
-                        theme={DARK_THEME}
                         placeholder
                         onClose={() => this.setVisible(false)}
                         onOpen={() => this.setVisible(true)}
