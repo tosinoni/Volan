@@ -43,7 +43,12 @@ class Initial extends Component {
     return await Promise.all([
       Asset.loadAsync([
         require("../assets/splash.png"),
-        require("../assets/icon.png")
+        require("../assets/icon.png"),
+        require("../assets/images/login/background.jpg"),
+        require("../assets/images/intro/image-1.png"),
+        require("../assets/images/intro/image-2.png"),
+        require("../assets/images/intro/image-3.png"),
+        require("../assets/images/logo-2.png")
       ]),
       Font.loadAsync({
         Roboto: require("native-base/Fonts/Roboto.ttf"),
