@@ -29,7 +29,6 @@ import * as Yup from "yup";
 import ErrorMessage from "../components/ErrorMessage";
 import { withFirebaseHOC } from "../config/Firebase";
 import PhoneInput from "react-native-phone-input";
-import Storage from "../utils/Storage";
 import DropdownAlert from "react-native-dropdownalert";
 import { Header as NavigationHeader } from "react-navigation-stack";
 import { ScrollView } from "react-native";
@@ -77,7 +76,6 @@ export class SignUp extends Component {
     const { name, email, password } = values;
 
     try {
-      await Storage.setIsNewUser(true);
       const response = await this.props.firebase.signupWithEmail(
         email,
         password
