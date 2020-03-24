@@ -21,7 +21,12 @@ import {
   Spinner,
   CheckBox
 } from "native-base";
-import { StyleSheet, Image, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  KeyboardAvoidingView,
+  Platform
+} from "react-native";
 import SocialButtons from "../components/SocialButtons";
 import Intro from "../components/Intro";
 import { Formik } from "formik";
@@ -32,7 +37,7 @@ import PhoneInput from "react-native-phone-input";
 import DropdownAlert from "react-native-dropdownalert";
 import { Header as NavigationHeader } from "react-navigation-stack";
 import { ScrollView } from "react-native";
-import CountryPicker, { DARK_THEME } from "react-native-country-picker-modal";
+import CountryPicker from "react-native-country-picker-modal";
 
 let phoneFn;
 const validationSchema = Yup.object().shape({
@@ -61,16 +66,10 @@ const validationSchema = Yup.object().shape({
 });
 
 export class SignUp extends Component {
-  constructor() {
-    super();
-
-    this.onPressFlag = this.onPressFlag.bind(this);
-    this.selectCountry = this.selectCountry.bind(this);
-    this.state = {
-      visible: false,
-      cca2: "US"
-    };
-  }
+  state = {
+    visible: false,
+    cca2: "CAN"
+  };
 
   handleOnSignup = async (values, actions) => {
     const { name, email, password } = values;
@@ -141,7 +140,10 @@ export class SignUp extends Component {
             keyboardShouldPersistTaps="handled"
             resetScrollToCoords={{ x: 0, y: 0 }}
             extraHeight={Platform.select({ android: 200, ios: 280 })}
-            style={Platform.select({ android: styles.content })}
+            style={Platform.select({
+              android: styles.content,
+              web: styles.content
+            })}
             contentContainerStyle={Platform.select({ ios: styles.content })}
             enableOnAndroid
           >
@@ -217,6 +219,7 @@ export class SignUp extends Component {
                         textStyle={styles.phoneInput}
                         autoFormat={true}
                       />
+
                       <CountryPicker
                         placeholder
                         onClose={() => this.setVisible(false)}
@@ -364,7 +367,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderBottomWidth: 2,
     borderColor: "white",
-    color: "white",
     paddingLeft: 10,
     width: "100%"
   },
