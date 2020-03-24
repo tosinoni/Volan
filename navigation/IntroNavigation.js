@@ -1,12 +1,17 @@
 import { createStackNavigator } from "react-navigation-stack";
-import Intro from "../screens/IntroScreen";
+import IntroOne from "../screens/intro/IntroOne";
+import IntroTwo from "../screens/intro/IntroTwo";
+import IntroThree from "../screens/intro/IntroThree";
 
 const IntroNavigation = createStackNavigator(
   {
-    Intro: { screen: Intro, navigationOptions: { headerShown: false } }
+    IntroOne: { screen: IntroOne },
+    IntroTwo: { screen: IntroTwo },
+    IntroThree: { screen: IntroThree }
   },
   {
-    initialRouteName: "Intro"
+    initialRouteName: "IntroOne",
+    headerMode: "none"
   }
 );
 

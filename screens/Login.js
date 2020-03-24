@@ -236,8 +236,9 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
-    top: -30,
-    backgroundColor: "#b82f25"
+    top: "-10%",
+    backgroundColor: "#b82f25",
+    justifyContent: "space-around"
   },
 
   form: {

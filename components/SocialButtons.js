@@ -5,11 +5,17 @@ import { StyleSheet } from "react-native";
 import * as Facebook from "expo-facebook";
 import { withFirebaseHOC } from "../config/Firebase";
 import * as Google from "expo-google-app-auth";
-import Toast from "react-native-easy-toast";
+import Loader from "./Loader";
 
 export class SocialButtons extends Component {
+  state = {
+    visible: false
+  };
+
   loginToFacebook = async () => {
     try {
+      this.setState({ visible: true });
+
       const appId = "580361876170911";
       const permissions = ["public_profile", "email", "user_friends"]; // Permissions required, consult Facebook docs
       await Facebook.initializeAsync(appId);
@@ -24,15 +30,19 @@ export class SocialButtons extends Component {
       if (type == "success") {
         const credential = this.props.firebase.getFacebookCredentials(token);
         this.addUserData(credential);
+      } else {
+        this.setState({ visible: false });
       }
     } catch (e) {
       console.log(e);
+      this.setState({ visible: false });
       if (e.code !== "-3") this.showErrorMessage(e);
     }
   };
 
   loginToGoogle = async () => {
     try {
+      this.setState({ visible: true });
       const result = await Google.logInAsync({
         androidClientId:
           "805901121237-ao6k1s0makubj5kpbekgvrckqu1669qj.apps.googleusercontent.com",
@@ -44,10 +54,13 @@ export class SocialButtons extends Component {
       if (result.type === "success") {
         const credential = this.props.firebase.getGoogleCredentials(result);
         this.addUserData(credential);
+      } else {
+        this.setState({ visible: false });
       }
     } catch (e) {
       console.log(e.code);
       if (e.code !== "-3") this.showErrorMessage(e);
+      this.setState({ visible: false });
     }
   };
 
@@ -69,8 +82,10 @@ export class SocialButtons extends Component {
         const userData = { email, phoneNumber, photoURL, name, uid };
         await this.props.firebase.createNewUser(userData);
       }
+      this.setState({ visible: false });
     } catch (e) {
       console.log(e);
+      this.setState({ visible: false });
       this.showErrorMessage(e);
     }
   };
@@ -112,6 +127,8 @@ export class SocialButtons extends Component {
             />
           </Button>
         </View>
+
+        <Loader visible={this.state.visible}></Loader>
       </View>
     );
   }
