@@ -15,7 +15,7 @@ export class Intro extends Component {
       text,
       subText,
       navigateText,
-      handleNavigate
+      handleNextClick
     } = this.props;
 
     return (
@@ -63,7 +63,7 @@ export class Intro extends Component {
           rounded
           light
           style={styles.navigateButton}
-          onPress={handleNavigate}
+          onPress={handleNextClick}
         >
           <Text style={styles.navigateText}>{navigateText}</Text>
         </Button>

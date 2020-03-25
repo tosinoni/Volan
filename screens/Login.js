@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     top: "-10%",
     backgroundColor: "#b82f25",
-    justifyContent: "space-around"
+    justifyContent: "space-between"
   },
 
   form: {
