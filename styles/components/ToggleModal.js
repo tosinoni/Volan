@@ -10,7 +10,7 @@ export const styles = props =>
         props.mode === Constants.BUYER ? Colors.brightBlue : Colors.brightRed,
       justifyContent: "space-evenly",
       alignItems: "center",
-      borderRadius: 4,
+      borderRadius: 20,
       borderColor: "rgba(0, 0, 0, 0.1)",
       paddingTop: 10,
       paddingBottom: 22
