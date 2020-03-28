@@ -4,6 +4,8 @@ import DecisionNavigation from "./DecisionNavigation";
 import AuthNavigation from "./AuthNavigation";
 import AppNavigation from "./AppNavigation";
 import IntroNavigation from "./IntroNavigation";
+import BuyerNavigation from "./BuyerNavigation";
+import SellerNavigation from "./SellerNavigation";
 
 const SwitchNavigator = createSwitchNavigator(
   {
@@ -11,7 +13,9 @@ const SwitchNavigator = createSwitchNavigator(
     Auth: AuthNavigation,
     App: AppNavigation,
     Intro: IntroNavigation,
-    Decision: DecisionNavigation
+    Decision: DecisionNavigation,
+    Buyer: BuyerNavigation,
+    Seller: SellerNavigation
   },
   {
     initialRouteName: "Initial"

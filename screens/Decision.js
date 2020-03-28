@@ -1,19 +1,42 @@
 import React, { Component } from "react";
-import { Container, Content, Button, Text, Icon } from "native-base";
+import { Button, Text, Icon } from "native-base";
 import { View, StyleSheet, Image, StatusBar } from "react-native";
 import { Colors } from "../styles/Colors";
 import { genericStyles } from "../styles/generic";
 import Swiper from "react-native-swiper";
-import Home from "../screens/Home";
+import Constants from "../constants";
+import ToggleModal from "../components/ToggleModal";
 
 export class Decision extends Component {
+  state = {
+    selectedMode: "",
+    showModal: false
+  };
+
+  onBuyerModeSelected = () => {
+    this.setState({ selectedMode: Constants.BUYER, showModal: true });
+  };
+
+  onSellerModeSelected = () => {
+    this.setState({ selectedMode: Constants.SELLER, showModal: true });
+  };
+
+  onClose = () => {
+    this.setState({ showModal: false });
+    const { selectedMode } = this.state;
+
+    if (selectedMode === Constants.BUYER) this.refs.swiper1.scrollBy(-1);
+    else this.refs.swiper2.scrollBy(1);
+  };
+
   render() {
+    const { showModal, selectedMode } = this.state;
     return (
       <View style={genericStyles.safeView}>
         <Swiper
+          onScrollBeginDrag={this.onBuyerModeSelected}
           showsPagination={false}
           loop={false}
-          onIndexChanged={this.onIndexChanged}
           ref={"swiper1"}
         >
           <View style={[styles.buttonView, styles.buyer]}>
@@ -58,10 +81,10 @@ export class Decision extends Component {
           ></View>
         </Swiper>
         <Swiper
-          index={2}
+          index={1}
           showsPagination={false}
           loop={false}
-          onIndexChanged={this.onIndexChanged}
+          onScrollBeginDrag={this.onSellerModeSelected}
           ref={"swiper2"}
         >
           <View
@@ -89,6 +112,12 @@ export class Decision extends Component {
             </Button>
           </View>
         </Swiper>
+
+        <ToggleModal
+          showModal={showModal}
+          mode={selectedMode}
+          onClose={this.onClose}
+        />
       </View>
     );
   }
