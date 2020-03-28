@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { Button, Text, Icon } from "native-base";
-import { View, StyleSheet, Image, StatusBar } from "react-native";
+import { View, Image } from "react-native";
 import { Colors } from "../styles/Colors";
-import { genericStyles } from "../styles/generic";
 import Swiper from "react-native-swiper";
 import Constants from "../constants";
 import ToggleModal from "../components/ToggleModal";
-
+import { styles } from "../styles/screens/Decision";
 export class Decision extends Component {
   state = {
     selectedMode: "",
@@ -32,7 +31,7 @@ export class Decision extends Component {
   render() {
     const { showModal, selectedMode } = this.state;
     return (
-      <View style={genericStyles.safeView}>
+      <View style={styles.safeView}>
         <Swiper
           onScrollBeginDrag={this.onBuyerModeSelected}
           showsPagination={false}
@@ -124,47 +123,3 @@ export class Decision extends Component {
 }
 
 export default Decision;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  image: {
-    position: "absolute",
-    top: Platform.OS === "android" ? StatusBar.currentHeight : 40,
-    right: 0,
-    width: 100,
-
-    height: 70,
-    resizeMode: "contain"
-  },
-  buttonView: {
-    flex: 1
-  },
-  button: {
-    width: "100%",
-    height: "100%"
-  },
-  buyer: {
-    backgroundColor: Colors.brightBlue,
-    borderTopLeftRadius: 400,
-    borderBottomLeftRadius: 400
-  },
-  seller: {
-    backgroundColor: Colors.brightRed,
-    borderTopRightRadius: 400,
-    borderBottomRightRadius: 400
-  },
-  text: {
-    color: Colors.white,
-    fontSize: 40,
-    fontWeight: "300"
-  },
-  icon: {
-    color: Colors.white,
-    fontWeight: "200"
-  },
-  bold: {
-    fontWeight: "bold"
-  }
-});
