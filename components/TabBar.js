@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FooterTab, Button, Icon, Text, Badge, Footer } from "native-base";
 import { withNavigation } from "react-navigation";
 import { styles } from "../styles/components/TabBar";
+import { DrawerActions } from "react-navigation-drawer";
 
 export class TabBar extends Component {
   state = {
@@ -10,6 +11,10 @@ export class TabBar extends Component {
   navigateToTabComponent = routeName => {
     this.props.navigation.navigate(routeName);
     this.setState({ currentRouteName: routeName });
+  };
+
+  openDrawer = () => {
+    this.props.navigation.dispatch(DrawerActions.openDrawer());
   };
 
   isRouteActive = routeName => {
@@ -37,10 +42,10 @@ export class TabBar extends Component {
           </Button>
           <Button
             style={styles.button}
-            active={this.isRouteActive("Matches")}
+            active={this.isRouteActive("MatchesPage")}
             vertical
             onPress={() => {
-              this.navigateToTabComponent("Matches");
+              this.navigateToTabComponent("MatchesPage");
             }}
           >
             <Icon name="camera" />
@@ -66,14 +71,7 @@ export class TabBar extends Component {
             </Badge>
             <Icon active name="navigate" />
           </Button>
-          <Button
-            style={styles.button}
-            vertical
-            onPress={() => {
-              this.navigateToTabComponent("Drawer");
-            }}
-            active={this.isRouteActive("Drawer")}
-          >
+          <Button style={styles.button} vertical onPress={this.openDrawer}>
             <Icon name="menu" />
           </Button>
         </FooterTab>
