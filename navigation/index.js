@@ -5,7 +5,7 @@ import AuthNavigation from "./AuthNavigation";
 import AppNavigation from "./AppNavigation";
 import IntroNavigation from "./IntroNavigation";
 import BuyerNavigation from "./BuyerNavigation";
-import SellerNavigation from "./seller";
+import SellerNavigation from "./SellerNavigation";
 
 const SwitchNavigator = createSwitchNavigator(
   {

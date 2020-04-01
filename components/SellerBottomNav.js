@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { FooterTab, Button, Icon, Text, Badge, Footer } from "native-base";
 import { withNavigation } from "react-navigation";
-import { styles } from "../styles/components/TabBar";
+import { styles as styleSheet } from "../styles/components/TabBar";
 import { DrawerActions } from "react-navigation-drawer";
+import Constants from "../constants";
 
-export class TabBar extends Component {
+export class SellerBottomNav extends Component {
   state = {
-    currentRouteName: "WishList"
+    currentRouteName: "Inventory"
   };
   navigateToTabComponent = routeName => {
     this.props.navigation.navigate(routeName);
@@ -23,15 +24,17 @@ export class TabBar extends Component {
   };
 
   render() {
+    const styles = styleSheet({ mode: Constants.SELLER });
+
     return (
       <Footer style={styles.footer} elevation={10}>
         <FooterTab style={styles.footerTab}>
           <Button
             badge
-            active={this.isRouteActive("WishList")}
+            active={this.isRouteActive("Inventory")}
             vertical
             onPress={() => {
-              this.navigateToTabComponent("WishList");
+              this.navigateToTabComponent("Inventory");
             }}
             style={styles.button}
           >
@@ -42,10 +45,10 @@ export class TabBar extends Component {
           </Button>
           <Button
             style={styles.button}
-            active={this.isRouteActive("MatchesPage")}
+            active={this.isRouteActive("Research")}
             vertical
             onPress={() => {
-              this.navigateToTabComponent("MatchesPage");
+              this.navigateToTabComponent("Research");
             }}
           >
             <Icon name="camera" />
@@ -80,4 +83,4 @@ export class TabBar extends Component {
   }
 }
 
-export default withNavigation(TabBar);
+export default withNavigation(SellerBottomNav);

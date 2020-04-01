@@ -12,12 +12,31 @@ import {
 import { View } from "react-native";
 import Constants from "../constants";
 import { Colors } from "../styles/Colors";
+import ToggleModal from "./ToggleModal";
 
 import { styles as Stylesheet } from "../styles/components/Header";
 
 export class Header extends Component {
+  state = {
+    showModal: false,
+    selectedMode: ""
+  };
+
+  onToggleSelected = () => {
+    const { mode } = this.props;
+
+    const switchedMode =
+      mode === Constants.BUYER ? Constants.SELLER : Constants.BUYER;
+    this.setState({ selectedMode: switchedMode, showModal: true });
+  };
+
+  onClose = () => {
+    this.setState({ showModal: false });
+  };
+
   render() {
     const { mode, title, isSearchDisabled } = this.props;
+    const { selectedMode, showModal } = this.state;
 
     const styles = Stylesheet(this.props);
     const isEnabled = mode === Constants.SELLER;
@@ -41,9 +60,16 @@ export class Header extends Component {
               trackColor={{ false: Colors.white, true: Colors.white }}
               thumbColor={isEnabled ? Colors.brightRed : Colors.brightBlue}
               ios_backgroundColor={Colors.white}
+              onValueChange={this.onToggleSelected}
             />
           </View>
         </Right>
+
+        <ToggleModal
+          showModal={showModal}
+          mode={selectedMode}
+          onClose={this.onClose}
+        />
       </HeaderNativeBase>
     );
   }

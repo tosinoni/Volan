@@ -1,22 +1,22 @@
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import WishList from "../screens/buyer/WishList";
-import Matches from "../screens/buyer/Matches";
-import Connections from "../screens/buyer/Connections";
-import BuyerBottomNav from "../components/BuyerBottomNav";
+import Inventory from "../screens/seller/Inventory";
+import Research from "../screens/seller/Research";
+import Connections from "../screens/seller/Connections";
+import SellerBottomNav from "../components/SellerBottomNav";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import Subscription from "../screens/Subscription";
 import { createStackNavigator } from "react-navigation-stack";
 import Sidebar from "../components/Sidebar";
 
-const WishListNavigatorStack = createStackNavigator({
-  WishList: {
-    screen: WishList
+const InventoryNavigatorStack = createStackNavigator({
+  Inventory: {
+    screen: Inventory
   }
 });
 
-const MatchesNavigatorStack = createStackNavigator({
-  Matches: {
-    screen: Matches
+const ResearchNavigatorStack = createStackNavigator({
+  Research: {
+    screen: Research
   }
 });
 
@@ -26,21 +26,21 @@ const ConnectionsNavigatorStack = createStackNavigator({
   }
 });
 
-const BuyerBottomNavigation = createBottomTabNavigator(
+const SellerBottomNavigation = createBottomTabNavigator(
   {
-    WishListPage: WishListNavigatorStack,
-    MatchesPage: MatchesNavigatorStack,
+    InventoryPage: InventoryNavigatorStack,
+    ResearchPage: ResearchNavigatorStack,
     ConnectionsPage: ConnectionsNavigatorStack
   },
   {
-    initialRouteName: "WishListPage",
-    tabBarComponent: BuyerBottomNav
+    initialRouteName: "InventoryPage",
+    tabBarComponent: SellerBottomNav
   }
 );
 
 const DrawerNavigation = createDrawerNavigator(
   {
-    Tabs: BuyerBottomNavigation
+    Tabs: SellerBottomNavigation
   },
   {
     contentComponent: Sidebar,
@@ -48,7 +48,7 @@ const DrawerNavigation = createDrawerNavigator(
   }
 );
 
-const BuyerNavigation = createStackNavigator({
+const SellerNavigation = createStackNavigator({
   Drawer: {
     screen: DrawerNavigation,
     navigationOptions: {
@@ -58,4 +58,4 @@ const BuyerNavigation = createStackNavigator({
   Subscription: { screen: Subscription }
 });
 
-export default BuyerNavigation;
+export default SellerNavigation;
