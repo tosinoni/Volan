@@ -27,7 +27,7 @@ class Initial extends Component {
               isExistingUser: true
             });
           } else {
-            this.props.navigation.navigate("App");
+            this.props.navigation.navigate("Decision");
           }
         } else {
           // if the user has previously signed out from the app
