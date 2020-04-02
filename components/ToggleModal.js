@@ -5,11 +5,17 @@ import Modal from "react-native-modal";
 import Constants from "../constants";
 import { styles } from "../styles/components/ToggleModal";
 import { withNavigation } from "react-navigation";
+import { withFirebaseHOC } from "../config/Firebase";
 
 export class ToggleModal extends Component {
-  goToSelectedScreen = () => {
+  goToSelectedScreen = async () => {
     const { mode } = this.props;
     const screen = mode === Constants.BUYER ? "Buyer" : "Seller";
+
+    const currentUser = this.props.firebase.getCurrentUser();
+    await this.props.firebase.updateUser(currentUser.uid, {
+      identity: mode
+    });
 
     this.props.navigation.navigate(screen);
   };
@@ -70,4 +76,4 @@ export class ToggleModal extends Component {
   }
 }
 
-export default withNavigation(ToggleModal);
+export default withFirebaseHOC(withNavigation(ToggleModal));
