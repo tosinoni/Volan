@@ -38,10 +38,10 @@ export class BuyerBottomNav extends Component {
             }}
             style={styles.button}
           >
-            <Badge>
+            <Badge style={styles.badge}>
               <Text>2</Text>
             </Badge>
-            <Icon name="apps" />
+            <Icon name="home" type="MaterialIcons" />
           </Button>
           <Button
             style={styles.button}
@@ -51,7 +51,7 @@ export class BuyerBottomNav extends Component {
               this.navigateToTabComponent("MatchesPage");
             }}
           >
-            <Icon name="camera" />
+            <Icon name="arrow-decision-outline" type="MaterialCommunityIcons" />
           </Button>
           <Button
             style={styles.button}
@@ -69,10 +69,10 @@ export class BuyerBottomNav extends Component {
               this.navigateToTabComponent("Connections");
             }}
           >
-            <Badge>
+            <Badge style={styles.badge}>
               <Text>51</Text>
             </Badge>
-            <Icon active name="navigate" />
+            <Icon name="connectdevelop" type="FontAwesome" />
           </Button>
           <Button style={styles.button} vertical onPress={this.openDrawer}>
             <Icon name="menu" />

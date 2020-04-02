@@ -38,5 +38,9 @@ export const styles = props =>
     },
     createIcon: {
       color: Colors.white
+    },
+    badge: {
+      backgroundColor:
+        props.mode === Constants.BUYER ? Colors.orange : Colors.orange
     }
   });

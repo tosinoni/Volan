@@ -38,10 +38,10 @@ export class SellerBottomNav extends Component {
             }}
             style={styles.button}
           >
-            <Badge>
+            <Badge style={styles.badge}>
               <Text>2</Text>
             </Badge>
-            <Icon name="apps" />
+            <Icon name="store" type="MaterialIcons" />
           </Button>
           <Button
             style={styles.button}
@@ -51,7 +51,7 @@ export class SellerBottomNav extends Component {
               this.navigateToTabComponent("Research");
             }}
           >
-            <Icon name="camera" />
+            <Icon name="finance" type="MaterialCommunityIcons" />
           </Button>
           <Button
             style={styles.button}
@@ -69,10 +69,10 @@ export class SellerBottomNav extends Component {
               this.navigateToTabComponent("Connections");
             }}
           >
-            <Badge>
-              <Text>51</Text>
+            <Badge style={styles.badge}>
+              <Text>2</Text>
             </Badge>
-            <Icon active name="navigate" />
+            <Icon active name="hands-helping" type="FontAwesome5" />
           </Button>
           <Button style={styles.button} vertical onPress={this.openDrawer}>
             <Icon name="menu" />
