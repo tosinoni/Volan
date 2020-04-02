@@ -6,6 +6,26 @@ import firebaseConfig from "./firebaseConfig";
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+const getCurrentUser = () => {
+  return firebase.auth().currentUser;
+};
+
+const getUser = id => {
+  return firebase
+    .firestore()
+    .collection("users")
+    .doc(`${id}`)
+    .get()
+    .then(function(doc) {
+      if (doc.exists) {
+        return doc.data();
+      }
+    })
+    .catch(function(error) {
+      console.log("Error getting document:", error);
+    });
+};
+
 const Firebase = {
   // auth
   loginWithEmail: (email, password) => {
@@ -26,8 +46,10 @@ const Firebase = {
   signOut: () => {
     return firebase.auth().signOut();
   },
-  getCurrentUser: () => {
-    return firebase.auth().currentUser;
+  getCurrentUser,
+  getLoggedInUserObj: async () => {
+    const currentUser = await getCurrentUser();
+    return getUser(currentUser.uid);
   },
   checkUserAuth: user => {
     return firebase.auth().onAuthStateChanged(user);
@@ -52,21 +74,7 @@ const Firebase = {
       .set(userData, { merge: true });
   },
 
-  getUser(id) {
-    return firebase
-      .firestore()
-      .collection("users")
-      .doc(`${id}`)
-      .get()
-      .then(function(doc) {
-        if (doc.exists) {
-          return doc.data();
-        }
-      })
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-  }
+  getUser
 };
 
 export default Firebase;

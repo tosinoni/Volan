@@ -16,7 +16,7 @@ export class IntroScreen extends Component {
   };
 
   handleGetStarted = () => {
-    this.props.navigation.navigate("Home");
+    this.props.navigation.navigate("Decision");
   };
 
   handleCircleClick = index => {
@@ -25,7 +25,7 @@ export class IntroScreen extends Component {
   };
 
   handleSkip = () => {
-    this.props.navigation.navigate("Home");
+    this.props.navigation.navigate("Decision");
   };
 
   onIndexChanged = index => {

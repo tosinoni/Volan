@@ -12,7 +12,7 @@ export class ToggleModal extends Component {
     const { mode } = this.props;
     const screen = mode === Constants.BUYER ? "Buyer" : "Seller";
 
-    const currentUser = this.props.firebase.getCurrentUser();
+    const currentUser = await this.props.firebase.getCurrentUser();
     await this.props.firebase.updateUser(currentUser.uid, {
       identity: mode
     });
