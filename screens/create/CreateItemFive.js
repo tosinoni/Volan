@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
 
-export class CreateItemOne extends Component {
+export class CreateItemFive extends Component {
   render() {
     return (
       <View>
-        <Text>Item 1</Text>
+        <Text>Item 5</Text>
       </View>
     );
   }
 }
 
-export default CreateItemOne;
+export default CreateItemFive;

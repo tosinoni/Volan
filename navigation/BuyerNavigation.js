@@ -7,7 +7,7 @@ import { createDrawerNavigator } from "react-navigation-drawer";
 import Subscription from "../screens/Subscription";
 import { createStackNavigator } from "react-navigation-stack";
 import Sidebar from "../components/Sidebar";
-import CreateItem from "../screens/create/CreateItemOne";
+import CreateItem from "../screens/create";
 
 const WishListNavigatorStack = createStackNavigator({
   WishList: {
