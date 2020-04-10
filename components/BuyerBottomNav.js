@@ -9,8 +9,8 @@ export class BuyerBottomNav extends Component {
   state = {
     currentRouteName: "WishList"
   };
-  navigateToTabComponent = routeName => {
-    this.props.navigation.navigate(routeName);
+  navigateToTabComponent = (routeName, options = {}) => {
+    this.props.navigation.navigate(routeName, options);
     this.setState({ currentRouteName: routeName });
   };
 
@@ -56,6 +56,9 @@ export class BuyerBottomNav extends Component {
           <Button
             style={styles.button}
             onPress={this._onHomePress}
+            onPress={() => {
+              this.navigateToTabComponent("Create", { mode: Constants.BUYER });
+            }}
             style={styles.createButton}
           >
             <Icon name="add" style={styles.createIcon} />

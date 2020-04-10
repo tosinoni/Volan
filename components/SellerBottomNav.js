@@ -9,8 +9,8 @@ export class SellerBottomNav extends Component {
   state = {
     currentRouteName: "Inventory"
   };
-  navigateToTabComponent = routeName => {
-    this.props.navigation.navigate(routeName);
+  navigateToTabComponent = (routeName, options = {}) => {
+    this.props.navigation.navigate(routeName, options);
     this.setState({ currentRouteName: routeName });
   };
 
@@ -57,6 +57,9 @@ export class SellerBottomNav extends Component {
             style={styles.button}
             onPress={this._onHomePress}
             style={styles.createButton}
+            onPress={() => {
+              this.navigateToTabComponent("Create", { mode: Constants.SELLER });
+            }}
           >
             <Icon name="add" style={styles.createIcon} />
           </Button>
