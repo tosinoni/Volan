@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
+import LocationInput from "../../components/LocationInput";
 
 export class CreateItemTwo extends Component {
   render() {
     return (
-      <View>
-        <Text>Item 2</Text>
+      <View style={{ flex: 1 }}>
+        <LocationInput />
       </View>
     );
   }

@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import { Form, Item, Label, Input } from "native-base";
 import { styles } from "../../styles/screens/create/CreateItemOne";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import LocationInput from "../../components/LocationInput";
 
 export class CreateItemOne extends Component {
   render() {
@@ -14,7 +15,7 @@ export class CreateItemOne extends Component {
             <View style={styles.formSection}>
               <Item stackedLabel style={styles.formItem}>
                 <Label style={styles.inputLabel}>Current Location</Label>
-                <Input style={styles.input} />
+                <LocationInput style={styles.input} />
               </Item>
             </View>
           </View>
