@@ -59,7 +59,7 @@ export class CreateItem extends Component {
     const styles = stylesheet({ mode });
 
     return (
-      <View style={styles.safeView}>
+      <View style={styles.content}>
         <Swiper
           showsPagination={false}
           loop={false}
