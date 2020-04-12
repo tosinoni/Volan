@@ -3,9 +3,31 @@ import { View, Text } from "react-native";
 import { Form, Item, Label, Input, Button } from "native-base";
 import { styles } from "../../styles/screens/create/CreateItemTwo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import CircularButtonList from "../../components/CircularButtonList";
 
 const km = "km";
 const mi = "mi";
+
+const bodyTypes = [
+  { text: "Convertible" },
+  { text: "Coupe" },
+  { text: "Hatchback" },
+  { text: "Sedan" },
+  { text: "SUV" }
+];
+
+const colors = [
+  { text: "Black", color: "black" },
+  { text: "Blue", color: "blue" },
+  { text: "Brown", color: "brown" },
+  { text: "Gray", color: "grey" },
+  { text: "Gold", color: "gold" },
+  { text: "Red", color: "red" },
+  { text: "White", color: "white" },
+  { text: "Pink", color: "pink" },
+  { text: "Green", color: "green" },
+  { text: "Beige", color: "beige" }
+];
 
 export class CreateItemTwo extends Component {
   state = {
@@ -55,6 +77,27 @@ export class CreateItemTwo extends Component {
                   </Button>
                 </View>
               </Item>
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionText}>BODY TYPE</Text>
+            <View style={styles.circularFormSection}>
+              <CircularButtonList list={bodyTypes} />
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionText}>EXTERIOR COLOR</Text>
+            <View style={styles.circularFormSection}>
+              <CircularButtonList list={colors} />
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionText}>INTERIOR COLOR</Text>
+            <View style={styles.circularFormSection}>
+              <CircularButtonList list={colors} />
             </View>
           </View>
         </Form>

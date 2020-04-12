@@ -12,6 +12,10 @@ export const genericCreateItemStyles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15
   },
+  circularFormSection: {
+    backgroundColor: Colors.white
+  },
+
   sectionText: {
     fontWeight: "bold",
     color: Colors.darkGrey,
