@@ -66,7 +66,7 @@ export class CreateItem extends Component {
           onIndexChanged={this.onIndexChanged}
           ref={"swiper"}
         >
-          <CreateItemOne />
+          <CreateItemOne mode={mode} />
           <CreateItemTwo />
           <CreateItemThree />
           <CreateItemFour />
