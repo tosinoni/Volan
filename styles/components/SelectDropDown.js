@@ -10,7 +10,7 @@ export const styles = props =>
       borderWidth: 1,
       borderColor: "#e6e6e6",
       borderColor: "#e6e6e6",
-      borderRadius: 10,
+      borderRadius: 5,
       height: 40
     },
     picker: {

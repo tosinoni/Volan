@@ -28,7 +28,7 @@ export const genericCreateItemStyles = StyleSheet.create({
     height: 30,
     borderWidth: 1,
     borderColor: "#e6e6e6",
-    borderRadius: 10,
+    borderRadius: 5,
     color: "#87868a",
     paddingLeft: 10
   },
