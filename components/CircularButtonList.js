@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { Button, Icon, Badge } from "native-base";
 import { styles } from "../styles/components/CircularButtonList";
 import { ScrollView } from "react-native-gesture-handler";
@@ -18,11 +18,10 @@ export class CircularButtonList extends Component {
     return (
       <ScrollView horizontal contentContainerStyle={styles.buttonList}>
         {list.map((item, index) => {
-          const isItemSelected = item.text === selectedItem;
+          const { icon, text, color } = item;
+          const isItemSelected = text === selectedItem;
           const backgroundColor =
-            isItemSelected && isButtonSelection
-              ? Colors.brightBlue
-              : item.color;
+            isItemSelected && isButtonSelection ? Colors.brightBlue : color;
 
           return (
             <View style={styles.buttonView} key={index}>
@@ -34,6 +33,11 @@ export class CircularButtonList extends Component {
                   onItemSelected(item);
                 }}
               >
+                {icon && (
+                  <View style={styles.iconView}>
+                    <Image source={icon} style={styles.icon} />
+                  </View>
+                )}
                 {isItemSelected && isBadgeSelection && (
                   <Badge primary style={styles.badge}>
                     <Icon
@@ -44,7 +48,7 @@ export class CircularButtonList extends Component {
                   </Badge>
                 )}
               </Button>
-              <Text>{item.text}</Text>
+              <Text>{text}</Text>
             </View>
           );
         })}

@@ -67,7 +67,7 @@ export class CreateItem extends Component {
           ref={"swiper"}
         >
           <CreateItemOne mode={mode} />
-          <CreateItemTwo />
+          <CreateItemTwo mode={mode} />
           <CreateItemThree />
           <CreateItemFour />
           <CreateItemFive />

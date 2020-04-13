@@ -5,6 +5,7 @@ import { styles } from "../../styles/screens/create/CreateItemOne";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import LocationInput from "../../components/LocationInput";
 import SelectDropDown from "../../components/SelectDropDown";
+import CircularButtonList from "../../components/CircularButtonList";
 
 const years = [
   { label: "2019", value: "2019" },
@@ -26,13 +27,41 @@ const makes = [
   { label: "Lexus", value: "Lexus" }
 ];
 
+const vehicleTypes = [
+  { text: "Car", icon: require("../../assets/images/vehicles/car.png") },
+  {
+    text: "Bicycle",
+    icon: require("../../assets/images/vehicles/bicycle.png")
+  },
+  {
+    text: "Motorcycle",
+    icon: require("../../assets/images/vehicles/motorcycle.png")
+  },
+  { text: "Truck", icon: require("../../assets/images/vehicles/truck.png") },
+  {
+    text: "Trailer",
+    icon: require("../../assets/images/vehicles/trailer.png")
+  },
+  { text: "Bus", icon: require("../../assets/images/vehicles/bus.png") },
+  { text: "Boat", icon: require("../../assets/images/vehicles/boat.png") },
+  {
+    text: "Aircraft",
+    icon: require("../../assets/images/vehicles/aircraft.png")
+  }
+];
+
 export class CreateItemOne extends Component {
   state = {
     selectedYear: "",
     selectedMake: "",
     selectedModel: "",
     selectedSubModel: "",
-    selectedTrim: ""
+    selectedTrim: "",
+    selectedVehicleType: "Car"
+  };
+
+  onVehicleTypeSelected = item => {
+    this.setState({ selectedVehicleType: item.text });
   };
 
   onYearSelected = selectedYear => {
@@ -61,7 +90,8 @@ export class CreateItemOne extends Component {
       selectedMake,
       selectedModel,
       selectedSubModel,
-      selectedTrim
+      selectedTrim,
+      selectedVehicleType
     } = this.state;
     const { mode } = this.props;
 
@@ -85,6 +115,18 @@ export class CreateItemOne extends Component {
                 <Label style={styles.inputLabel}>VIN</Label>
                 <Input style={styles.input} />
               </Item>
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionText}>VEHICLE TYPE</Text>
+            <View style={styles.circularFormSection}>
+              <CircularButtonList
+                list={vehicleTypes}
+                isButtonSelection
+                selectedItem={selectedVehicleType}
+                onItemSelected={this.onVehicleTypeSelected}
+              />
             </View>
           </View>
 

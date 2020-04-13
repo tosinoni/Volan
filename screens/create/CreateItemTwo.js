@@ -4,16 +4,17 @@ import { Form, Item, Label, Input, Button } from "native-base";
 import { styles } from "../../styles/screens/create/CreateItemTwo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import CircularButtonList from "../../components/CircularButtonList";
+import SelectDropDown from "../../components/SelectDropDown";
 
 const km = "km";
 const mi = "mi";
 
 const bodyTypes = [
-  { text: "Convertible" },
-  { text: "Coupe" },
-  { text: "Hatchback" },
-  { text: "Sedan" },
-  { text: "SUV" }
+  { label: "Convertible", value: "Convertible" },
+  { label: "Coupe", value: "Coupe" },
+  { label: "Hatchback", value: "Hatchback" },
+  { label: "Sedan", value: "Sedan" },
+  { label: "SUV", value: "SUV" }
 ];
 
 const colors = [
@@ -41,9 +42,10 @@ export class CreateItemTwo extends Component {
     this.setState({ selectedMileageType });
   };
 
-  onBodyTypeSelected = item => {
-    this.setState({ selectedBodyType: item.text });
+  onBodyTypeSelected = selectedBodyType => {
+    this.setState({ selectedBodyType });
   };
+
   onExteriorColorSelected = item => {
     this.setState({ selectedExteriorColor: item.text });
   };
@@ -58,6 +60,8 @@ export class CreateItemTwo extends Component {
       selectedExteriorColor,
       selectedInteriorColor
     } = this.state;
+    const { mode } = this.props;
+
     const isKmSelected = selectedMileageType === km;
     const isMiSelected = selectedMileageType === mi;
 
@@ -101,13 +105,17 @@ export class CreateItemTwo extends Component {
 
           <View style={styles.section}>
             <Text style={styles.sectionText}>BODY TYPE</Text>
-            <View style={styles.circularFormSection}>
-              <CircularButtonList
-                list={bodyTypes}
-                isButtonSelection
-                selectedItem={selectedBodyType}
-                onItemSelected={this.onBodyTypeSelected}
-              />
+            <View style={styles.formSection}>
+              <Item stackedLabel style={styles.formItem}>
+                <Label style={styles.inputLabel}>Body Type</Label>
+                <SelectDropDown
+                  headerTitle="Select Body Type"
+                  selectedValue={selectedBodyType}
+                  items={bodyTypes}
+                  onValueChange={this.onBodyTypeSelected}
+                  mode={mode}
+                />
+              </Item>
             </View>
           </View>
 

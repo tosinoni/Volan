@@ -42,5 +42,15 @@ export const styles = StyleSheet.create({
   badgeIcon: {
     color: Colors.white,
     fontSize: 15
+  },
+  iconView: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%"
+  },
+  icon: {
+    width: 35,
+    height: 35,
+    tintColor: "white"
   }
 });
