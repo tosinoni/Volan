@@ -31,14 +31,33 @@ const colors = [
 
 export class CreateItemTwo extends Component {
   state = {
-    selectedMileageType: km
+    selectedMileageType: km,
+    selectedBodyType: "",
+    selectedExteriorColor: "",
+    selectedInteriorColor: ""
   };
 
   onMileageTypeSelected = selectedMileageType => {
     this.setState({ selectedMileageType });
   };
+
+  onBodyTypeSelected = item => {
+    this.setState({ selectedBodyType: item.text });
+  };
+  onExteriorColorSelected = item => {
+    this.setState({ selectedExteriorColor: item.text });
+  };
+  onInteriorColorSelected = item => {
+    this.setState({ selectedInteriorColor: item.text });
+  };
+
   render() {
-    const { selectedMileageType } = this.state;
+    const {
+      selectedMileageType,
+      selectedBodyType,
+      selectedExteriorColor,
+      selectedInteriorColor
+    } = this.state;
     const isKmSelected = selectedMileageType === km;
     const isMiSelected = selectedMileageType === mi;
 
@@ -83,21 +102,36 @@ export class CreateItemTwo extends Component {
           <View style={styles.section}>
             <Text style={styles.sectionText}>BODY TYPE</Text>
             <View style={styles.circularFormSection}>
-              <CircularButtonList list={bodyTypes} />
+              <CircularButtonList
+                list={bodyTypes}
+                isButtonSelection
+                selectedItem={selectedBodyType}
+                onItemSelected={this.onBodyTypeSelected}
+              />
             </View>
           </View>
 
           <View style={styles.section}>
             <Text style={styles.sectionText}>EXTERIOR COLOR</Text>
             <View style={styles.circularFormSection}>
-              <CircularButtonList list={colors} />
+              <CircularButtonList
+                list={colors}
+                isBadgeSelection
+                selectedItem={selectedExteriorColor}
+                onItemSelected={this.onExteriorColorSelected}
+              />
             </View>
           </View>
 
           <View style={styles.section}>
             <Text style={styles.sectionText}>INTERIOR COLOR</Text>
             <View style={styles.circularFormSection}>
-              <CircularButtonList list={colors} />
+              <CircularButtonList
+                list={colors}
+                isBadgeSelection
+                selectedItem={selectedInteriorColor}
+                onItemSelected={this.onInteriorColorSelected}
+              />
             </View>
           </View>
         </Form>
