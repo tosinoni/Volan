@@ -5,6 +5,7 @@ import { styles } from "../../styles/screens/create/CreateItemTwo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import CircularButtonList from "../../components/CircularButtonList";
 import SelectDropDown from "../../components/SelectDropDown";
+import CountInput from "../../components/CountInput";
 
 const km = "km";
 const mi = "mi";
@@ -30,20 +31,33 @@ const colors = [
   { text: "Beige", color: "beige" }
 ];
 
+const transmissions = [
+  { label: "Automatic", value: "Automatic" },
+  { label: "Manual", value: "Manual" }
+];
+
+const fuelTypes = [
+  { label: "Gasoline", value: "gasoline" },
+  { label: "Diesel", value: "diesel" }
+];
+
 export class CreateItemTwo extends Component {
   state = {
-    selectedMileageType: km,
-    selectedBodyType: "",
+    mileageType: km,
+    bodyType: "",
     selectedExteriorColor: "",
-    selectedInteriorColor: ""
+    selectedInteriorColor: "",
+    numberOfDoors: "",
+    numberOfPassengers: "",
+    transmission: "",
+    drivetrain: "",
+    displacement: "",
+    numberOfCylinders: "",
+    fueltype: ""
   };
 
-  onMileageTypeSelected = selectedMileageType => {
-    this.setState({ selectedMileageType });
-  };
-
-  onBodyTypeSelected = selectedBodyType => {
-    this.setState({ selectedBodyType });
+  onInputChange = (key, value) => {
+    this.setState({ [key]: value });
   };
 
   onExteriorColorSelected = item => {
@@ -55,15 +69,22 @@ export class CreateItemTwo extends Component {
 
   render() {
     const {
-      selectedMileageType,
-      selectedBodyType,
+      numberOfCylinders,
+      displacement,
+      mileageType,
+      bodyType,
       selectedExteriorColor,
-      selectedInteriorColor
+      selectedInteriorColor,
+      numberOfDoors,
+      numberOfPassengers,
+      transmission,
+      drivetrain,
+      fueltype
     } = this.state;
     const { mode } = this.props;
 
-    const isKmSelected = selectedMileageType === km;
-    const isMiSelected = selectedMileageType === mi;
+    const isKmSelected = mileageType === km;
+    const isMiSelected = mileageType === mi;
 
     return (
       <KeyboardAwareScrollView viewIsInsideTabBar>
@@ -82,7 +103,7 @@ export class CreateItemTwo extends Component {
                         ? styles.selectedMileageButton
                         : styles.unSelectedMileageButton
                     }
-                    onPress={() => this.onMileageTypeSelected(km)}
+                    onPress={() => this.onInputChange("mileageType", km)}
                   >
                     <Text style={styles.text}>km</Text>
                   </Button>
@@ -94,7 +115,7 @@ export class CreateItemTwo extends Component {
                         ? styles.selectedMileageButton
                         : styles.unSelectedMileageButton
                     }
-                    onPress={() => this.onMileageTypeSelected(mi)}
+                    onPress={() => this.onInputChange("mileageType", mi)}
                   >
                     <Text style={styles.text}>mi</Text>
                   </Button>
@@ -110,9 +131,10 @@ export class CreateItemTwo extends Component {
                 <Label style={styles.inputLabel}>Body Type</Label>
                 <SelectDropDown
                   headerTitle="Select Body Type"
-                  selectedValue={selectedBodyType}
+                  selectedValue={bodyType}
                   items={bodyTypes}
-                  onValueChange={this.onBodyTypeSelected}
+                  itemKey="bodyType"
+                  onValueChange={this.onInputChange}
                   mode={mode}
                 />
               </Item>
@@ -140,6 +162,85 @@ export class CreateItemTwo extends Component {
                 selectedItem={selectedInteriorColor}
                 onItemSelected={this.onInteriorColorSelected}
               />
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionText}>OTHER</Text>
+            <View style={styles.formSection}>
+              <View style={styles.formItemsRow}>
+                <Item stackedLabel style={styles.formItemLeft}>
+                  <Label style={styles.inputLabel}>Number of Doors</Label>
+                  <CountInput
+                    itemKey="numberOfDoors"
+                    value={numberOfDoors}
+                    onValueChange={this.onInputChange}
+                  />
+                </Item>
+                <Item stackedLabel style={styles.formItemRight}>
+                  <Label style={styles.inputLabel}>Number of Passengers</Label>
+                  <CountInput
+                    itemKey="numberOfPassengers"
+                    value={numberOfPassengers}
+                    onValueChange={this.onInputChange}
+                  />
+                </Item>
+              </View>
+              <View style={styles.formItemsRow}>
+                <Item stackedLabel style={styles.formItemLeft}>
+                  <Label style={styles.inputLabel}>Transmission</Label>
+                  <SelectDropDown
+                    headerTitle="Select Transmission"
+                    selectedValue={transmission}
+                    items={transmissions}
+                    itemKey="transmission"
+                    onValueChange={this.onInputChange}
+                    mode={mode}
+                  />
+                </Item>
+
+                <Item stackedLabel style={styles.formItemRight}>
+                  <Label style={styles.inputLabel}>Drivetrain</Label>
+                  <SelectDropDown
+                    headerTitle="Select Drivetrain"
+                    itemKey="drivetrain"
+                    selectedValue={drivetrain}
+                    onValueChange={this.onInputChange}
+                    mode={mode}
+                  />
+                </Item>
+              </View>
+              <View style={styles.formItemsRow}>
+                <Item stackedLabel style={styles.formItemLeft}>
+                  <Label style={styles.inputLabel}>Displacement</Label>
+                  <CountInput
+                    itemKey="displacement"
+                    value={displacement}
+                    onValueChange={this.onInputChange}
+                  />
+                </Item>
+                <Item stackedLabel style={styles.formItemRight}>
+                  <Label style={styles.inputLabel}>Number of Cylinders</Label>
+                  <CountInput
+                    itemKey="numberOfCylinders"
+                    value={numberOfCylinders}
+                    onValueChange={this.onInputChange}
+                  />
+                </Item>
+              </View>
+              <View style={styles.formItemsRow}>
+                <Item stackedLabel style={styles.formItem}>
+                  <Label style={styles.inputLabel}>Fuel Type</Label>
+                  <SelectDropDown
+                    headerTitle="Select Fuel Type"
+                    itemKey="fueltype"
+                    items={fuelTypes}
+                    selectedValue={fueltype}
+                    onValueChange={this.onInputChange}
+                    mode={mode}
+                  />
+                </Item>
+              </View>
             </View>
           </View>
         </Form>

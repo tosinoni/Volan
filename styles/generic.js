@@ -10,5 +10,11 @@ export const genericStyles = StyleSheet.create({
   },
   text: {
     color: Colors.white
+  },
+  flexRow: {
+    flexDirection: "row"
+  },
+  flexColumn: {
+    flexDirection: "column"
   }
 });

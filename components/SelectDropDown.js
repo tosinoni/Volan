@@ -15,6 +15,7 @@ import { styles as stylesheet } from "../styles/components/SelectDropDown";
 export class SelectDropDown extends Component {
   render() {
     const {
+      itemKey,
       headerTitle,
       mode,
       selectedValue,
@@ -43,7 +44,9 @@ export class SelectDropDown extends Component {
           style={styles.picker}
           iosIcon={<Icon name="arrow-down" style={styles.pickerIconStyle} />}
           selectedValue={selectedValue}
-          onValueChange={onValueChange}
+          onValueChange={value => {
+            onValueChange(itemKey, value);
+          }}
         >
           {items.map((item, index) => {
             return (

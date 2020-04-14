@@ -6,7 +6,7 @@ import { genericStyles } from "../generic";
 export const styles = props =>
   StyleSheet.create({
     pickerContainer: {
-      width: "100%",
+      alignSelf: "stretch",
       borderWidth: 1,
       borderColor: "#e6e6e6",
       borderColor: "#e6e6e6",

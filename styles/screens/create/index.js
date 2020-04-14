@@ -3,6 +3,12 @@ import { StyleSheet } from "react-native";
 import { genericStyles } from "../../generic";
 import Constants from "../../../constants";
 
+const formItem = {
+  flex: 1,
+  borderBottomWidth: 0,
+  marginLeft: 0,
+  marginTop: 10
+};
 export const genericCreateItemStyles = StyleSheet.create({
   section: {
     marginTop: 10
@@ -22,11 +28,19 @@ export const genericCreateItemStyles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 15
   },
-
-  formItem: {
-    borderBottomWidth: 0,
-    marginLeft: 0,
-    marginTop: 10
+  formItemsRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignSelf: "stretch"
+  },
+  formItem,
+  formItemRight: {
+    ...formItem,
+    marginLeft: 5
+  },
+  formItemLeft: {
+    ...formItem,
+    marginRight: 5
   },
   input: {
     height: 30,

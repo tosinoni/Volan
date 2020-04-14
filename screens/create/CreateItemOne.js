@@ -52,45 +52,29 @@ const vehicleTypes = [
 
 export class CreateItemOne extends Component {
   state = {
-    selectedYear: "",
-    selectedMake: "",
-    selectedModel: "",
-    selectedSubModel: "",
-    selectedTrim: "",
+    year: "",
+    make: "",
+    model: "",
+    submodel: "",
+    trim: "",
     selectedVehicleType: "Car"
+  };
+
+  onInputChange = (key, value) => {
+    this.setState({ [key]: value });
   };
 
   onVehicleTypeSelected = item => {
     this.setState({ selectedVehicleType: item.text });
   };
 
-  onYearSelected = selectedYear => {
-    this.setState({ selectedYear });
-  };
-
-  onMakeSelected = selectedMake => {
-    this.setState({ selectedMake });
-  };
-
-  onModelSelected = selectedModel => {
-    this.setState({ selectedModel });
-  };
-
-  onSubModelSelected = selectedSubModel => {
-    this.setState({ selectedSubModel });
-  };
-
-  onTrimSelected = selectedTrim => {
-    this.setState({ selectedTrim });
-  };
-
   render() {
     const {
-      selectedYear,
-      selectedMake,
-      selectedModel,
-      selectedSubModel,
-      selectedTrim,
+      year,
+      make,
+      model,
+      submodel,
+      trim,
       selectedVehicleType
     } = this.state;
     const { mode } = this.props;
@@ -136,10 +120,11 @@ export class CreateItemOne extends Component {
               <Item stackedLabel style={styles.formItem}>
                 <Label style={styles.inputLabel}>Year</Label>
                 <SelectDropDown
+                  itemKey="year"
                   headerTitle="Select Year"
-                  selectedValue={selectedYear}
+                  selectedValue={year}
                   items={years}
-                  onValueChange={this.onYearSelected}
+                  onValueChange={this.onInputChange}
                   mode={mode}
                 />
               </Item>
@@ -148,9 +133,10 @@ export class CreateItemOne extends Component {
                 <Label style={styles.inputLabel}>Make</Label>
                 <SelectDropDown
                   headerTitle="Select Make"
-                  selectedValue={selectedMake}
+                  itemKey="make"
+                  selectedValue={make}
                   items={makes}
-                  onValueChange={this.onMakeSelected}
+                  onValueChange={this.onInputChange}
                   mode={mode}
                 />
               </Item>
@@ -158,9 +144,10 @@ export class CreateItemOne extends Component {
               <Item stackedLabel style={styles.formItem}>
                 <Label style={styles.inputLabel}>Model</Label>
                 <SelectDropDown
+                  itemKey="model"
                   headerTitle="Select Model"
-                  selectedValue={selectedModel}
-                  onValueChange={this.onModelSelected}
+                  selectedValue={model}
+                  onValueChange={this.onInputChange}
                   mode={mode}
                 />
               </Item>
@@ -168,9 +155,10 @@ export class CreateItemOne extends Component {
               <Item stackedLabel style={styles.formItem}>
                 <Label style={styles.inputLabel}>Submodel</Label>
                 <SelectDropDown
+                  itemKey="submodel"
                   headerTitle="Select Submodel"
-                  selectedValue={selectedSubModel}
-                  onValueChange={this.onSubModelSelected}
+                  selectedValue={submodel}
+                  onValueChange={this.onInputChange}
                   mode={mode}
                 />
               </Item>
@@ -179,8 +167,9 @@ export class CreateItemOne extends Component {
                 <Label style={styles.inputLabel}>Trim</Label>
                 <SelectDropDown
                   headerTitle="Select Trim"
-                  selectedValue={selectedTrim}
-                  onValueChange={this.onTrimSelected}
+                  itemKey="trim"
+                  selectedValue={trim}
+                  onValueChange={this.onInputChange}
                   mode={mode}
                 />
               </Item>
