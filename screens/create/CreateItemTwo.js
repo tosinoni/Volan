@@ -37,8 +37,21 @@ const transmissions = [
 ];
 
 const fuelTypes = [
-  { label: "Gasoline", value: "gasoline" },
-  { label: "Diesel", value: "diesel" }
+  { label: "Diesel", value: "Diesel" },
+  { label: "Electric", value: "Electric" },
+  { label: "Electric Hybrid", value: "ElectricHybrid" },
+  { label: "Flex Fuel", value: "FlexFuel" },
+  { label: "Gasoline", value: "Gasoline" },
+  { label: "Hydrogen", value: "hydrogen" },
+  { label: "Natural Gas", value: "NaturalGas" },
+  { label: "Propane", value: "Propane" }
+];
+
+const drivetrains = [
+  { label: "4x4", value: "4x4" },
+  { label: "AWD", value: "AWD" },
+  { label: "FWD", value: "FWD" },
+  { label: "RWD", value: "RWD" }
 ];
 
 export class CreateItemTwo extends Component {
@@ -173,6 +186,8 @@ export class CreateItemTwo extends Component {
                   <Label style={styles.inputLabel}>Number of Doors</Label>
                   <CountInput
                     itemKey="numberOfDoors"
+                    incrementor={1}
+                    decimals={0}
                     value={numberOfDoors}
                     onValueChange={this.onInputChange}
                   />
@@ -181,6 +196,8 @@ export class CreateItemTwo extends Component {
                   <Label style={styles.inputLabel}>Number of Passengers</Label>
                   <CountInput
                     itemKey="numberOfPassengers"
+                    incrementor={1}
+                    decimals={0}
                     value={numberOfPassengers}
                     onValueChange={this.onInputChange}
                   />
@@ -205,6 +222,7 @@ export class CreateItemTwo extends Component {
                     headerTitle="Select Drivetrain"
                     itemKey="drivetrain"
                     selectedValue={drivetrain}
+                    items={drivetrains}
                     onValueChange={this.onInputChange}
                     mode={mode}
                   />
@@ -215,6 +233,8 @@ export class CreateItemTwo extends Component {
                   <Label style={styles.inputLabel}>Displacement</Label>
                   <CountInput
                     itemKey="displacement"
+                    incrementor={0.1}
+                    decimals={1}
                     value={displacement}
                     onValueChange={this.onInputChange}
                   />
@@ -223,6 +243,8 @@ export class CreateItemTwo extends Component {
                   <Label style={styles.inputLabel}>Number of Cylinders</Label>
                   <CountInput
                     itemKey="numberOfCylinders"
+                    incrementor={1}
+                    decimals={0}
                     value={numberOfCylinders}
                     onValueChange={this.onInputChange}
                   />
