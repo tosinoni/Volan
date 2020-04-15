@@ -5,20 +5,20 @@ import { Button, Input, Icon } from "native-base";
 
 export class CountInput extends Component {
   onIncreaseSelected = () => {
-    const { increment = 1, value = 0, onValueChange, itemKey } = this.props;
+    const { increment = this.props.incrementor, value = 0, onValueChange, itemKey } = this.props;
     const newValue = (value || 0) + increment;
     onValueChange(itemKey, newValue);
   };
 
   onDecreaseSelected = () => {
-    const { increment = 1, value = 0, onValueChange, itemKey } = this.props;
+    const { increment = this.props.incrementor, value = 0, onValueChange, itemKey } = this.props;
     const newValue = (value || 0) - increment;
     onValueChange(itemKey, newValue);
   };
 
   render() {
     const { value } = this.props;
-    const displayValue = value > 0 ? value : "";
+    const displayValue = value > 0 ? value.toFixed(this.props.decimals) : "";
 
     return (
       <View style={styles.inputView}>
