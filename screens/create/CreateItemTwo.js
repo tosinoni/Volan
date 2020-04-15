@@ -186,7 +186,6 @@ export class CreateItemTwo extends Component {
                   <Label style={styles.inputLabel}>Number of Doors</Label>
                   <CountInput
                     itemKey="numberOfDoors"
-                    incrementor={1}
                     decimals={0}
                     value={numberOfDoors}
                     onValueChange={this.onInputChange}
@@ -196,7 +195,6 @@ export class CreateItemTwo extends Component {
                   <Label style={styles.inputLabel}>Number of Passengers</Label>
                   <CountInput
                     itemKey="numberOfPassengers"
-                    incrementor={1}
                     decimals={0}
                     value={numberOfPassengers}
                     onValueChange={this.onInputChange}
@@ -233,7 +231,7 @@ export class CreateItemTwo extends Component {
                   <Label style={styles.inputLabel}>Displacement</Label>
                   <CountInput
                     itemKey="displacement"
-                    incrementor={0.1}
+                    increment={0.1}
                     decimals={1}
                     value={displacement}
                     onValueChange={this.onInputChange}
@@ -243,7 +241,6 @@ export class CreateItemTwo extends Component {
                   <Label style={styles.inputLabel}>Number of Cylinders</Label>
                   <CountInput
                     itemKey="numberOfCylinders"
-                    incrementor={1}
                     decimals={0}
                     value={numberOfCylinders}
                     onValueChange={this.onInputChange}

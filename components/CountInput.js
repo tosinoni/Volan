@@ -5,13 +5,13 @@ import { Button, Input, Icon } from "native-base";
 
 export class CountInput extends Component {
   onIncreaseSelected = () => {
-    const { increment = this.props.incrementor, value = 0, onValueChange, itemKey } = this.props;
+    const { increment = 1, value = 0, onValueChange, itemKey } = this.props;
     const newValue = (value || 0) + increment;
     onValueChange(itemKey, newValue);
   };
 
   onDecreaseSelected = () => {
-    const { increment = this.props.incrementor, value = 0, onValueChange, itemKey } = this.props;
+    const { increment = 1, value = 0, onValueChange, itemKey } = this.props;
     const newValue = (value || 0) - increment;
     onValueChange(itemKey, newValue);
   };
