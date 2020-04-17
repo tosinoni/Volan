@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { Button, Icon } from "native-base";
 import { styles } from "../styles/components/ImageTileList";
 
@@ -7,7 +7,7 @@ const createTile = {
   type: "icon",
   iconName: "add-a-photo",
   iconType: "MaterialIcons",
-  isCreateIcon: true
+  isCreate: true
 };
 
 export class ImageTileList extends Component {
@@ -35,7 +35,14 @@ export class ImageTileList extends Component {
     const { tileStyle = {}, onTileSelected } = this.props;
 
     const Tile = ({ item, key }) => {
-      const { type = "text", value, iconName, iconType, isDisabled } = item;
+      const {
+        type = "text",
+        value,
+        iconName,
+        iconType,
+        uri,
+        isDisabled
+      } = item;
 
       const isImage = type === "image";
       const isIcon = type === "icon";
@@ -60,6 +67,7 @@ export class ImageTileList extends Component {
                 type={iconType}
               />
             )}
+            {isImage && <Image source={{ uri }} style={styles.image} />}
           </Button>
         </View>
       );

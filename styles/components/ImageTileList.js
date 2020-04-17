@@ -28,5 +28,9 @@ export const styles = StyleSheet.create({
   },
   text: {
     color: "#575757"
+  },
+  image: {
+    width: 100,
+    height: 100
   }
 });
