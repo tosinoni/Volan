@@ -23,7 +23,9 @@ export const styles = StyleSheet.create({
     color: "#393e47",
     fontSize: 40
   },
-
+  iconDisabled: {
+    opacity: 0.4
+  },
   text: {
     color: "#575757"
   }
