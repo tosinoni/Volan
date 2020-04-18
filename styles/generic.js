@@ -1,5 +1,5 @@
 import { StyleSheet, StatusBar, Platform } from "react-native";
-
+import { Colors } from "./Colors";
 export const genericStyles = StyleSheet.create({
   safeView: {
     flex: 1,
@@ -7,5 +7,14 @@ export const genericStyles = StyleSheet.create({
   },
   bold: {
     fontWeight: "bold"
+  },
+  text: {
+    color: Colors.white
+  },
+  flexRow: {
+    flexDirection: "row"
+  },
+  flexColumn: {
+    flexDirection: "column"
   }
 });

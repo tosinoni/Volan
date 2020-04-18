@@ -83,7 +83,13 @@ export class SignUp extends Component {
       if (response.user) {
         const { uid } = response.user;
         const phoneNumber = phoneFn.getValue();
-        const userData = { email, name, uid, phoneNumber };
+        const userData = {
+          email,
+          name,
+          uid,
+          phoneNumber,
+          photoURL: "http://www.gravatar.com/avatar/?d=identicon"
+        };
         await this.props.firebase.createNewUser(userData);
       }
     } catch (error) {
@@ -368,7 +374,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderColor: "white",
     paddingLeft: 10,
-    width: "100%"
+    width: "100%",
+    color: "white"
   },
 
   phoneInput: {

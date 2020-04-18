@@ -4,7 +4,7 @@ import { Asset } from "expo-asset";
 import * as Font from "expo-font";
 import * as Icon from "@expo/vector-icons";
 import { withFirebaseHOC } from "../config/Firebase";
-import { AsyncStorage } from "react-native";
+import Constants from "../constants";
 
 class Initial extends Component {
   state = {
@@ -27,7 +27,9 @@ class Initial extends Component {
               isExistingUser: true
             });
           } else {
-            this.props.navigation.navigate("App");
+            const screen =
+              currentUser.identity === Constants.BUYER ? "Buyer" : "Seller";
+            this.props.navigation.navigate(screen);
           }
         } else {
           // if the user has previously signed out from the app

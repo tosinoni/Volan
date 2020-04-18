@@ -24,22 +24,6 @@ class Home extends Component {
           }}
           type="clear"
         />
-        <Button
-          title="Profile"
-          onPress={() => this.props.navigation.navigate("Profile")}
-          titleStyle={{
-            color: "#F57C00"
-          }}
-          type="clear"
-        />
-        <Button
-          title="Settings"
-          onPress={() => this.props.navigation.navigate("Settings")}
-          titleStyle={{
-            color: "#F57C00"
-          }}
-          type="clear"
-        />
       </View>
     );
   }
