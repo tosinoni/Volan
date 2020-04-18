@@ -10,18 +10,41 @@ import DropdownAlert from "react-native-dropdownalert";
 import Constants from "expo-constants";
 import { withNavigation } from "react-navigation";
 import { StackActions } from "react-navigation";
+import ImageViewer from "../../components/images/ImageViewer";
 
 const maxNumberOfImages = 10;
 
 export class CreateItemFour extends Component {
   state = {
-    images: []
+    images: [],
+    selectedImages: [],
+    imagePreviewVisible: false
   };
 
   onTileSelected = item => {
     if (item.isCreate) {
       this.launchActionSheet();
+    } else if (item.uri) {
+      this.showImageViewer([item]);
     }
+  };
+
+  showImageViewer = images => {
+    const selectedImages = images.map(({ uri }) => {
+      return { url: uri };
+    });
+
+    this.setState({
+      selectedImages,
+      imagePreviewVisible: true
+    });
+  };
+
+  closeImageViewer = () => {
+    this.setState({
+      selectedImages: [],
+      imagePreviewVisible: false
+    });
   };
 
   isPermissionGiven = async () => {
@@ -111,7 +134,7 @@ export class CreateItemFour extends Component {
   };
 
   render() {
-    const { images } = this.state;
+    const { images, selectedImages, imagePreviewVisible } = this.state;
 
     return (
       <KeyboardAwareScrollView viewIsInsideTabBar>
@@ -137,6 +160,12 @@ export class CreateItemFour extends Component {
         />
 
         <DropdownAlert ref={ref => (this.dropDownAlertRef = ref)} showCancel />
+
+        <ImageViewer
+          visible={imagePreviewVisible}
+          images={selectedImages}
+          onClose={this.closeImageViewer}
+        />
       </KeyboardAwareScrollView>
     );
   }
