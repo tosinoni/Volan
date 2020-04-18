@@ -69,7 +69,7 @@ export class CreateItem extends Component {
           <CreateItemOne mode={mode} />
           <CreateItemTwo mode={mode} />
           <CreateItemThree />
-          <CreateItemFour />
+          <CreateItemFour mode={mode} />
           <CreateItemFive />
           <CreateItemSix />
           <CreateItemSeven />

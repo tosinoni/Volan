@@ -8,6 +8,7 @@ import Subscription from "../screens/Subscription";
 import { createStackNavigator } from "react-navigation-stack";
 import Sidebar from "../components/Sidebar";
 import CreateItem from "../screens/create";
+import ImageBrowser from "../screens/ImageBrowser";
 
 const InventoryNavigatorStack = createStackNavigator({
   Inventory: {
@@ -57,7 +58,10 @@ const SellerNavigation = createStackNavigator({
     }
   },
   Subscription: { screen: Subscription },
-  Create: { screen: CreateItem }
+  Create: { screen: CreateItem },
+  ImageBrowser: {
+    screen: ImageBrowser
+  }
 });
 
 export default SellerNavigation;

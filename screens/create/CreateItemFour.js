@@ -8,6 +8,10 @@ import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import DropdownAlert from "react-native-dropdownalert";
 import Constants from "expo-constants";
+import { withNavigation } from "react-navigation";
+import { StackActions } from "react-navigation";
+
+const maxNumberOfImages = 10;
 
 export class CreateItemFour extends Component {
   state = {
@@ -29,7 +33,7 @@ export class CreateItemFour extends Component {
     return true;
   };
 
-  createImageTile = ({ uri }) => {
+  getImageTile = ({ uri }) => {
     return {
       type: "image",
       uri
@@ -50,18 +54,16 @@ export class CreateItemFour extends Component {
 
       const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
+        allowsEditing: false,
         aspect: [4, 3],
         quality: 1
       });
       if (!result.cancelled) {
         const { images } = this.state;
-        images.push(this.createImageTile(result));
+        images.push(this.getImageTile(result));
 
         this.setState({ images });
       }
-
-      console.log(result);
     } catch (e) {
       this.dropDownAlertRef.alertWithType(
         "error",
@@ -72,9 +74,36 @@ export class CreateItemFour extends Component {
   };
 
   handleActionClicked = index => {
+    const imagesLeftToMax = maxNumberOfImages - this.state.images.length;
+    const max = imagesLeftToMax > 0 ? imagesLeftToMax : 0;
+
     if (index === 0) {
       this.pickPhoto();
+    } else if (index === 1) {
+      const pushAction = StackActions.push({
+        routeName: "ImageBrowser",
+        params: {
+          mode: this.props.mode,
+          max,
+          callback: this.imageBrowserCallback
+        }
+      });
+
+      this.props.navigation.dispatch(pushAction);
     }
+  };
+
+  imageBrowserCallback = callback => {
+    callback
+      .then((photos = []) => {
+        const newImages = photos.map(item => {
+          return this.getImageTile(item);
+        });
+        const { images } = this.state;
+
+        this.setState({ images: [...images, ...newImages] });
+      })
+      .catch(e => console.log(e));
   };
 
   launchActionSheet = () => {
@@ -113,4 +142,4 @@ export class CreateItemFour extends Component {
   }
 }
 
-export default CreateItemFour;
+export default withNavigation(CreateItemFour);
