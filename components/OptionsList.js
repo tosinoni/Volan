@@ -39,11 +39,12 @@ export class OptionsList extends Component {
       initialList = [],
       initialText,
       selectedText,
+      selectedColor,
       selectedList = []
     } = this.props;
 
     const OptionItem = ({ text, type, key }) => {
-      const backgroundColor = type === "selected" ? Colors.orange : undefined;
+      const backgroundColor = type === "selected" ? selectedColor : undefined;
       const iconName = type === "selected" ? "minus" : "plus";
 
       return (

@@ -3,19 +3,19 @@ import { View, Text } from "react-native";
 import OptionsList from "../../components/OptionsList";
 
 const availableOptionsList = [
-  "Leather Seats",
-  "Sunroof/Moonroof",
-  "Navigation System",
-  "DVD/Entertainment",
-  "Power Seats",
-  "Heated Seats",
-  "Backup Camera",
-  "Parking Sensors",
   "Air Conditioning",
   "Alloy Wheels",
-  "Power Windows",
+  "Backup Camera",
+  "Cruise Control",
+  "DVD/Entertainment",
+  "Heated Seats",
   "Keyless Entry",
-  "Cruise Control"
+  "Leather Seats",
+  "Navigation System",
+  "Parking Sensors",
+  "Power Seats",
+  "Power Windows",
+  "Sunroof/Moonroof",
 ];
 export class CreateItemThree extends Component {
   state = {
@@ -34,6 +34,7 @@ export class CreateItemThree extends Component {
       <OptionsList
         initialText="AVAILABLE OPTIONS"
         selectedText="SELECTED OPTIONS"
+        selectedColor="#1cba99"
         initialList={availableOptions}
         selectedList={selectedOptions}
         onItemSelected={this.onItemSelected}
