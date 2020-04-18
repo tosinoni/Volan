@@ -5,6 +5,7 @@ import Connections from "../screens/seller/Connections";
 import SellerBottomNav from "../components/SellerBottomNav";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import Subscription from "../screens/Subscription";
+import Profile from "../screens/Profile";
 import { createStackNavigator } from "react-navigation-stack";
 import Sidebar from "../components/Sidebar";
 import CreateItem from "../screens/create";
@@ -57,6 +58,7 @@ const SellerNavigation = createStackNavigator({
       headerShown: false
     }
   },
+  Profile: { screen: Profile },
   Subscription: { screen: Subscription },
   Create: { screen: CreateItem },
   ImageBrowser: {

@@ -11,6 +11,7 @@ import { Avatar, Button, Icon} from 'react-native-elements';
 import { Colors } from "../styles/Colors";
 import { withFirebaseHOC } from "../config/Firebase";
 import { ProfileFooter } from "../screens/ProfileFooter"
+import { Settings } from "../screens/Settings"
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -29,7 +30,7 @@ export class Profile extends Component {
               style={{
                 flex: 1,
                 flexDirection: 'column',
-                backgroundColor: Colors.brightBlue,
+                backgroundColor: Colors.darkBlue,
                 alignItems: 'center',
                 height: 250,
                 borderBottomRightRadius: 50,
@@ -133,6 +134,7 @@ export class Profile extends Component {
           </ScrollView>
         </SafeAreaView>
       </View>
+        <Settings/>
         <ProfileFooter/>
       </ScrollView>
     );
