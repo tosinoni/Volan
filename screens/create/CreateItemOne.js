@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { Form, Item, Label, Input } from "native-base";
 import { styles } from "../../styles/screens/create/CreateItemOne";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import LocationInput from "../../components/LocationInput";
 import SelectDropDown from "../../components/SelectDropDown";
 import CircularButtonList from "../../components/CircularButtonList";
 
@@ -82,16 +81,6 @@ export class CreateItemOne extends Component {
     return (
       <KeyboardAwareScrollView viewIsInsideTabBar>
         <Form>
-          <View style={styles.section}>
-            <Text style={styles.sectionText}>LOCATION</Text>
-            <View style={styles.formSection}>
-              <Item stackedLabel style={styles.formItem}>
-                <Label style={styles.inputLabel}>Current Location</Label>
-                <LocationInput style={styles.input} />
-              </Item>
-            </View>
-          </View>
-
           <View style={styles.section}>
             <Text style={styles.sectionText}>VIN</Text>
             <View style={styles.formSection}>
@@ -175,6 +164,23 @@ export class CreateItemOne extends Component {
               </Item>
             </View>
           </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionText}>CARFAX</Text>
+            <View style={styles.formSection}>
+              <Item stackedLabel style={styles.formItem}>
+                <Label style={styles.inputLabel}>Attach CARFAX Canada Report</Label>
+                <Item>
+                  <Input style = {styles.carfaxInput} placeholder= "CARFAX Canada Report URL"/>
+                  <Image
+                    style={styles.carfaxLogo}
+                    source={require("../../assets/images/carfax-canada.png")}
+                  />
+                </Item>
+              </Item>
+            </View>
+          </View>
+
         </Form>
       </KeyboardAwareScrollView>
     );
