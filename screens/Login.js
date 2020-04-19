@@ -25,7 +25,6 @@ import {
   Image,
   Platform,
   ScrollView,
-  KeyboardAvoidingView,
   TouchableHighlight,
   StatusBar
 } from "react-native";

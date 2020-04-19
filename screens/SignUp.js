@@ -21,12 +21,7 @@ import {
   Spinner,
   CheckBox
 } from "native-base";
-import {
-  StyleSheet,
-  Image,
-  KeyboardAvoidingView,
-  Platform
-} from "react-native";
+import { StyleSheet, Image, Platform } from "react-native";
 import SocialButtons from "../components/SocialButtons";
 import Intro from "../components/Intro";
 import { Formik } from "formik";
