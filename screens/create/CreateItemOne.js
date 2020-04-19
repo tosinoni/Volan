@@ -106,7 +106,7 @@ export class CreateItemOne extends Component {
           <View style={styles.section}>
             <Text style={styles.sectionText}>MAKE / MODEL</Text>
             <View style={styles.formSection}>
-              <Item stackedLabel style={styles.formItem}>
+              <View style={styles.formItem}>
                 <Label style={styles.inputLabel}>Year</Label>
                 <SelectDropDown
                   itemKey="year"
@@ -116,9 +116,9 @@ export class CreateItemOne extends Component {
                   onValueChange={this.onInputChange}
                   mode={mode}
                 />
-              </Item>
+              </View>
 
-              <Item stackedLabel style={styles.formItem}>
+              <View style={styles.formItem}>
                 <Label style={styles.inputLabel}>Make</Label>
                 <SelectDropDown
                   headerTitle="Select Make"
@@ -128,9 +128,9 @@ export class CreateItemOne extends Component {
                   onValueChange={this.onInputChange}
                   mode={mode}
                 />
-              </Item>
+              </View>
 
-              <Item stackedLabel style={styles.formItem}>
+              <View style={styles.formItem}>
                 <Label style={styles.inputLabel}>Model</Label>
                 <SelectDropDown
                   itemKey="model"
@@ -139,9 +139,9 @@ export class CreateItemOne extends Component {
                   onValueChange={this.onInputChange}
                   mode={mode}
                 />
-              </Item>
+              </View>
 
-              <Item stackedLabel style={styles.formItem}>
+              <View style={styles.formItem}>
                 <Label style={styles.inputLabel}>Submodel</Label>
                 <SelectDropDown
                   itemKey="submodel"
@@ -150,9 +150,9 @@ export class CreateItemOne extends Component {
                   onValueChange={this.onInputChange}
                   mode={mode}
                 />
-              </Item>
+              </View>
 
-              <Item stackedLabel style={styles.formItem}>
+              <View style={styles.formItem}>
                 <Label style={styles.inputLabel}>Trim</Label>
                 <SelectDropDown
                   headerTitle="Select Trim"
@@ -161,7 +161,7 @@ export class CreateItemOne extends Component {
                   onValueChange={this.onInputChange}
                   mode={mode}
                 />
-              </Item>
+              </View>
             </View>
           </View>
 
@@ -169,9 +169,14 @@ export class CreateItemOne extends Component {
             <Text style={styles.sectionText}>CARFAX</Text>
             <View style={styles.formSection}>
               <Item stackedLabel style={styles.formItem}>
-                <Label style={styles.inputLabel}>Attach CARFAX Canada Report</Label>
+                <Label style={styles.inputLabel}>
+                  Attach CARFAX Canada Report
+                </Label>
                 <Item>
-                  <Input style = {styles.carfaxInput} placeholder= "CARFAX Canada Report URL"/>
+                  <Input
+                    style={styles.carfaxInput}
+                    placeholder="CARFAX Canada Report URL"
+                  />
                   <Image
                     style={styles.carfaxLogo}
                     source={require("../../assets/images/carfax-canada.png")}
@@ -180,7 +185,6 @@ export class CreateItemOne extends Component {
               </Item>
             </View>
           </View>
-
         </Form>
       </KeyboardAwareScrollView>
     );

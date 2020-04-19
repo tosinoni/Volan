@@ -140,7 +140,7 @@ export class CreateItemTwo extends Component {
           <View style={styles.section}>
             <Text style={styles.sectionText}>BODY TYPE</Text>
             <View style={styles.formSection}>
-              <Item stackedLabel style={styles.formItem}>
+              <View stackedLabel style={styles.formItem}>
                 <Label style={styles.inputLabel}>Body Type</Label>
                 <SelectDropDown
                   headerTitle="Select Body Type"
@@ -150,7 +150,7 @@ export class CreateItemTwo extends Component {
                   onValueChange={this.onInputChange}
                   mode={mode}
                 />
-              </Item>
+              </View>
             </View>
           </View>
 
@@ -200,7 +200,7 @@ export class CreateItemTwo extends Component {
                 </Item>
               </View>
               <View style={styles.formItemsRow}>
-                <Item stackedLabel style={styles.formItemLeft}>
+                <View stackedLabel style={styles.formItemLeft}>
                   <Label style={styles.inputLabel}>Transmission</Label>
                   <SelectDropDown
                     headerTitle="Select Transmission"
@@ -210,9 +210,9 @@ export class CreateItemTwo extends Component {
                     onValueChange={this.onInputChange}
                     mode={mode}
                   />
-                </Item>
+                </View>
 
-                <Item stackedLabel style={styles.formItemRight}>
+                <View stackedLabel style={styles.formItemRight}>
                   <Label style={styles.inputLabel}>Drivetrain</Label>
                   <SelectDropDown
                     headerTitle="Select Drivetrain"
@@ -222,7 +222,7 @@ export class CreateItemTwo extends Component {
                     onValueChange={this.onInputChange}
                     mode={mode}
                   />
-                </Item>
+                </View>
               </View>
               <View style={styles.formItemsRow}>
                 <Item stackedLabel style={styles.formItemLeft}>
@@ -245,7 +245,7 @@ export class CreateItemTwo extends Component {
                 </Item>
               </View>
               <View style={styles.formItemsRow}>
-                <Item stackedLabel style={styles.formItem}>
+                <View stackedLabel style={styles.formItem}>
                   <Label style={styles.inputLabel}>Fuel Type</Label>
                   <SelectDropDown
                     headerTitle="Select Fuel Type"
@@ -255,7 +255,7 @@ export class CreateItemTwo extends Component {
                     onValueChange={this.onInputChange}
                     mode={mode}
                   />
-                </Item>
+                </View>
               </View>
             </View>
           </View>
