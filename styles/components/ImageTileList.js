@@ -15,6 +15,11 @@ export const styles = StyleSheet.create({
     borderRadius: 10
   },
 
+  tileDisabled: {
+    borderColor: Colors.brightGrey,
+    borderStyle: "solid"
+  },
+
   button: {
     width: "100%",
     height: "100%",

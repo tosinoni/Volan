@@ -11,6 +11,7 @@ import Constants from "expo-constants";
 import { withNavigation } from "react-navigation";
 import { StackActions } from "react-navigation";
 import ImageViewer from "../../components/images/ImageViewer";
+import uuid from "react-native-uuid";
 
 const maxNumberOfImages = 10;
 
@@ -29,9 +30,35 @@ export class CreateItemFour extends Component {
     }
   };
 
+  onImageEdited = item => {
+    const { images } = this.state;
+    const selectedIndex = images.findIndex(({ key }) => key === item.key);
+
+    if (selectedIndex) {
+      const selectedImage = images[selectedIndex];
+      images[selectedIndex] = { ...selectedImage, uri: item.uri };
+
+      this.setState({ images });
+    }
+  };
+
+  onImageDeleted = () => {
+    const { images, selectedImages } = this.state;
+    const itemKey = selectedImages[0] && selectedImages[0].key;
+
+    console.log(itemKey);
+    console.log(images);
+    const selectedIndex = images.findIndex(({ key }) => key === itemKey);
+    console.log(selectedIndex);
+    if (selectedIndex > -1) {
+      images.splice(selectedIndex, 1);
+      this.setState({ images });
+    }
+  };
+
   showImageViewer = images => {
-    const selectedImages = images.map(({ uri }) => {
-      return { url: uri };
+    const selectedImages = images.map(({ uri, key }) => {
+      return { url: uri, key };
     });
 
     this.setState({
@@ -59,7 +86,8 @@ export class CreateItemFour extends Component {
   getImageTile = ({ uri }) => {
     return {
       type: "image",
-      uri
+      uri,
+      key: uuid.v1()
     };
   };
 
@@ -83,9 +111,9 @@ export class CreateItemFour extends Component {
       });
       if (!result.cancelled) {
         const { images } = this.state;
-        images.push(this.getImageTile(result));
+        const newImages = [...images, this.getImageTile(result)];
 
-        this.setState({ images });
+        this.setState({ images: newImages });
       }
     } catch (e) {
       this.dropDownAlertRef.alertWithType(
@@ -119,10 +147,11 @@ export class CreateItemFour extends Component {
   imageBrowserCallback = callback => {
     callback
       .then((photos = []) => {
+        const { images } = this.state;
+
         const newImages = photos.map(item => {
           return this.getImageTile(item);
         });
-        const { images } = this.state;
 
         this.setState({ images: [...images, ...newImages] });
       })
@@ -165,6 +194,8 @@ export class CreateItemFour extends Component {
           visible={imagePreviewVisible}
           images={selectedImages}
           onClose={this.closeImageViewer}
+          onImageEdited={this.onImageEdited}
+          onImageDeleted={this.onImageDeleted}
         />
       </KeyboardAwareScrollView>
     );

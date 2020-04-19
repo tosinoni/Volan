@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { View, Text, Image } from "react-native";
 import { Button, Icon } from "native-base";
 import { styles } from "../styles/components/ImageTileList";
+import SortableGrid from "react-native-sortable-grid-with-fixed";
 
 const createTile = {
   type: "icon",
   iconName: "add-a-photo",
   iconType: "MaterialIcons",
-  isCreate: true
+  isCreate: true,
+  isFixed: true
 };
 
 export class ImageTileList extends Component {
@@ -23,12 +25,17 @@ export class ImageTileList extends Component {
           type: "icon",
           iconName: "photo",
           iconType: "MaterialIcons",
-          isDisabled: true
+          isDisabled: true,
+          isFixed: true
         });
       }
     }
 
     return tiles;
+  };
+
+  onItemsReArranged = items => {
+    console.log("items rearranged", items);
   };
 
   render() {
@@ -41,23 +48,31 @@ export class ImageTileList extends Component {
         iconName,
         iconType,
         uri,
-        isDisabled
+        isDisabled,
+        isCreate
       } = item;
 
       const isImage = type === "image";
       const isIcon = type === "icon";
       const isText = type === "text";
+      const disabled = isCreate ? false : true;
 
       return (
-        <View style={[styles.tile, tileStyle.tile]} key={key}>
+        <View
+          style={[
+            styles.tile,
+            tileStyle.tile,
+            isDisabled && styles.tileDisabled
+          ]}
+          key={key}
+          inactive={true}
+        >
           <Button
             rounded
             transparent
             style={styles.button}
-            disabled={isDisabled}
-            onPress={() => {
-              onTileSelected(item);
-            }}
+            disabled={disabled}
+            onPress={() => onTileSelected(item)}
           >
             {isText && <Text style={styles.text}>{value}</Text>}
             {isIcon && (
@@ -75,9 +90,25 @@ export class ImageTileList extends Component {
 
     const tiles = this.getTiles();
 
-    return tiles.map((item, key) => {
-      return <Tile item={item} key={key} />;
-    });
+    return (
+      <SortableGrid
+        itemsPerRow={3}
+        style={{ flex: 1 }}
+        onDragRelease={this.onItemsReArranged}
+      >
+        {tiles.map((item, key) => {
+          return (
+            <Tile
+              item={item}
+              key={item.key || key}
+              fixed={item.isFixed}
+              inactive={item.isFixed}
+              onTap={() => onTileSelected(item)}
+            />
+          );
+        })}
+      </SortableGrid>
+    );
   }
 }
 

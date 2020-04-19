@@ -29,7 +29,8 @@ export class CreateItem extends Component {
   };
 
   state = {
-    currentIndex: 0
+    currentIndex: 0,
+    scrollEnabled: true
   };
 
   handleCircleClick = index => {
@@ -47,10 +48,16 @@ export class CreateItem extends Component {
 
   onIndexChanged = index => {
     this.setState({ currentIndex: index });
+
+    if (index === 3) {
+      this.setState({ scrollEnabled: false });
+    } else {
+      this.setState({ scrollEnabled: true });
+    }
   };
 
   render() {
-    const { currentIndex } = this.state;
+    const { currentIndex, scrollEnabled } = this.state;
     const { params } = this.props.navigation.state;
     const { mode } = params;
     const isNextButtonDisabled = currentIndex === 6;
@@ -65,6 +72,7 @@ export class CreateItem extends Component {
           loop={false}
           onIndexChanged={this.onIndexChanged}
           ref={"swiper"}
+          scrollEnabled={scrollEnabled}
         >
           <CreateItemOne mode={mode} />
           <CreateItemTwo mode={mode} />
