@@ -9,7 +9,6 @@ import CreateItemThree from "./CreateItemThree";
 import CreateItemFour from "./CreateItemFour";
 import CreateItemFive from "./CreateItemFive";
 import CreateItemSix from "./CreateItemSix";
-import CreateItemSeven from "./CreateItemSeven";
 import { styles as stylesheet } from "../../styles/screens/create";
 import { Footer, Icon, Button } from "native-base";
 import FooterPageNavButtons from "../../components/FooterPageNavButtons";
@@ -60,7 +59,7 @@ export class CreateItem extends Component {
     const { currentIndex, scrollEnabled } = this.state;
     const { params } = this.props.navigation.state;
     const { mode } = params;
-    const isNextButtonDisabled = currentIndex === 6;
+    const isNextButtonDisabled = currentIndex === 5;
     const isPrevButtonDisabled = currentIndex === 0;
 
     const styles = stylesheet({ mode });
@@ -80,7 +79,6 @@ export class CreateItem extends Component {
           <CreateItemFour mode={mode} />
           <CreateItemFive />
           <CreateItemSix />
-          <CreateItemSeven />
         </Swiper>
 
         <Footer style={styles.footer}>
@@ -99,7 +97,7 @@ export class CreateItem extends Component {
             />
           </Button>
           <FooterPageNavButtons
-            numOfButtons={7}
+            numOfButtons={6}
             screenIndex={currentIndex}
             handleCircleClick={this.handleCircleClick}
           />

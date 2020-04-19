@@ -16,9 +16,13 @@ export class CountInput extends Component {
     onValueChange(itemKey, newValue);
   };
 
+  onInputChange = value => {
+    const { itemKey, onValueChange } = this.props;
+    onValueChange(itemKey, parseFloat(value));
+  };
   render() {
-    const { value } = this.props;
-    const displayValue = value > 0 ? value.toFixed(this.props.decimals) : "";
+    const { value, decimals = 0 } = this.props;
+    const displayValue = value > 0 ? parseFloat(value).toFixed(decimals) : "";
 
     return (
       <View style={styles.inputView}>
@@ -26,7 +30,11 @@ export class CountInput extends Component {
           <Icon style={styles.icon} name="minus" type="FontAwesome" />
         </Button>
 
-        <Input style={styles.input} keyboardType="numeric">
+        <Input
+          style={styles.input}
+          keyboardType="numeric"
+          onChangeText={this.onInputChange}
+        >
           <Text>{displayValue}</Text>
         </Input>
 
