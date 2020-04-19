@@ -54,8 +54,6 @@ export class SellerBottomNav extends Component {
             <Icon name="finance" type="MaterialCommunityIcons" />
           </Button>
           <Button
-            style={styles.button}
-            onPress={this._onHomePress}
             style={styles.createButton}
             onPress={() => {
               this.navigateToTabComponent("Create", { mode: Constants.SELLER });

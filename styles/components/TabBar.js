@@ -1,6 +1,6 @@
 import { Colors } from "../Colors";
 import Constants from "../../constants";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { genericStyles } from "../generic";
 
 export const styles = props =>
@@ -28,7 +28,7 @@ export const styles = props =>
     createButton: {
       height: 50,
       width: 50,
-      bottom: 30,
+      bottom: Platform.OS === "android" ? 15 : 40,
       borderWidth: 1,
       flex: 0,
       borderColor: "lightgrey",

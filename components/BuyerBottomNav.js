@@ -54,8 +54,6 @@ export class BuyerBottomNav extends Component {
             <Icon name="arrow-decision-outline" type="MaterialCommunityIcons" />
           </Button>
           <Button
-            style={styles.button}
-            onPress={this._onHomePress}
             onPress={() => {
               this.navigateToTabComponent("Create", { mode: Constants.BUYER });
             }}
