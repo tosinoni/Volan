@@ -110,10 +110,12 @@ export class CreateItemFour extends Component {
         quality: 1
       });
       if (!result.cancelled) {
+        this.setState({ ImageTileListVisible: false });
+
         const { images } = this.state;
         const newImages = [...images, this.getImageTile(result)];
 
-        this.setState({ images: newImages });
+        this.setState({ images: newImages, ImageTileListVisible: true });
       }
     } catch (e) {
       this.dropDownAlertRef.alertWithType(
