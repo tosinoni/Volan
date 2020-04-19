@@ -19,7 +19,8 @@ export class CreateItemFour extends Component {
   state = {
     images: [],
     selectedImages: [],
-    imagePreviewVisible: false
+    imagePreviewVisible: false,
+    ImageTileListVisible: true
   };
 
   onTileSelected = item => {
@@ -31,10 +32,12 @@ export class CreateItemFour extends Component {
   };
 
   onImageEdited = item => {
-    const { images } = this.state;
-    const selectedIndex = images.findIndex(({ key }) => key === item.key);
+    const { images, selectedImages } = this.state;
+    const itemKey = selectedImages[0] && selectedImages[0].key;
 
-    if (selectedIndex) {
+    const selectedIndex = images.findIndex(({ key }) => key === itemKey);
+
+    if (selectedIndex > -1) {
       const selectedImage = images[selectedIndex];
       images[selectedIndex] = { ...selectedImage, uri: item.uri };
 
@@ -46,10 +49,7 @@ export class CreateItemFour extends Component {
     const { images, selectedImages } = this.state;
     const itemKey = selectedImages[0] && selectedImages[0].key;
 
-    console.log(itemKey);
-    console.log(images);
     const selectedIndex = images.findIndex(({ key }) => key === itemKey);
-    console.log(selectedIndex);
     if (selectedIndex > -1) {
       images.splice(selectedIndex, 1);
       this.setState({ images });
@@ -147,13 +147,17 @@ export class CreateItemFour extends Component {
   imageBrowserCallback = callback => {
     callback
       .then((photos = []) => {
+        this.setState({ ImageTileListVisible: false });
         const { images } = this.state;
 
         const newImages = photos.map(item => {
           return this.getImageTile(item);
         });
 
-        this.setState({ images: [...images, ...newImages] });
+        this.setState({
+          images: [...images, ...newImages],
+          ImageTileListVisible: true
+        });
       })
       .catch(e => console.log(e));
   };
@@ -163,7 +167,12 @@ export class CreateItemFour extends Component {
   };
 
   render() {
-    const { images, selectedImages, imagePreviewVisible } = this.state;
+    const {
+      images,
+      selectedImages,
+      imagePreviewVisible,
+      ImageTileListVisible
+    } = this.state;
 
     return (
       <KeyboardAwareScrollView viewIsInsideTabBar>
@@ -171,11 +180,13 @@ export class CreateItemFour extends Component {
           <Text style={styles.sectionText}>PHOTOS</Text>
           <View style={styles.formSection}>
             <View style={styles.tileList}>
-              <ImageTileList
-                items={images}
-                tileStyle={styles}
-                onTileSelected={this.onTileSelected}
-              />
+              {ImageTileListVisible && (
+                <ImageTileList
+                  items={images}
+                  tileStyle={styles}
+                  onTileSelected={this.onTileSelected}
+                />
+              )}
             </View>
           </View>
         </View>

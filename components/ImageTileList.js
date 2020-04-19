@@ -34,9 +34,7 @@ export class ImageTileList extends Component {
     return tiles;
   };
 
-  onItemsReArranged = items => {
-    console.log("items rearranged", items);
-  };
+  onItemsReArranged = items => {};
 
   render() {
     const { tileStyle = {}, onTileSelected } = this.props;
