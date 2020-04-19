@@ -11,7 +11,6 @@ export class CreateItemSix extends Component {
         viewIsInsideTabBar={true}
         contentContainerStyle={{ flex: 1 }}
         extraHeight={-30}
-        extraScrollHeight={-20}
       >
         <View style={[styles.section, { flex: 1 }]}>
           <Text style={styles.sectionText}>SELLER NOTES</Text>
