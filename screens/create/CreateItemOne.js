@@ -82,16 +82,6 @@ export class CreateItemOne extends Component {
       <KeyboardAwareScrollView viewIsInsideTabBar>
         <Form>
           <View style={styles.section}>
-            <Text style={styles.sectionText}>VIN</Text>
-            <View style={styles.formSection}>
-              <Item stackedLabel style={styles.formItem}>
-                <Label style={styles.inputLabel}>VIN</Label>
-                <Input style={styles.input} />
-              </Item>
-            </View>
-          </View>
-
-          <View style={styles.section}>
             <Text style={styles.sectionText}>VEHICLE TYPE</Text>
             <View style={styles.circularFormSection}>
               <CircularButtonList
@@ -100,6 +90,16 @@ export class CreateItemOne extends Component {
                 selectedItem={selectedVehicleType}
                 onItemSelected={this.onVehicleTypeSelected}
               />
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionText}>VIN</Text>
+            <View style={styles.formSection}>
+              <Item stackedLabel style={styles.formItem}>
+                <Label style={styles.inputLabel}>VIN</Label>
+                <Input style={styles.input} />
+              </Item>
             </View>
           </View>
 
