@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
   },
 
   carfaxInput: {
-    height: 30
+    height: 30,
+    color: "#87868a"
   }
 });

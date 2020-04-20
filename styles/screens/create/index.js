@@ -54,7 +54,8 @@ export const genericCreateItemStyles = StyleSheet.create({
 
   inputLabel: {
     marginBottom: 10,
-    paddingTop: 0
+    paddingTop: 0,
+    color: "#575757"
   }
 });
 

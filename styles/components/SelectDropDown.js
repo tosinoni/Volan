@@ -18,7 +18,8 @@ export const styles = props =>
       paddingBottom: 0,
       borderColor: "#e6e6e6",
       borderRadius: 10,
-      height: 40
+      height: 40,
+      color: "#87868a"
     },
     header: {
       backgroundColor:
