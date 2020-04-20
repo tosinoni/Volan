@@ -76,7 +76,10 @@ export class CreateItemFour extends Component {
 
   isPermissionGiven = async () => {
     if (Constants.platform.ios) {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA);
+      const { status } = await Permissions.askAsync(
+        Permissions.CAMERA,
+        Permissions.CAMERA_ROLL
+      );
       return status === "granted";
     }
 
@@ -126,13 +129,23 @@ export class CreateItemFour extends Component {
     }
   };
 
-  handleActionClicked = index => {
+  handleActionClicked = async index => {
     const imagesLeftToMax = maxNumberOfImages - this.state.images.length;
     const max = imagesLeftToMax > 0 ? imagesLeftToMax : 0;
 
     if (index === 0) {
       this.pickPhoto();
     } else if (index === 1) {
+      const permissionGiven = await this.isPermissionGiven();
+      if (!permissionGiven) {
+        this.dropDownAlertRef.alertWithType(
+          "error",
+          "Select photo failed",
+          "Permission is needed to access camera"
+        );
+        return;
+      }
+
       const pushAction = StackActions.push({
         routeName: "ImageBrowser",
         params: {

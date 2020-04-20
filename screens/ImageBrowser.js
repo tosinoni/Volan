@@ -13,8 +13,7 @@ import { Colors } from "../styles/Colors";
 import { Button, Icon } from "native-base";
 
 import * as MediaLibrary from "expo-media-library";
-import SafeAreaView from "react-native-safe-area-view";
-import Header from "../components/Header";
+import DropdownAlert from "react-native-dropdownalert";
 
 import ImageTile from "../components/images/ImageTile";
 
@@ -99,9 +98,18 @@ export default class ImageBrowser extends React.Component {
     let params = { first: 500 };
     if (this.state.after) params.after = this.state.after;
     if (!this.state.hasNextPage) return;
-    MediaLibrary.getAssetsAsync(params).then(assets => {
-      this.processPhotos(assets);
-    });
+    MediaLibrary.getAssetsAsync(params)
+      .then(assets => {
+        this.processPhotos(assets);
+      })
+      .catch(e => {
+        console.log(e);
+        this.dropDownAlertRef.alertWithType(
+          "error",
+          "Select images failed",
+          e.message
+        );
+      });
   };
 
   processPhotos = assets => {
@@ -149,31 +157,6 @@ export default class ImageBrowser extends React.Component {
     this.props.navigation.state.params.callback(assetsInfo);
     this.props.navigation.pop();
   };
-
-  // renderHeader = () => {
-  //   const headerDoneText = this.props.headerDoneText
-  //     ? this.props.headerDoneText
-  //     : "Done";
-  //   const headerButtonColor = this.props.headerButtonColor
-  //     ? this.props.headerButtonColor
-  //     : "#007aff";
-
-  //   return (
-  //     <View>
-  //       <View style={styles.header}>
-  //         <Button
-  //           transparent
-  //           onPress={() => this.props.callback(Promise.resolve([]))}
-  //         >
-  //           <Text style={{ color: headerButtonColor }}>{headerCloseText}</Text>
-  //         </Button>
-  //         <Button transparent onPress={() => this.prepareCallback()}>
-  //           <Text style={{ color: headerButtonColor }}>{headerDoneText}</Text>
-  //         </Button>
-  //       </View>
-  //     </View>
-  //   );
-  // };
 
   renderImageTile = ({ item, index }) => {
     const selected = this.state.selected.indexOf(index) !== -1;
@@ -233,7 +216,12 @@ export default class ImageBrowser extends React.Component {
   };
 
   render() {
-    return <View style={styles.container}>{this.renderImages()}</View>;
+    return (
+      <View style={styles.container}>
+        {this.renderImages()}
+        <DropdownAlert ref={ref => (this.dropDownAlertRef = ref)} showCancel />
+      </View>
+    );
   }
 }
 

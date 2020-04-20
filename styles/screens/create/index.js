@@ -44,7 +44,7 @@ export const genericCreateItemStyles = StyleSheet.create({
     marginRight: 5
   },
   input: {
-    height: 30,
+    height: 40,
     borderWidth: 1,
     borderColor: "#e6e6e6",
     borderRadius: 5,
