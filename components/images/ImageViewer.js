@@ -10,13 +10,13 @@ export class ImageViewer extends Component {
     isEditVisible: false
   };
 
-  onToggleEdit = item => {
+  onToggleEdit = () => {
     this.setState({ isEditVisible: false });
     this.props.onClose();
   };
 
-  onImageEdited = item => {
-    this.props.onImageEdited(item);
+  onImageEdited = (item, index) => {
+    this.props.onImageEdited(item, index);
   };
 
   onImageDeleted = index => {
@@ -25,7 +25,8 @@ export class ImageViewer extends Component {
   };
 
   render() {
-    const { visible, images, onClose } = this.props;
+    const { visible, images, onClose, selectedIndex } = this.props;
+    console.log("images", images);
 
     return (
       <Modal visible={visible} transparent={true} onRequestClose={onClose}>
@@ -33,7 +34,7 @@ export class ImageViewer extends Component {
           imageUrls={images}
           onSwipeDown={onClose}
           enableSwipeDown={true}
-          enablePreload
+          index={selectedIndex}
           footerContainerStyle={{
             flex: 1,
             right: 5,
@@ -41,12 +42,17 @@ export class ImageViewer extends Component {
             width: "100%"
           }}
           renderImage={props => {
+            const index = images.findIndex(
+              ({ url }) => url === props.source.uri
+            );
             return (
               <ImageBackground {...props}>
                 <ImageManipulator
                   photo={{ uri: props.source.uri }}
                   isVisible={this.state.isEditVisible}
-                  onPictureChoosed={this.onImageEdited}
+                  onPictureChoosed={item => {
+                    this.onImageEdited(item, index);
+                  }}
                   onToggleModal={this.onToggleEdit}
                 />
               </ImageBackground>
@@ -71,7 +77,7 @@ export class ImageViewer extends Component {
                 </Button>
                 <Button
                   transparent
-                  onPress={index => this.onImageDeleted(index)}
+                  onPress={index => this.onImageDeleted(currentIndex)}
                 >
                   <Icon
                     type="MaterialCommunityIcons"

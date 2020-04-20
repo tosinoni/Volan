@@ -19,6 +19,7 @@ export class CreateItemFour extends Component {
   state = {
     images: [],
     selectedImages: [],
+    selectedIndex: 0,
     imagePreviewVisible: false,
     ImageTileListVisible: true
   };
@@ -27,15 +28,12 @@ export class CreateItemFour extends Component {
     if (item.isCreate) {
       this.launchActionSheet();
     } else if (item.uri) {
-      this.showImageViewer([item]);
+      this.showImageViewer(item);
     }
   };
 
-  onImageEdited = item => {
-    const { images, selectedImages } = this.state;
-    const itemKey = selectedImages[0] && selectedImages[0].key;
-
-    const selectedIndex = images.findIndex(({ key }) => key === itemKey);
+  onImageEdited = (item, selectedIndex) => {
+    const { images } = this.state;
 
     if (selectedIndex > -1) {
       const selectedImage = images[selectedIndex];
@@ -45,25 +43,27 @@ export class CreateItemFour extends Component {
     }
   };
 
-  onImageDeleted = () => {
-    const { images, selectedImages } = this.state;
-    const itemKey = selectedImages[0] && selectedImages[0].key;
+  onImageDeleted = selectedIndex => {
+    const { images } = this.state;
 
-    const selectedIndex = images.findIndex(({ key }) => key === itemKey);
     if (selectedIndex > -1) {
       images.splice(selectedIndex, 1);
       this.setState({ images });
     }
   };
 
-  showImageViewer = images => {
+  showImageViewer = item => {
+    const { images } = this.state;
+
+    const selectedIndex = images.findIndex(({ uri }) => uri === item.uri);
     const selectedImages = images.map(({ uri, key }) => {
       return { url: uri, key };
     });
 
     this.setState({
       selectedImages,
-      imagePreviewVisible: true
+      imagePreviewVisible: true,
+      selectedIndex
     });
   };
 
@@ -90,7 +90,7 @@ export class CreateItemFour extends Component {
     return {
       type: "image",
       uri,
-      key: uuid.v1()
+      key: uuid.v4()
     };
   };
 
@@ -184,6 +184,7 @@ export class CreateItemFour extends Component {
   render() {
     const {
       images,
+      selectedIndex,
       selectedImages,
       imagePreviewVisible,
       ImageTileListVisible
@@ -219,6 +220,7 @@ export class CreateItemFour extends Component {
         <ImageViewer
           visible={imagePreviewVisible}
           images={selectedImages}
+          selectedIndex={selectedIndex}
           onClose={this.closeImageViewer}
           onImageEdited={this.onImageEdited}
           onImageDeleted={this.onImageDeleted}
