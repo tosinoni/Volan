@@ -18,7 +18,6 @@ export const genericCreateItemStyles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     paddingTop: 0
-
   },
   circularFormSection: {
     backgroundColor: Colors.white
@@ -56,15 +55,6 @@ export const genericCreateItemStyles = StyleSheet.create({
   inputLabel: {
     marginBottom: 10,
     paddingTop: 0
-  },
-
-  carfaxLogo: {
-    width: 80,
-    height: 20
-  },
-
-  carfaxInput: {
-    paddingLeft:0
   }
 });
 

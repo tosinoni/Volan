@@ -166,17 +166,25 @@ export class CreateItemOne extends Component {
           </View>
 
           <View style={styles.section}>
+            <Text style={styles.sectionText}>PRICE</Text>
+            <View style={styles.formSection}>
+              <Item stackedLabel style={styles.formItem}>
+                <Label style={styles.inputLabel}>PRICE</Label>
+                <Input style={styles.input} />
+              </Item>
+            </View>
+          </View>
+
+          <View style={styles.section}>
             <Text style={styles.sectionText}>CARFAX</Text>
             <View style={styles.formSection}>
               <Item stackedLabel style={styles.formItem}>
                 <Label style={styles.inputLabel}>
-                  Attach CARFAX Canada Report
+                  CARFAX Canada Report URL
                 </Label>
-                <Item>
-                  <Input
-                    style={styles.carfaxInput}
-                    placeholder="CARFAX Canada Report URL"
-                  />
+
+                <Item style={styles.carfaxContainer}>
+                  <Input style={styles.carfaxInput} />
                   <Image
                     style={styles.carfaxLogo}
                     source={require("../../assets/images/carfax-canada.png")}
