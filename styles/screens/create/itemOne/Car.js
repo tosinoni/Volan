@@ -1,10 +1,8 @@
 import { StyleSheet } from "react-native";
-import { genericStyles } from "../../generic";
-import { genericCreateItemStyles } from "./index";
+import { styles as ItemOneStyles } from "./index";
 
 export const styles = StyleSheet.create({
-  ...genericStyles,
-  ...genericCreateItemStyles,
+  ...ItemOneStyles,
 
   carfaxContainer: {
     borderColor: "#e6e6e6",

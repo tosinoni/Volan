@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { styles } from "../../styles/screens/create/CreateItemFour";
-import ImageTileList from "../../components/ImageTileList";
+import { View, Text } from "react-native";
+import { styles } from "../../../styles/screens/create/itemFour";
+import ImageTileList from "../../../components/ImageTileList";
 import ActionSheet from "react-native-actionsheet";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
@@ -10,7 +10,7 @@ import DropdownAlert from "react-native-dropdownalert";
 import Constants from "expo-constants";
 import { withNavigation } from "react-navigation";
 import { StackActions } from "react-navigation";
-import ImageViewer from "../../components/images/ImageViewer";
+import ImageViewer from "../../../components/images/ImageViewer";
 import uuid from "react-native-uuid";
 
 const maxNumberOfImages = 10;

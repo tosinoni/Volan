@@ -3,15 +3,16 @@ import { View } from "react-native";
 import Constants from "../../constants";
 import { Colors } from "../../styles/Colors";
 import Swiper from "react-native-swiper";
-import CreateItemOne from "./CreateItemOne";
-import CreateItemTwo from "./CreateItemTwo";
-import CreateItemThree from "./CreateItemThree";
-import CreateItemFour from "./CreateItemFour";
-import CreateItemFive from "./CreateItemFive";
-import CreateItemSix from "./CreateItemSix";
+import CreateItemOne from "./itemOne";
+import CreateItemTwo from "./itemTwo";
+import CreateItemThree from "./itemThree";
+import CreateItemFour from "./itemFour";
+import CreateItemFive from "./itemFive";
+import CreateItemSix from "./itemSix";
 import { styles as stylesheet } from "../../styles/screens/create";
 import { Footer, Icon, Button } from "native-base";
 import FooterPageNavButtons from "../../components/FooterPageNavButtons";
+import { VEHICLE_TYPES } from "../../constants";
 
 export class CreateItem extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -21,18 +22,19 @@ export class CreateItem extends Component {
     return {
       title: isBuyer ? "Add Wishlist" : "Add Inventory",
       headerStyle: {
-        backgroundColor: isBuyer ? Colors.brightBlue : Colors.brightRed
+        backgroundColor: isBuyer ? Colors.brightBlue : Colors.brightRed,
       },
-      headerTintColor: Colors.white
+      headerTintColor: Colors.white,
     };
   };
 
   state = {
+    selectedVehicleType: VEHICLE_TYPES.CAR,
     currentIndex: 0,
-    scrollEnabled: true
+    scrollEnabled: true,
   };
 
-  handleCircleClick = index => {
+  handleCircleClick = (index) => {
     const offset = index - this.state.currentIndex;
     this.refs.swiper.scrollBy(offset);
   };
@@ -45,7 +47,7 @@ export class CreateItem extends Component {
     this.refs.swiper.scrollBy(-1);
   };
 
-  onIndexChanged = index => {
+  onIndexChanged = (index) => {
     this.setState({ currentIndex: index });
 
     if (index === 3) {
@@ -55,8 +57,44 @@ export class CreateItem extends Component {
     }
   };
 
+  onInputChange = (key, value) => {
+    const { selectedVehicleType } = this.state;
+
+    const selectedVehicleTypeProps = this.state[selectedVehicleType] || {};
+    const newProps = {
+      ...selectedVehicleTypeProps,
+      [key]: value,
+    };
+
+    this.setState({
+      [selectedVehicleType]: newProps,
+    });
+  };
+
+  onMultipleValuesChange = (values = {}) => {
+    const { selectedVehicleType } = this.state;
+    const selectedVehicleTypeProps = this.state[selectedVehicleType] || {};
+
+    const newProps = Object.keys(values).reduce(
+      (newProps, key) => {
+        newProps[key] = values[key];
+        return newProps;
+      },
+      { ...selectedVehicleTypeProps }
+    );
+
+    this.setState({
+      [selectedVehicleType]: newProps,
+    });
+  };
+
+  onVehicleTypeChanged = (selectedVehicleType) => {
+    this.setState({ selectedVehicleType });
+  };
+
   render() {
-    const { currentIndex, scrollEnabled } = this.state;
+    const { currentIndex, scrollEnabled, selectedVehicleType } = this.state;
+    const selectedVehicleTypeProps = this.state[selectedVehicleType] || {};
     const { params } = this.props.navigation.state;
     const { mode } = params;
     const isNextButtonDisabled = currentIndex === 5;
@@ -73,12 +111,42 @@ export class CreateItem extends Component {
           ref={"swiper"}
           scrollEnabled={scrollEnabled}
         >
-          <CreateItemOne mode={mode} />
-          <CreateItemTwo mode={mode} />
-          <CreateItemThree />
-          <CreateItemFour mode={mode} />
-          <CreateItemFive />
-          <CreateItemSix />
+          <CreateItemOne
+            selectedVehicleType={selectedVehicleType}
+            mode={mode}
+            onInputChange={this.onInputChange}
+            onVehicleTypeChanged={this.onVehicleTypeChanged}
+            {...selectedVehicleTypeProps}
+          />
+          <CreateItemTwo
+            mode={mode}
+            onInputChange={this.onInputChange}
+            selectedVehicleType={selectedVehicleType}
+            {...selectedVehicleTypeProps}
+          />
+          <CreateItemThree
+            onInputChange={this.onInputChange}
+            onMultipleValuesChange={this.onMultipleValuesChange}
+            selectedVehicleType={selectedVehicleType}
+            {...selectedVehicleTypeProps}
+          />
+          <CreateItemFour
+            mode={mode}
+            onInputChange={this.onInputChange}
+            selectedVehicleType={selectedVehicleType}
+            {...selectedVehicleTypeProps}
+          />
+          <CreateItemFive
+            onInputChange={this.onInputChange}
+            selectedVehicleType={selectedVehicleType}
+            onMultipleValuesChange={this.onMultipleValuesChange}
+            {...selectedVehicleTypeProps}
+          />
+          <CreateItemSix
+            onInputChange={this.onInputChange}
+            selectedVehicleType={selectedVehicleType}
+            {...selectedVehicleTypeProps}
+          />
         </Swiper>
 
         <Footer style={styles.footer}>

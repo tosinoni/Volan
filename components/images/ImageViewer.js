@@ -26,7 +26,6 @@ export class ImageViewer extends Component {
 
   render() {
     const { visible, images, onClose, selectedIndex } = this.props;
-    console.log("images", images);
 
     return (
       <Modal visible={visible} transparent={true} onRequestClose={onClose}>

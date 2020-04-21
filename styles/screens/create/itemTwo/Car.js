@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-import { genericStyles } from "../../generic";
-import { genericCreateItemStyles } from "./index";
-import { Colors } from "../../Colors";
+import { styles as ItemTwoStyles } from "./index";
+import { Colors } from "../../../Colors";
+
 const mileageButton = {
   marginRight: 5,
   width: 30,
@@ -14,8 +14,7 @@ const mileageButton = {
 };
 
 export const styles = StyleSheet.create({
-  ...genericStyles,
-  ...genericCreateItemStyles,
+  ...ItemTwoStyles,
   mileageInput: {
     borderWidth: 1,
     borderColor: "#e6e6e6",
@@ -30,9 +29,5 @@ export const styles = StyleSheet.create({
   unSelectedMileageButton: {
     ...mileageButton,
     backgroundColor: "#bfc4cc"
-  },
-  input: {
-    ...genericCreateItemStyles.input,
-    borderWidth: 0
   }
 });
