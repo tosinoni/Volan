@@ -112,13 +112,12 @@ export class CreateItem extends PureComponent {
     const { mode } = params;
     const isNextButtonDisabled = currentIndex === 5;
     const isPrevButtonDisabled = currentIndex === 0;
+    const vehicleProps = this.getVehicleProps(selectedVehicleType);
 
     const styles = stylesheet({ mode });
 
     return (
-      <CreateItemContext.Provider
-        value={{ ...this.getVehicleProps(selectedVehicleType) }}
-      >
+      <CreateItemContext.Provider value={{ ...vehicleProps }}>
         <View style={styles.content}>
           <Swiper
             showsPagination={false}
