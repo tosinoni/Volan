@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import OptionsList from "../../../components/OptionsList";
+import { withCreateItemHOC } from "../context";
 
 const availableOptionsList = [
   "Air Conditioning",
@@ -20,7 +21,7 @@ const availableOptionsList = [
 
 export class CreateItemThree extends PureComponent {
   onItemSelected = (availableOptions, selectedOptions) => {
-    const { onMultipleValuesChange } = this.props;
+    const { onMultipleValuesChange } = this.props.createItem;
     onMultipleValuesChange({ availableOptions, selectedOptions });
   };
 
@@ -28,7 +29,7 @@ export class CreateItemThree extends PureComponent {
     const {
       availableOptions = availableOptionsList,
       selectedOptions,
-    } = this.props;
+    } = this.props.createItem;
 
     return (
       <OptionsList
@@ -47,7 +48,6 @@ export class CreateItemThree extends PureComponent {
   };
 
   render() {
-    const {} = this.props;
     return (
       <KeyboardAwareScrollView viewIsInsideTabBar>
         {this.renderViewType()}
@@ -56,4 +56,4 @@ export class CreateItemThree extends PureComponent {
   }
 }
 
-export default CreateItemThree;
+export default withCreateItemHOC(CreateItemThree);

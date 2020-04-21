@@ -8,6 +8,7 @@ import { View, Text } from "react-native";
 import CircularButtonList from "../../../components/CircularButtonList";
 import { Label } from "native-base";
 import SelectDropDown from "../../../components/SelectDropDown";
+import { withCreateItemHOC } from "../context";
 
 const vehicleTypes = [
   {
@@ -55,7 +56,7 @@ const years = [
 
 export class CreateItemOne extends PureComponent {
   getDefaultView = () => {
-    const { year, mode, onInputChange } = this.props;
+    const { year, mode, onInputChange } = this.props.createItem;
 
     return (
       <View style={styles.section}>
@@ -80,21 +81,21 @@ export class CreateItemOne extends PureComponent {
   renderViewType = (selectedVehicleType) => {
     switch (selectedVehicleType) {
       case VEHICLE_TYPES.CAR:
-        return <CarItemOne {...this.props} />;
+        return <CarItemOne />;
       default:
         return this.getDefaultView();
     }
   };
 
   onVehicleTypeSelected = (item) => {
-    const { onVehicleTypeChanged } = this.props;
+    const { onVehicleTypeChanged } = this.props.createItem;
     const selectedVehicleType = item.text;
 
     onVehicleTypeChanged(selectedVehicleType);
   };
 
   render() {
-    const { selectedVehicleType } = this.props;
+    const { selectedVehicleType } = this.props.createItem;
     return (
       <KeyboardAwareScrollView viewIsInsideTabBar>
         <Form>
@@ -116,4 +117,4 @@ export class CreateItemOne extends PureComponent {
   }
 }
 
-export default CreateItemOne;
+export default withCreateItemHOC(CreateItemOne);

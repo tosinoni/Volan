@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import OptionsList from "../../../components/OptionsList";
+import { withCreateItemHOC } from "../context";
 
 const declarationOptionsList = [
   "5 Digit Odomoter",
@@ -21,7 +22,7 @@ const declarationOptionsList = [
 
 export class CreateItemFive extends PureComponent {
   onItemSelected = (declarationOptions, selectedOptions) => {
-    const { onMultipleValuesChange } = this.props;
+    const { onMultipleValuesChange } = this.props.createItem;
     onMultipleValuesChange({ declarationOptions, selectedOptions });
   };
 
@@ -29,7 +30,7 @@ export class CreateItemFive extends PureComponent {
     const {
       declarationOptions = declarationOptionsList,
       selectedOptions,
-    } = this.props;
+    } = this.props.createItem;
 
     return (
       <OptionsList
@@ -56,4 +57,4 @@ export class CreateItemFive extends PureComponent {
   }
 }
 
-export default CreateItemFive;
+export default withCreateItemHOC(CreateItemFive);

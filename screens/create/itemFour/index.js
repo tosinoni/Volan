@@ -12,6 +12,7 @@ import { withNavigation } from "react-navigation";
 import { StackActions } from "react-navigation";
 import ImageViewer from "../../../components/images/ImageViewer";
 import uuid from "react-native-uuid";
+import { withCreateItemHOC } from "../context";
 
 const maxNumberOfImages = 10;
 
@@ -149,7 +150,7 @@ export class CreateItemFour extends PureComponent {
       const pushAction = StackActions.push({
         routeName: "ImageBrowser",
         params: {
-          mode: this.props.mode,
+          mode: this.props.createItem.mode,
           max,
           callback: this.imageBrowserCallback,
         },
@@ -233,4 +234,4 @@ export class CreateItemFour extends PureComponent {
   }
 }
 
-export default withNavigation(CreateItemFour);
+export default withNavigation(withCreateItemHOC(CreateItemFour));

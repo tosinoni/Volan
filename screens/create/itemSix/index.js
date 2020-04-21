@@ -3,6 +3,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { styles } from "../../../styles/screens/create/itemSix";
 import { View, Text } from "react-native";
 import { Textarea, Button, Form } from "native-base";
+import { withCreateItemHOC } from "../context";
 
 export class CreateItemThree extends PureComponent {
   getDefaultView = () => {
@@ -38,4 +39,4 @@ export class CreateItemThree extends PureComponent {
   }
 }
 
-export default CreateItemThree;
+export default withCreateItemHOC(CreateItemThree);

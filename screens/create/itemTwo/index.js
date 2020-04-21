@@ -6,6 +6,7 @@ import { Form } from "native-base";
 import { styles } from "../../../styles/screens/create/itemTwo";
 import { View, Text } from "react-native";
 import CircularButtonList from "../../../components/CircularButtonList";
+import { withCreateItemHOC } from "../context";
 
 const colors = [
   { text: "Black", color: "black" },
@@ -22,7 +23,7 @@ const colors = [
 
 export class CreateItemTwo extends PureComponent {
   getDefaultView = () => {
-    const { selectedExteriorColor, onInputChange } = this.props;
+    const { selectedExteriorColor, onInputChange } = this.props.createItem;
 
     return (
       <View style={styles.section}>
@@ -42,17 +43,16 @@ export class CreateItemTwo extends PureComponent {
   };
 
   renderViewType = (selectedVehicleType) => {
-    const selectedMileageType = this.props.mileageType || "km";
     switch (selectedVehicleType) {
       case VEHICLE_TYPES.CAR:
-        return <CarItemTwo {...this.props} mileageType={selectedMileageType} />;
+        return <CarItemTwo />;
       default:
         return this.getDefaultView();
     }
   };
 
   render() {
-    const { selectedVehicleType } = this.props;
+    const { selectedVehicleType } = this.props.createItem;
 
     return (
       <KeyboardAwareScrollView viewIsInsideTabBar>
@@ -62,4 +62,4 @@ export class CreateItemTwo extends PureComponent {
   }
 }
 
-export default CreateItemTwo;
+export default withCreateItemHOC(CreateItemTwo);

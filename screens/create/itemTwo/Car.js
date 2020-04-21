@@ -5,6 +5,8 @@ import { styles } from "../../../styles/screens/create/itemTwo/Car";
 import CircularButtonList from "../../../components/CircularButtonList";
 import SelectDropDown from "../../../components/SelectDropDown";
 import CountInput from "../../../components/CountInput";
+import { withCreateItemHOC } from "../context";
+
 const km = "km";
 const mi = "mi";
 
@@ -59,7 +61,7 @@ export class CarItemTwo extends PureComponent {
       onInputChange,
       numberOfCylinders,
       displacement,
-      mileageType,
+      mileageType = "km",
       bodyType,
       selectedExteriorColor,
       selectedInteriorColor,
@@ -68,7 +70,7 @@ export class CarItemTwo extends PureComponent {
       transmission,
       drivetrain,
       fueltype,
-    } = this.props;
+    } = this.props.createItem;
 
     const isKmSelected = mileageType === km;
     const isMiSelected = mileageType === mi;
@@ -241,4 +243,4 @@ export class CarItemTwo extends PureComponent {
   }
 }
 
-export default CarItemTwo;
+export default withCreateItemHOC(CarItemTwo);

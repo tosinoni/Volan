@@ -13,6 +13,7 @@ import { styles as stylesheet } from "../../styles/screens/create";
 import { Footer, Icon, Button } from "native-base";
 import FooterPageNavButtons from "../../components/FooterPageNavButtons";
 import { VEHICLE_TYPES } from "../../constants";
+import { CreateItemContext } from "./context";
 
 export class CreateItem extends PureComponent {
   static navigationOptions = ({ navigation }) => {
@@ -26,12 +27,6 @@ export class CreateItem extends PureComponent {
       },
       headerTintColor: Colors.white,
     };
-  };
-
-  state = {
-    selectedVehicleType: VEHICLE_TYPES.CAR,
-    currentIndex: 0,
-    scrollEnabled: true,
   };
 
   handleCircleClick = (index) => {
@@ -58,19 +53,33 @@ export class CreateItem extends PureComponent {
   };
 
   onInputChange = (key, value) => {
-    this.setState({
+    const { selectedVehicleType } = this.state;
+
+    const selectedVehicleTypeProps = this.state[selectedVehicleType] || {};
+    const newProps = {
+      ...selectedVehicleTypeProps,
       [key]: value,
+    };
+
+    this.setState({
+      [selectedVehicleType]: newProps,
     });
   };
 
   onMultipleValuesChange = (values = {}) => {
-    const newProps = Object.keys(values).reduce((newProps, key) => {
-      newProps[key] = values[key];
-      return newProps;
-    }, {});
+    const { selectedVehicleType } = this.state;
+    const selectedVehicleTypeProps = this.state[selectedVehicleType] || {};
+
+    const newProps = Object.keys(values).reduce(
+      (newProps, key) => {
+        newProps[key] = values[key];
+        return newProps;
+      },
+      { ...selectedVehicleTypeProps }
+    );
 
     this.setState({
-      ...newProps,
+      [selectedVehicleType]: newProps,
     });
   };
 
@@ -78,9 +87,27 @@ export class CreateItem extends PureComponent {
     this.setState({ selectedVehicleType });
   };
 
+  getVehicleProps = (selectedVehicleType) => {
+    const { [selectedVehicleType]: selectedVehicleTypeProps = {} } = this.state;
+
+    return {
+      onVehicleTypeChanged: this.onVehicleTypeChanged,
+      onInputChange: this.onInputChange,
+      onMultipleValuesChange: this.onMultipleValuesChange,
+      mode: this.props.navigation.state.params.mode,
+      ...selectedVehicleTypeProps,
+      selectedVehicleType,
+    };
+  };
+
+  state = {
+    selectedVehicleType: VEHICLE_TYPES.CAR,
+    currentIndex: 0,
+    scrollEnabled: true,
+  };
+
   render() {
     const { currentIndex, scrollEnabled, selectedVehicleType } = this.state;
-    const selectedVehicleTypeProps = { ...this.state };
     const { params } = this.props.navigation.state;
     const { mode } = params;
     const isNextButtonDisabled = currentIndex === 5;
@@ -89,83 +116,63 @@ export class CreateItem extends PureComponent {
     const styles = stylesheet({ mode });
 
     return (
-      <View style={styles.content}>
-        <Swiper
-          showsPagination={false}
-          loop={false}
-          onIndexChanged={this.onIndexChanged}
-          ref={"swiper"}
-          scrollEnabled={scrollEnabled}
-        >
-          <CreateItemOne
-            mode={mode}
-            onInputChange={this.onInputChange}
-            onVehicleTypeChanged={this.onVehicleTypeChanged}
-            {...selectedVehicleTypeProps}
-          />
-          <CreateItemTwo
-            mode={mode}
-            onInputChange={this.onInputChange}
-            {...selectedVehicleTypeProps}
-          />
-          <CreateItemThree
-            onInputChange={this.onInputChange}
-            onMultipleValuesChange={this.onMultipleValuesChange}
-            {...selectedVehicleTypeProps}
-          />
-          <CreateItemFour
-            mode={mode}
-            onInputChange={this.onInputChange}
-            {...selectedVehicleTypeProps}
-          />
-          <CreateItemFive
-            onInputChange={this.onInputChange}
-            onMultipleValuesChange={this.onMultipleValuesChange}
-            {...selectedVehicleTypeProps}
-          />
-          <CreateItemSix
-            onInputChange={this.onInputChange}
-            {...selectedVehicleTypeProps}
-          />
-        </Swiper>
+      <CreateItemContext.Provider
+        value={{ ...this.getVehicleProps(selectedVehicleType) }}
+      >
+        <View style={styles.content}>
+          <Swiper
+            showsPagination={false}
+            loop={false}
+            onIndexChanged={this.onIndexChanged}
+            ref={"swiper"}
+            scrollEnabled={scrollEnabled}
+          >
+            <CreateItemOne />
+            <CreateItemTwo />
+            <CreateItemThree />
+            <CreateItemFour />
+            <CreateItemFive />
+            <CreateItemSix />
+          </Swiper>
 
-        <Footer style={styles.footer}>
-          <Button
-            transparent
-            style={styles.prevButton}
-            disabled={isPrevButtonDisabled}
-            onPress={this.handleBackClick}
-          >
-            <Icon
-              name="arrowleft"
-              type="AntDesign"
-              style={
-                isPrevButtonDisabled ? styles.iconDisabled : styles.buttonIcon
-              }
+          <Footer style={styles.footer}>
+            <Button
+              transparent
+              style={styles.prevButton}
+              disabled={isPrevButtonDisabled}
+              onPress={this.handleBackClick}
+            >
+              <Icon
+                name="arrowleft"
+                type="AntDesign"
+                style={
+                  isPrevButtonDisabled ? styles.iconDisabled : styles.buttonIcon
+                }
+              />
+            </Button>
+            <FooterPageNavButtons
+              numOfButtons={6}
+              screenIndex={currentIndex}
+              handleCircleClick={this.handleCircleClick}
             />
-          </Button>
-          <FooterPageNavButtons
-            numOfButtons={6}
-            screenIndex={currentIndex}
-            handleCircleClick={this.handleCircleClick}
-          />
-          <Button
-            transparent
-            style={styles.nextButton}
-            iconRight
-            disabled={isNextButtonDisabled}
-            onPress={this.handleNextClick}
-          >
-            <Icon
-              name="arrowright"
-              type="AntDesign"
-              style={
-                isNextButtonDisabled ? styles.iconDisabled : styles.buttonIcon
-              }
-            />
-          </Button>
-        </Footer>
-      </View>
+            <Button
+              transparent
+              style={styles.nextButton}
+              iconRight
+              disabled={isNextButtonDisabled}
+              onPress={this.handleNextClick}
+            >
+              <Icon
+                name="arrowright"
+                type="AntDesign"
+                style={
+                  isNextButtonDisabled ? styles.iconDisabled : styles.buttonIcon
+                }
+              />
+            </Button>
+          </Footer>
+        </View>
+      </CreateItemContext.Provider>
     );
   }
 }

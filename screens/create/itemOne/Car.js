@@ -3,6 +3,7 @@ import { View, Text, Image } from "react-native";
 import { styles } from "../../../styles/screens/create/itemOne/Car";
 import { Item, Label, Input } from "native-base";
 import SelectDropDown from "../../../components/SelectDropDown";
+import { withCreateItemHOC } from "../context";
 
 const years = [
   { label: "2019", value: "2019" },
@@ -34,7 +35,7 @@ export class CarItemOne extends PureComponent {
       trim,
       mode,
       onInputChange,
-    } = this.props;
+    } = this.props.createItem;
 
     return (
       <Fragment>
@@ -141,4 +142,4 @@ export class CarItemOne extends PureComponent {
   }
 }
 
-export default CarItemOne;
+export default withCreateItemHOC(CarItemOne);
