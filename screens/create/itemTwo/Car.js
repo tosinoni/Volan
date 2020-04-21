@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment, PureComponent } from "react";
 import { View, Text } from "react-native";
 import { Item, Label, Input, Button } from "native-base";
 import { styles } from "../../../styles/screens/create/itemTwo/Car";
@@ -13,7 +13,7 @@ const bodyTypes = [
   { label: "Coupe", value: "Coupe" },
   { label: "Hatchback", value: "Hatchback" },
   { label: "Sedan", value: "Sedan" },
-  { label: "SUV", value: "SUV" }
+  { label: "SUV", value: "SUV" },
 ];
 
 const colors = [
@@ -26,12 +26,12 @@ const colors = [
   { text: "White", color: "white" },
   { text: "Pink", color: "pink" },
   { text: "Green", color: "green" },
-  { text: "Beige", color: "beige" }
+  { text: "Beige", color: "beige" },
 ];
 
 const transmissions = [
   { label: "Automatic", value: "Automatic" },
-  { label: "Manual", value: "Manual" }
+  { label: "Manual", value: "Manual" },
 ];
 
 const fuelTypes = [
@@ -42,17 +42,17 @@ const fuelTypes = [
   { label: "Gasoline", value: "Gasoline" },
   { label: "Hydrogen", value: "hydrogen" },
   { label: "Natural Gas", value: "NaturalGas" },
-  { label: "Propane", value: "Propane" }
+  { label: "Propane", value: "Propane" },
 ];
 
 const drivetrains = [
   { label: "4x4", value: "4x4" },
   { label: "AWD", value: "AWD" },
   { label: "FWD", value: "FWD" },
-  { label: "RWD", value: "RWD" }
+  { label: "RWD", value: "RWD" },
 ];
 
-export class CarItemTwo extends Component {
+export class CarItemTwo extends PureComponent {
   render() {
     const {
       mode,
@@ -67,7 +67,7 @@ export class CarItemTwo extends Component {
       numberOfPassengers,
       transmission,
       drivetrain,
-      fueltype
+      fueltype,
     } = this.props;
 
     const isKmSelected = mileageType === km;
@@ -134,7 +134,7 @@ export class CarItemTwo extends Component {
               list={colors}
               isBadgeSelection
               selectedItem={selectedExteriorColor}
-              onItemSelected={item =>
+              onItemSelected={(item) =>
                 onInputChange("selectedExteriorColor", item.text)
               }
             />
@@ -148,7 +148,7 @@ export class CarItemTwo extends Component {
               list={colors}
               isBadgeSelection
               selectedItem={selectedInteriorColor}
-              onItemSelected={item =>
+              onItemSelected={(item) =>
                 onInputChange("selectedInteriorColor", item.text)
               }
             />

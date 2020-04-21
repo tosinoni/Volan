@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { View } from "react-native";
 import Constants from "../../constants";
 import { Colors } from "../../styles/Colors";
@@ -14,7 +14,7 @@ import { Footer, Icon, Button } from "native-base";
 import FooterPageNavButtons from "../../components/FooterPageNavButtons";
 import { VEHICLE_TYPES } from "../../constants";
 
-export class CreateItem extends Component {
+export class CreateItem extends PureComponent {
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
 
@@ -58,33 +58,19 @@ export class CreateItem extends Component {
   };
 
   onInputChange = (key, value) => {
-    const { selectedVehicleType } = this.state;
-
-    const selectedVehicleTypeProps = this.state[selectedVehicleType] || {};
-    const newProps = {
-      ...selectedVehicleTypeProps,
-      [key]: value,
-    };
-
     this.setState({
-      [selectedVehicleType]: newProps,
+      [key]: value,
     });
   };
 
   onMultipleValuesChange = (values = {}) => {
-    const { selectedVehicleType } = this.state;
-    const selectedVehicleTypeProps = this.state[selectedVehicleType] || {};
-
-    const newProps = Object.keys(values).reduce(
-      (newProps, key) => {
-        newProps[key] = values[key];
-        return newProps;
-      },
-      { ...selectedVehicleTypeProps }
-    );
+    const newProps = Object.keys(values).reduce((newProps, key) => {
+      newProps[key] = values[key];
+      return newProps;
+    }, {});
 
     this.setState({
-      [selectedVehicleType]: newProps,
+      ...newProps,
     });
   };
 
@@ -94,7 +80,7 @@ export class CreateItem extends Component {
 
   render() {
     const { currentIndex, scrollEnabled, selectedVehicleType } = this.state;
-    const selectedVehicleTypeProps = this.state[selectedVehicleType] || {};
+    const selectedVehicleTypeProps = { ...this.state };
     const { params } = this.props.navigation.state;
     const { mode } = params;
     const isNextButtonDisabled = currentIndex === 5;
@@ -112,7 +98,6 @@ export class CreateItem extends Component {
           scrollEnabled={scrollEnabled}
         >
           <CreateItemOne
-            selectedVehicleType={selectedVehicleType}
             mode={mode}
             onInputChange={this.onInputChange}
             onVehicleTypeChanged={this.onVehicleTypeChanged}
@@ -121,30 +106,25 @@ export class CreateItem extends Component {
           <CreateItemTwo
             mode={mode}
             onInputChange={this.onInputChange}
-            selectedVehicleType={selectedVehicleType}
             {...selectedVehicleTypeProps}
           />
           <CreateItemThree
             onInputChange={this.onInputChange}
             onMultipleValuesChange={this.onMultipleValuesChange}
-            selectedVehicleType={selectedVehicleType}
             {...selectedVehicleTypeProps}
           />
           <CreateItemFour
             mode={mode}
             onInputChange={this.onInputChange}
-            selectedVehicleType={selectedVehicleType}
             {...selectedVehicleTypeProps}
           />
           <CreateItemFive
             onInputChange={this.onInputChange}
-            selectedVehicleType={selectedVehicleType}
             onMultipleValuesChange={this.onMultipleValuesChange}
             {...selectedVehicleTypeProps}
           />
           <CreateItemSix
             onInputChange={this.onInputChange}
-            selectedVehicleType={selectedVehicleType}
             {...selectedVehicleTypeProps}
           />
         </Swiper>

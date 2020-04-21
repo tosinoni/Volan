@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Button } from "native-base";
 import { View } from "react-native";
 import { styles } from "../styles/components/FooterPageNavButtons";
 
-export class FooterPageNavButtons extends Component {
+export class FooterPageNavButtons extends PureComponent {
   render() {
     const { numOfButtons = 0, screenIndex, handleCircleClick } = this.props;
     const arrayOfButtons = [];
@@ -12,7 +12,7 @@ export class FooterPageNavButtons extends Component {
       arrayOfButtons.push(i);
     }
 
-    return arrayOfButtons.map(value => {
+    return arrayOfButtons.map((value) => {
       const isCurrentScreen = value == screenIndex;
       const circle = isCurrentScreen ? styles.currentScreen : styles.circle;
       return (

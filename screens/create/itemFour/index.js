@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { View, Text } from "react-native";
 import { styles } from "../../../styles/screens/create/itemFour";
@@ -15,16 +15,16 @@ import uuid from "react-native-uuid";
 
 const maxNumberOfImages = 10;
 
-export class CreateItemFour extends Component {
+export class CreateItemFour extends PureComponent {
   state = {
     images: [],
     selectedImages: [],
     selectedIndex: 0,
     imagePreviewVisible: false,
-    ImageTileListVisible: true
+    ImageTileListVisible: true,
   };
 
-  onTileSelected = item => {
+  onTileSelected = (item) => {
     if (item.isCreate) {
       this.launchActionSheet();
     } else if (item.uri) {
@@ -43,7 +43,7 @@ export class CreateItemFour extends Component {
     }
   };
 
-  onImageDeleted = selectedIndex => {
+  onImageDeleted = (selectedIndex) => {
     const { images } = this.state;
 
     if (selectedIndex > -1) {
@@ -52,7 +52,7 @@ export class CreateItemFour extends Component {
     }
   };
 
-  showImageViewer = item => {
+  showImageViewer = (item) => {
     const { images } = this.state;
 
     const selectedIndex = images.findIndex(({ uri }) => uri === item.uri);
@@ -63,14 +63,14 @@ export class CreateItemFour extends Component {
     this.setState({
       selectedImages,
       imagePreviewVisible: true,
-      selectedIndex
+      selectedIndex,
     });
   };
 
   closeImageViewer = () => {
     this.setState({
       selectedImages: [],
-      imagePreviewVisible: false
+      imagePreviewVisible: false,
     });
   };
 
@@ -90,7 +90,7 @@ export class CreateItemFour extends Component {
     return {
       type: "image",
       uri,
-      key: uuid.v4()
+      key: uuid.v4(),
     };
   };
 
@@ -110,7 +110,7 @@ export class CreateItemFour extends Component {
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: false,
         aspect: [4, 3],
-        quality: 1
+        quality: 1,
       });
       if (!result.cancelled) {
         this.setState({ ImageTileListVisible: false });
@@ -129,7 +129,7 @@ export class CreateItemFour extends Component {
     }
   };
 
-  handleActionClicked = async index => {
+  handleActionClicked = async (index) => {
     const imagesLeftToMax = maxNumberOfImages - this.state.images.length;
     const max = imagesLeftToMax > 0 ? imagesLeftToMax : 0;
 
@@ -151,30 +151,30 @@ export class CreateItemFour extends Component {
         params: {
           mode: this.props.mode,
           max,
-          callback: this.imageBrowserCallback
-        }
+          callback: this.imageBrowserCallback,
+        },
       });
 
       this.props.navigation.dispatch(pushAction);
     }
   };
 
-  imageBrowserCallback = callback => {
+  imageBrowserCallback = (callback) => {
     callback
       .then((photos = []) => {
         this.setState({ ImageTileListVisible: false });
         const { images } = this.state;
 
-        const newImages = photos.map(item => {
+        const newImages = photos.map((item) => {
           return this.getImageTile(item);
         });
 
         this.setState({
           images: [...images, ...newImages],
-          ImageTileListVisible: true
+          ImageTileListVisible: true,
         });
       })
-      .catch(e => console.log(e));
+      .catch((e) => console.log(e));
   };
 
   launchActionSheet = () => {
@@ -187,7 +187,7 @@ export class CreateItemFour extends Component {
       selectedIndex,
       selectedImages,
       imagePreviewVisible,
-      ImageTileListVisible
+      ImageTileListVisible,
     } = this.state;
 
     return (
@@ -208,14 +208,17 @@ export class CreateItemFour extends Component {
         </View>
 
         <ActionSheet
-          ref={o => (this.ActionSheet = o)}
+          ref={(o) => (this.ActionSheet = o)}
           title={"Select image"}
           options={["Take Photo", "Choose from Library...", "Cancel"]}
           cancelButtonIndex={2}
           onPress={this.handleActionClicked}
         />
 
-        <DropdownAlert ref={ref => (this.dropDownAlertRef = ref)} showCancel />
+        <DropdownAlert
+          ref={(ref) => (this.dropDownAlertRef = ref)}
+          showCancel
+        />
 
         <ImageViewer
           visible={imagePreviewVisible}

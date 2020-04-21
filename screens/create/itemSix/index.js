@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { styles } from "../../../styles/screens/create/itemSix";
 import { View, Text } from "react-native";
 import { Textarea, Button, Form } from "native-base";
 
-export class CreateItemThree extends Component {
+export class CreateItemThree extends PureComponent {
   getDefaultView = () => {
     return (
       <View style={[styles.section, { flex: 1 }]}>

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import OptionsList from "../../../components/OptionsList";
 
@@ -16,10 +16,10 @@ const declarationOptionsList = [
   "Non Runner",
   "Odometer Rolled Back",
   "Suspension Needs Repair",
-  "Transmission Needs Repair"
+  "Transmission Needs Repair",
 ];
 
-export class CreateItemFive extends Component {
+export class CreateItemFive extends PureComponent {
   onItemSelected = (declarationOptions, selectedOptions) => {
     const { onMultipleValuesChange } = this.props;
     onMultipleValuesChange({ declarationOptions, selectedOptions });
@@ -28,7 +28,7 @@ export class CreateItemFive extends Component {
   getDefaultView = () => {
     const {
       declarationOptions = declarationOptionsList,
-      selectedOptions
+      selectedOptions,
     } = this.props;
 
     return (

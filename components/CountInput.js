@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import { View, Text } from "react-native";
 import { styles } from "../styles/components/CountInput";
 import { Button, Input, Icon } from "native-base";
 
-export class CountInput extends Component {
+export class CountInput extends PureComponent {
   onIncreaseSelected = () => {
     const { increment = 1, value = 0, onValueChange, itemKey } = this.props;
     const newValue = (value || 0) + increment;
@@ -16,7 +16,7 @@ export class CountInput extends Component {
     onValueChange(itemKey, newValue);
   };
 
-  onInputChange = value => {
+  onInputChange = (value) => {
     const { itemKey, onValueChange } = this.props;
     onValueChange(itemKey, parseFloat(value));
   };

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { VEHICLE_TYPES } from "../../../constants/";
 import CarItemTwo from "./Car";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -17,10 +17,10 @@ const colors = [
   { text: "White", color: "white" },
   { text: "Pink", color: "pink" },
   { text: "Green", color: "green" },
-  { text: "Beige", color: "beige" }
+  { text: "Beige", color: "beige" },
 ];
 
-export class CreateItemTwo extends Component {
+export class CreateItemTwo extends PureComponent {
   getDefaultView = () => {
     const { selectedExteriorColor, onInputChange } = this.props;
 
@@ -32,7 +32,7 @@ export class CreateItemTwo extends Component {
             list={colors}
             isBadgeSelection
             selectedItem={selectedExteriorColor}
-            onItemSelected={item =>
+            onItemSelected={(item) =>
               onInputChange("selectedExteriorColor", item.text)
             }
           />
@@ -41,10 +41,11 @@ export class CreateItemTwo extends Component {
     );
   };
 
-  renderViewType = selectedVehicleType => {
+  renderViewType = (selectedVehicleType) => {
+    const selectedMileageType = this.props.mileageType || "km";
     switch (selectedVehicleType) {
       case VEHICLE_TYPES.CAR:
-        return <CarItemTwo {...this.props} mileageType="km" />;
+        return <CarItemTwo {...this.props} mileageType={selectedMileageType} />;
       default:
         return this.getDefaultView();
     }

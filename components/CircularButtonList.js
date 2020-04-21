@@ -1,18 +1,18 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import { View, Text, Image } from "react-native";
 import { Button, Icon, Badge } from "native-base";
 import { styles } from "../styles/components/CircularButtonList";
 import { ScrollView } from "react-native-gesture-handler";
 import { Colors } from "../styles/Colors";
 
-export class CircularButtonList extends Component {
+export class CircularButtonList extends PureComponent {
   render() {
     const {
       list = [],
       onItemSelected,
       selectedItem,
       isBadgeSelection,
-      isButtonSelection
+      isButtonSelection,
     } = this.props;
 
     return (

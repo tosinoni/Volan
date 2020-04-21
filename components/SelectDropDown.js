@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import {
   Picker,
   Header,
@@ -7,12 +7,12 @@ import {
   Icon,
   Right,
   Title,
-  Body
+  Body,
 } from "native-base";
 import { View } from "react-native";
 import { styles as stylesheet } from "../styles/components/SelectDropDown";
 
-export class SelectDropDown extends Component {
+export class SelectDropDown extends PureComponent {
   render() {
     const {
       itemKey,
@@ -20,14 +20,14 @@ export class SelectDropDown extends Component {
       mode,
       selectedValue,
       onValueChange,
-      items = []
+      items = [],
     } = this.props;
     const styles = stylesheet({ mode });
 
     return (
       <View style={styles.pickerContainer}>
         <Picker
-          renderHeader={backAction => (
+          renderHeader={(backAction) => (
             <Header style={styles.header}>
               <Left>
                 <Button transparent onPress={backAction}>
@@ -44,7 +44,7 @@ export class SelectDropDown extends Component {
           style={styles.picker}
           iosIcon={<Icon name="arrow-down" style={styles.pickerIconStyle} />}
           selectedValue={selectedValue}
-          onValueChange={value => {
+          onValueChange={(value) => {
             onValueChange(itemKey, value);
           }}
         >

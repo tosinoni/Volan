@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment, PureComponent } from "react";
 import { View, Text, Image } from "react-native";
 import { styles } from "../../../styles/screens/create/itemOne/Car";
 import { Item, Label, Input } from "native-base";
@@ -10,7 +10,7 @@ const years = [
   { label: "2017", value: "2017" },
   { label: "2016", value: "2016" },
   { label: "2015", value: "2015" },
-  { label: "2014", value: "2014" }
+  { label: "2014", value: "2014" },
 ];
 
 const makes = [
@@ -21,10 +21,10 @@ const makes = [
   { label: "BMW", value: "BMW" },
   { label: "Honda", value: "Honda" },
   { label: "Hyundai", value: "Hyundai" },
-  { label: "Lexus", value: "Lexus" }
+  { label: "Lexus", value: "Lexus" },
 ];
 
-export class CarItemOne extends Component {
+export class CarItemOne extends PureComponent {
   render() {
     const {
       year,
@@ -33,7 +33,7 @@ export class CarItemOne extends Component {
       submodel,
       trim,
       mode,
-      onInputChange
+      onInputChange,
     } = this.props;
 
     return (

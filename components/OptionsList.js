@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native";
 import { Text } from "react-native";
@@ -6,7 +6,7 @@ import { styles } from "../styles/components/OptionsList";
 import { Button, Icon } from "native-base";
 import { Colors } from "../styles/Colors";
 
-export class OptionsList extends Component {
+export class OptionsList extends PureComponent {
   removeItemFromList = (list, text) => {
     const newList = [...list];
 
@@ -40,7 +40,7 @@ export class OptionsList extends Component {
       initialText,
       selectedText,
       selectedColor,
-      selectedList = []
+      selectedList = [],
     } = this.props;
 
     const OptionItem = ({ text, type, key }) => {

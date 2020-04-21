@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import {
   Switch,
   Header as HeaderNativeBase,
@@ -7,7 +7,7 @@ import {
   Right,
   Button,
   Icon,
-  Title
+  Title,
 } from "native-base";
 import { View } from "react-native";
 import Constants from "../constants";
@@ -16,10 +16,10 @@ import ToggleModal from "./ToggleModal";
 
 import { styles as Stylesheet } from "../styles/components/Header";
 
-export class Header extends Component {
+export class Header extends PureComponent {
   state = {
     showModal: false,
-    selectedMode: ""
+    selectedMode: "",
   };
 
   onToggleSelected = () => {
