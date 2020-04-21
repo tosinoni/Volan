@@ -51,7 +51,7 @@ export class Profile extends Component {
                     // Default to initials if no profile pic present
                     source={{
                       uri:
-                        'https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg',
+                        'https://media-exp1.licdn.com/dms/image/C4E03AQE7N0xLMdo2cA/profile-displayphoto-shrink_200_200/0?e=1593043200&v=beta&t=JPxRFhnRrNOhkZG0pMrCxvvWnuFN0YNuZWQqh3YyabA',
                     }}
                     activeOpacity={0.7}
                     overlayContainerStyle={{ backgroundColor: 'transparent' }}
@@ -70,13 +70,13 @@ export class Profile extends Component {
                     }}
                   >
                     <Text style={styles.name}>
-                      Paul Allen
+                      Tosin Oni
                     </Text>
                     <Text style={styles.companyInfo}>
                       Ottawa Motors
                     </Text>
                     <Text style={styles.userInfo}>
-                      paul.allen@gmail.com
+                      tosin.oni@gmail.com
                     </Text>
                     <Text style={styles.userInfo}>
                       (613)-345-7628

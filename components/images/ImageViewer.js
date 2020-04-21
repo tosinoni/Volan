@@ -71,7 +71,7 @@ export class ImageViewer extends Component {
                 >
                   <Icon
                     type="MaterialCommunityIcons"
-                    name="content-save-edit"
+                    name="square-edit-outline"
                   />
                 </Button>
                 <Button
