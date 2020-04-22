@@ -9,12 +9,12 @@ const createTile = {
   iconName: "add-a-photo",
   iconType: "MaterialIcons",
   isCreate: true,
-  isFixed: true
+  isFixed: true,
 };
 
 export class ImageTileList extends PureComponent {
   getTiles = () => {
-    const { items, minNumberOfTiles = 9 } = this.props;
+    const { items = [], minNumberOfTiles = 9 } = this.props;
     const tiles = [createTile, ...items];
 
     if (tiles.length < minNumberOfTiles) {
@@ -26,7 +26,7 @@ export class ImageTileList extends PureComponent {
           iconName: "photo",
           iconType: "MaterialIcons",
           isDisabled: true,
-          isFixed: true
+          isFixed: true,
         });
       }
     }
@@ -34,7 +34,7 @@ export class ImageTileList extends PureComponent {
     return tiles;
   };
 
-  onItemsReArranged = items => {};
+  onItemsReArranged = (items) => {};
 
   render() {
     const { tileStyle = {}, onTileSelected } = this.props;
@@ -47,7 +47,7 @@ export class ImageTileList extends PureComponent {
         iconType,
         uri,
         isDisabled,
-        isCreate
+        isCreate,
       } = item;
 
       const isImage = type === "image";
@@ -60,7 +60,7 @@ export class ImageTileList extends PureComponent {
           style={[
             styles.tile,
             tileStyle.tile,
-            isDisabled && styles.tileDisabled
+            isDisabled && styles.tileDisabled,
           ]}
           key={key}
           inactive={true}
@@ -90,8 +90,8 @@ export class ImageTileList extends PureComponent {
 
     return (
       <SortableGrid
-        itemsPerRow={3}
         style={{ flex: 1 }}
+        itemsPerRow={3}
         onDragRelease={this.onItemsReArranged}
       >
         {tiles.map((item, key) => {

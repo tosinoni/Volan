@@ -4,11 +4,11 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   buttonList: {
     flexDirection: "row",
-    paddingVertical: 15
+    paddingVertical: 15,
   },
   buttonView: {
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   button: {
     paddingTop: 0,
@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 2,
-    marginHorizontal: 15
+    marginHorizontal: 15,
   },
   badge: {
     alignSelf: "flex-end",
@@ -35,20 +35,21 @@ export const styles = StyleSheet.create({
     paddingLeft: 3,
     paddingRight: 3,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: Colors.brightGreen,
   },
   badgeIcon: {
     color: Colors.white,
-    fontSize: 15
+    fontSize: 15,
   },
   iconView: {
     justifyContent: "center",
     alignItems: "center",
-    height: "100%"
+    height: "100%",
   },
   icon: {
     width: 35,
     height: 35,
-    tintColor: "white"
-  }
+    tintColor: "white",
+  },
 });

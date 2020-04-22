@@ -10,7 +10,7 @@ const mileageButton = {
   justifyContent: "center",
   alignItems: "center",
   paddingTop: 0,
-  paddingBottom: 0
+  paddingBottom: 0,
 };
 
 export const styles = StyleSheet.create({
@@ -20,14 +20,14 @@ export const styles = StyleSheet.create({
     borderColor: "#e6e6e6",
     borderRadius: 5,
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   selectedMileageButton: {
     ...mileageButton,
-    backgroundColor: Colors.brightBlue
+    backgroundColor: Colors.brightGreen,
   },
   unSelectedMileageButton: {
     ...mileageButton,
-    backgroundColor: "#bfc4cc"
-  }
+    backgroundColor: "#bfc4cc",
+  },
 });

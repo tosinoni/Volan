@@ -9,9 +9,9 @@ export const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
   tile: {
-    marginVertical: 10
-  }
+    marginVertical: 10,
+  },
 });

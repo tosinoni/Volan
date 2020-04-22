@@ -21,15 +21,15 @@ const declarationOptionsList = [
 ];
 
 export class CreateItemFive extends PureComponent {
-  onItemSelected = (declarationOptions, selectedOptions) => {
+  onItemSelected = (declarationOptions, selectedDeclarations) => {
     const { onMultipleValuesChange } = this.props.createItem;
-    onMultipleValuesChange({ declarationOptions, selectedOptions });
+    onMultipleValuesChange({ declarationOptions, selectedDeclarations });
   };
 
   getDefaultView = () => {
     const {
       declarationOptions = declarationOptionsList,
-      selectedOptions,
+      selectedDeclarations,
     } = this.props.createItem;
 
     return (
@@ -38,7 +38,7 @@ export class CreateItemFive extends PureComponent {
         selectedText="SELECTED"
         selectedColor="#e57067"
         initialList={declarationOptions}
-        selectedList={selectedOptions}
+        selectedList={selectedDeclarations}
         onItemSelected={this.onItemSelected}
       />
     );

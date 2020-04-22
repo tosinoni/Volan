@@ -21,7 +21,7 @@ export class CircularButtonList extends PureComponent {
           const { icon, text, color } = item;
           const isItemSelected = text === selectedItem;
           const backgroundColor =
-            isItemSelected && isButtonSelection ? Colors.brightBlue : color;
+            isItemSelected && isButtonSelection ? Colors.brightGreen : color;
 
           return (
             <View style={styles.buttonView} key={index}>
@@ -39,7 +39,7 @@ export class CircularButtonList extends PureComponent {
                   </View>
                 )}
                 {isItemSelected && isBadgeSelection && (
-                  <Badge primary style={styles.badge}>
+                  <Badge style={styles.badge}>
                     <Icon
                       type="FontAwesome"
                       name="check"

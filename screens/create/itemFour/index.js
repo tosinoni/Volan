@@ -76,13 +76,11 @@ export class CreateItemFour extends PureComponent {
   };
 
   isPermissionGiven = async () => {
-    if (Constants.platform.ios) {
-      const { status } = await Permissions.askAsync(
-        Permissions.CAMERA,
-        Permissions.CAMERA_ROLL
-      );
-      return status === "granted";
-    }
+    const { status } = await Permissions.askAsync(
+      Permissions.CAMERA,
+      Permissions.CAMERA_ROLL
+    );
+    return status === "granted";
 
     return true;
   };
