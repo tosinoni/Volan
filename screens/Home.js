@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-elements";
 import { withFirebaseHOC } from "../config/Firebase";
 
-class Home extends Component {
+class Home extends PureComponent {
   handleSignout = async () => {
     try {
       await this.props.firebase.signOut();

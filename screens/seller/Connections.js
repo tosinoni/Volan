@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { View, Text } from "react-native";
 import Header from "../../components/Header";
 import Constants from "../../constants";
 
-export class Connections extends Component {
+export class Connections extends PureComponent {
   static navigationOptions = {
     header: props => <Header mode={Constants.SELLER} title="Connections" />
   };

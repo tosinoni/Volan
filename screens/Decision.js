@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Button, Text, Icon } from "native-base";
 import { View, Image } from "react-native";
 import { Colors } from "../styles/Colors";
@@ -6,7 +6,7 @@ import Swiper from "react-native-swiper";
 import Constants from "../constants";
 import ToggleModal from "../components/ToggleModal";
 import { styles } from "../styles/screens/Decision";
-export class Decision extends Component {
+export class Decision extends PureComponent {
   state = {
     selectedMode: "",
     showModal: false

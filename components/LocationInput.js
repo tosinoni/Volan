@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { Text } from "react-native";
 import * as Location from "expo-location";
 
-export class LocationInput extends Component {
+export class LocationInput extends PureComponent {
   state = {
     currentLocation: {}
   };

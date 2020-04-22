@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { View, Text, Image } from "react-native";
 import { Button, Icon } from "native-base";
 import { styles } from "../styles/components/ImageTileList";
@@ -12,7 +12,7 @@ const createTile = {
   isFixed: true
 };
 
-export class ImageTileList extends Component {
+export class ImageTileList extends PureComponent {
   getTiles = () => {
     const { items, minNumberOfTiles = 9 } = this.props;
     const tiles = [createTile, ...items];

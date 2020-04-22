@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Image } from "react-native";
 import { View, Text, Button } from "native-base";
 
-export class Intro extends Component {
+export class Intro extends PureComponent {
   render() {
     const {
       handleSkip,

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import Intro from "../components/Intro";
 import { SafeAreaView } from "react-native";
 import { styles as stylesOne } from "../styles/screens/intro/IntroOne";
@@ -6,7 +6,7 @@ import { styles as stylesTwo } from "../styles/screens/intro/IntroTwo";
 import { styles as stylesThree } from "../styles/screens/intro/IntroThree";
 import Swiper from "react-native-swiper";
 
-export class IntroScreen extends Component {
+export class IntroScreen extends PureComponent {
   state = {
     currentIndex: 0
   };

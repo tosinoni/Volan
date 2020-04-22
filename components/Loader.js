@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import AnimatedLoader from "react-native-animated-loader";
 import { StyleSheet } from "react-native";
-export class Loader extends Component {
+export class Loader extends PureComponent {
   render() {
     const { visible } = this.props;
 

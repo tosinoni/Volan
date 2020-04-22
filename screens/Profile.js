@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   StyleSheet,
   Text,
@@ -15,7 +15,7 @@ import { Settings } from "../screens/Settings"
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export class Profile extends Component {
+export class Profile extends PureComponent {
   GoToEditProfile = () => this.props.navigation.navigate("EditProfile");
   render() {
     return (

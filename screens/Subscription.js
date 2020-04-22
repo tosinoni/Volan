@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { View, Text } from "react-native";
 
-export class Subscription extends Component {
+export class Subscription extends PureComponent {
   render() {
     return (
       <View>

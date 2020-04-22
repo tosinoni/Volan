@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 import {
   Text,
   Icon,
@@ -46,7 +46,7 @@ const validationSchema = Yup.object().shape({
     .required("Please provide a password")
 });
 
-export class Login extends Component {
+export class Login extends PureComponent {
   GoToSignUpPage = () => this.props.navigation.navigate("Signup");
   GoToForgotPassword = () => this.props.navigation.navigate("ForgotPassword");
 

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
 import { View, Text, Row, Button, Icon } from "native-base";
 import { StyleSheet } from "react-native";
@@ -7,7 +7,7 @@ import { withFirebaseHOC } from "../config/Firebase";
 import * as Google from "expo-google-app-auth";
 import Loader from "./Loader";
 
-export class SocialButtons extends Component {
+export class SocialButtons extends PureComponent {
   state = {
     visible: false
   };

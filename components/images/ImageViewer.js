@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Modal, Text, ImageBackground } from "react-native";
 import ImageViewerZoom from "react-native-image-zoom-viewer";
 import { Icon, Button } from "native-base";
 import { View } from "react-native";
 import { ImageManipulator } from "expo-image-crop";
 
-export class ImageViewer extends Component {
+export class ImageViewer extends PureComponent {
   state = {
     isEditVisible: false
   };

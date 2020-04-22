@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Text, View, Image } from "react-native";
 import { Button } from "native-base";
 import Modal from "react-native-modal";
@@ -7,7 +7,7 @@ import { styles } from "../styles/components/ToggleModal";
 import { withNavigation } from "react-navigation";
 import { withFirebaseHOC } from "../config/Firebase";
 
-export class ToggleModal extends Component {
+export class ToggleModal extends PureComponent {
   goToSelectedScreen = async () => {
     const { mode } = this.props;
     const screen = mode === Constants.BUYER ? "Buyer" : "Seller";

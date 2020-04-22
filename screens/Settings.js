@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { View, SectionList, StyleSheet } from 'react-native';
 import { ListItem, Divider} from 'react-native-elements';
 import { Colors } from "../styles/Colors";
@@ -69,7 +69,7 @@ const sections = [
   { data: [] },
 ];
 
-export class Settings extends Component {
+export class Settings extends PureComponent {
   renderItem = ({
     item: { title, backgroundColor, type, icon, rightTitle, hideChevron, checkbox },
   }) => (

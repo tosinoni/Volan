@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 
 import {
   Text,
@@ -60,7 +60,7 @@ const validationSchema = Yup.object().shape({
   terms: Yup.boolean().oneOf([true], "Must Accept Terms and Conditions")
 });
 
-export class SignUp extends Component {
+export class SignUp extends PureComponent {
   state = {
     visible: false,
     cca2: "CAN"

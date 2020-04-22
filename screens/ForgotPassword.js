@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import DropdownAlert from "react-native-dropdownalert";
 import { withFirebaseHOC } from "../config/Firebase";
@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
     .required("Please enter a registered email")
 });
 
-export class ForgotPassword extends Component {
+export class ForgotPassword extends PureComponent {
   handlePasswordReset = async (values, actions) => {
     const { email } = values;
     try {

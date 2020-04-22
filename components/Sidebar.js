@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { View } from "react-native";
 import { Text, List, ListItem, Thumbnail } from "native-base";
 import { DrawerActions } from "react-navigation-drawer";
@@ -7,7 +7,7 @@ import { withFirebaseHOC } from "../config/Firebase";
 
 const routes = ["Subscription", "Profile", "Logout"];
 
-export class Sidebar extends Component {
+export class Sidebar extends PureComponent {
   state = {
     user: {}
   };

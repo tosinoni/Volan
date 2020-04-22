@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,7 +14,7 @@ import { withFirebaseHOC } from "../config/Firebase";
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-class EditProfile extends Component {
+class EditProfile extends PureComponent {
   render() {
     return (
       <ScrollView>

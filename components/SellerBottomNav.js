@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { FooterTab, Button, Icon, Text, Badge, Footer } from "native-base";
 import { withNavigation } from "react-navigation";
 import { styles as styleSheet } from "../styles/components/TabBar";
 import { DrawerActions } from "react-navigation-drawer";
 import Constants from "../constants";
 
-export class SellerBottomNav extends Component {
+export class SellerBottomNav extends PureComponent {
   state = {
     currentRouteName: "Inventory"
   };

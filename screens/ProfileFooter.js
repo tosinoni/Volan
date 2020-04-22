@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,7 +6,7 @@ import {
   Image,
 } from 'react-native';
 
-export class ProfileFooter extends Component {
+export class ProfileFooter extends PureComponent {
   render() {
     return (
       <View style={styles.container}>
