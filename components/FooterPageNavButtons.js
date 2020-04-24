@@ -12,11 +12,11 @@ export class FooterPageNavButtons extends PureComponent {
       arrayOfButtons.push(i);
     }
 
-    return arrayOfButtons.map((value) => {
+    return arrayOfButtons.map((value, key) => {
       const isCurrentScreen = value == screenIndex;
       const circle = isCurrentScreen ? styles.currentScreen : styles.circle;
       return (
-        <View style={styles.tracker}>
+        <View style={styles.tracker} key={key}>
           <Button
             onPress={() => {
               handleCircleClick(value);

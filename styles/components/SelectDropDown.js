@@ -3,7 +3,7 @@ import Constants from "../../constants";
 import { StyleSheet } from "react-native";
 import { genericStyles } from "../generic";
 
-export const styles = props =>
+export const styles = (props) =>
   StyleSheet.create({
     pickerContainer: {
       alignSelf: "stretch",
@@ -11,7 +11,7 @@ export const styles = props =>
       borderColor: "#e6e6e6",
       borderColor: "#e6e6e6",
       borderRadius: 5,
-      height: 40
+      height: 40,
     },
     picker: {
       paddingTop: 0,
@@ -19,17 +19,16 @@ export const styles = props =>
       borderColor: "#e6e6e6",
       borderRadius: 10,
       height: 40,
-      color: "#87868a"
     },
     header: {
       backgroundColor:
-        props.mode === Constants.BUYER ? Colors.brightBlue : Colors.brightRed
+        props.mode === Constants.BUYER ? Colors.brightBlue : Colors.brightRed,
     },
     pickerTextStyle: {
       color: "#87868a",
-      paddingLeft: 10
+      paddingLeft: 10,
     },
     pickerIconStyle: {
-      color: "#87868a"
-    }
+      color: "#87868a",
+    },
   });

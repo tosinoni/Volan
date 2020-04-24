@@ -39,7 +39,7 @@ export class ImageTileList extends Component {
   render() {
     const { tileStyle = {}, onTileSelected } = this.props;
 
-    const Tile = ({ item, key }) => {
+    const Tile = ({ item }) => {
       const {
         type = "text",
         value,
@@ -62,7 +62,6 @@ export class ImageTileList extends Component {
             tileStyle.tile,
             isDisabled && styles.tileDisabled,
           ]}
-          key={key}
           inactive={true}
         >
           <Button
