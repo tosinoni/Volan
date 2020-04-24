@@ -7,12 +7,10 @@ import ActionSheet from "react-native-actionsheet";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import DropdownAlert from "react-native-dropdownalert";
-import Constants from "expo-constants";
 import { withNavigation } from "react-navigation";
 import { StackActions } from "react-navigation";
 import ImageViewer from "../../../components/images/ImageViewer";
 import uuid from "react-native-uuid";
-import { withCreateItemHOC } from "../context";
 
 const maxNumberOfImages = 10;
 
@@ -232,4 +230,4 @@ export class CreateItemFour extends PureComponent {
   }
 }
 
-export default withNavigation(withCreateItemHOC(CreateItemFour));
+export default withNavigation(CreateItemFour);

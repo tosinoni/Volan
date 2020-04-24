@@ -1,9 +1,9 @@
-import React, { Fragment, PureComponent } from "react";
+import React, { Fragment } from "react";
 import { View, Text, Image } from "react-native";
 import { styles } from "../../../styles/screens/create/itemOne/Car";
 import { Item, Label, Input } from "native-base";
 import SelectDropDown from "../../../components/SelectDropDown";
-import { withCreateItemHOC } from "../context";
+import { useFormikContext } from "formik";
 
 const years = [
   { label: "2019", value: "2019" },
@@ -25,121 +25,127 @@ const makes = [
   { label: "Lexus", value: "Lexus" },
 ];
 
-export class CarItemOne extends PureComponent {
-  render() {
-    const {
-      year,
-      make,
-      model,
-      submodel,
-      trim,
-      mode,
-      onInputChange,
-    } = this.props.createItem;
+const CarItemOne = () => {
+  const { values, handleChange } = useFormikContext();
+  const { mode, selectedVehicleType } = values;
+  const { year, make, model, submodel, trim, price, vin, carfaxUrl } = values[
+    selectedVehicleType
+  ];
 
-    return (
-      <Fragment>
-        <View style={styles.section}>
-          <Text style={styles.sectionText}>VIN</Text>
-          <View style={styles.formSection}>
-            <Item stackedLabel style={styles.formItem}>
-              <Label style={styles.inputLabel}>VIN</Label>
-              <Input style={styles.input} />
+  return (
+    <Fragment>
+      <View style={styles.section}>
+        <Text style={styles.sectionText}>VIN</Text>
+        <View style={styles.formSection}>
+          <Item stackedLabel style={styles.formItem}>
+            <Label style={styles.inputLabel}>VIN</Label>
+            <Input
+              style={styles.input}
+              onChangeText={handleChange(`${selectedVehicleType}.vin`)}
+              value={vin}
+            />
+          </Item>
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionText}>MAKE / MODEL</Text>
+        <View style={styles.formSection}>
+          <View style={styles.formItem}>
+            <Label style={styles.inputLabel}>Year</Label>
+            <SelectDropDown
+              itemKey="year"
+              headerTitle="Select Year"
+              selectedValue={year}
+              items={years}
+              onValueChange={handleChange(`${selectedVehicleType}.year`)}
+              mode={mode}
+            />
+          </View>
+
+          <View style={styles.formItem}>
+            <Label style={styles.inputLabel}>Make</Label>
+            <SelectDropDown
+              headerTitle="Select Make"
+              itemKey="make"
+              selectedValue={make}
+              items={makes}
+              onValueChange={handleChange(`${selectedVehicleType}.make`)}
+              mode={mode}
+            />
+          </View>
+
+          <View style={styles.formItem}>
+            <Label style={styles.inputLabel}>Model</Label>
+            <SelectDropDown
+              itemKey="model"
+              headerTitle="Select Model"
+              selectedValue={model}
+              onValueChange={handleChange(`${selectedVehicleType}.model`)}
+              mode={mode}
+            />
+          </View>
+
+          <View style={styles.formItem}>
+            <Label style={styles.inputLabel}>Submodel</Label>
+            <SelectDropDown
+              itemKey="submodel"
+              headerTitle="Select Submodel"
+              selectedValue={submodel}
+              onValueChange={handleChange(`${selectedVehicleType}.submodel`)}
+              mode={mode}
+            />
+          </View>
+
+          <View style={styles.formItem}>
+            <Label style={styles.inputLabel}>Trim</Label>
+            <SelectDropDown
+              headerTitle="Select Trim"
+              itemKey="trim"
+              selectedValue={trim}
+              onValueChange={handleChange(`${selectedVehicleType}.trim`)}
+              mode={mode}
+            />
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionText}>PRICE</Text>
+        <View style={styles.formSection}>
+          <Item stackedLabel style={styles.formItem}>
+            <Label style={styles.inputLabel}>PRICE</Label>
+            <Input
+              style={styles.input}
+              onChangeText={handleChange(`${selectedVehicleType}.price`)}
+              value={price}
+            />
+          </Item>
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionText}>CARFAX</Text>
+        <View style={styles.formSection}>
+          <Item stackedLabel style={styles.formItem}>
+            <Label style={styles.inputLabel}>CARFAX Canada Report URL</Label>
+
+            <Item style={styles.carfaxContainer}>
+              <Input
+                value={carfaxUrl}
+                style={styles.carfaxInput}
+                onChangeText={handleChange(`${selectedVehicleType}.carfaxUrl`)}
+              />
+              <Image
+                style={styles.carfaxLogo}
+                source={require("../../../assets/images/carfax-canada.png")}
+              />
             </Item>
-          </View>
+          </Item>
         </View>
+      </View>
+    </Fragment>
+  );
+};
 
-        <View style={styles.section}>
-          <Text style={styles.sectionText}>MAKE / MODEL</Text>
-          <View style={styles.formSection}>
-            <View style={styles.formItem}>
-              <Label style={styles.inputLabel}>Year</Label>
-              <SelectDropDown
-                itemKey="year"
-                headerTitle="Select Year"
-                selectedValue={year}
-                items={years}
-                onValueChange={onInputChange}
-                mode={mode}
-              />
-            </View>
-
-            <View style={styles.formItem}>
-              <Label style={styles.inputLabel}>Make</Label>
-              <SelectDropDown
-                headerTitle="Select Make"
-                itemKey="make"
-                selectedValue={make}
-                items={makes}
-                onValueChange={onInputChange}
-                mode={mode}
-              />
-            </View>
-
-            <View style={styles.formItem}>
-              <Label style={styles.inputLabel}>Model</Label>
-              <SelectDropDown
-                itemKey="model"
-                headerTitle="Select Model"
-                selectedValue={model}
-                onValueChange={onInputChange}
-                mode={mode}
-              />
-            </View>
-
-            <View style={styles.formItem}>
-              <Label style={styles.inputLabel}>Submodel</Label>
-              <SelectDropDown
-                itemKey="submodel"
-                headerTitle="Select Submodel"
-                selectedValue={submodel}
-                onValueChange={onInputChange}
-                mode={mode}
-              />
-            </View>
-
-            <View style={styles.formItem}>
-              <Label style={styles.inputLabel}>Trim</Label>
-              <SelectDropDown
-                headerTitle="Select Trim"
-                itemKey="trim"
-                selectedValue={trim}
-                onValueChange={onInputChange}
-                mode={mode}
-              />
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionText}>PRICE</Text>
-          <View style={styles.formSection}>
-            <Item stackedLabel style={styles.formItem}>
-              <Label style={styles.inputLabel}>PRICE</Label>
-              <Input style={styles.input} />
-            </Item>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionText}>CARFAX</Text>
-          <View style={styles.formSection}>
-            <Item stackedLabel style={styles.formItem}>
-              <Label style={styles.inputLabel}>CARFAX Canada Report URL</Label>
-
-              <Item style={styles.carfaxContainer}>
-                <Input style={styles.carfaxInput} />
-                <Image
-                  style={styles.carfaxLogo}
-                  source={require("../../../assets/images/carfax-canada.png")}
-                />
-              </Item>
-            </Item>
-          </View>
-        </View>
-      </Fragment>
-    );
-  }
-}
-
-export default withCreateItemHOC(CarItemOne);
+export default CarItemOne;

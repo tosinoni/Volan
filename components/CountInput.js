@@ -5,21 +5,24 @@ import { Button, Input, Icon } from "native-base";
 
 export class CountInput extends PureComponent {
   onIncreaseSelected = () => {
-    const { increment = 1, value = 0, onValueChange, itemKey } = this.props;
-    const newValue = (value || 0) + increment;
-    onValueChange(itemKey, newValue);
+    const { increment = 1, value = 0, onValueChange } = this.props;
+    const newValue = parseFloat(value || 0) + increment;
+
+    onValueChange(`${newValue}`);
   };
 
   onDecreaseSelected = () => {
-    const { increment = 1, value = 0, onValueChange, itemKey } = this.props;
-    const newValue = (value || 0) - increment;
-    onValueChange(itemKey, newValue);
+    const { increment = 1, value = 0, onValueChange } = this.props;
+    const newValue = parseFloat(value || 0) - increment;
+    onValueChange(`${newValue}`);
   };
 
   onInputChange = (value) => {
-    const { itemKey, onValueChange } = this.props;
-    onValueChange(itemKey, parseFloat(value));
+    const { onValueChange } = this.props;
+
+    onValueChange(value);
   };
+
   render() {
     const { value, decimals = 0 } = this.props;
     const displayValue = value > 0 ? parseFloat(value).toFixed(decimals) : "";

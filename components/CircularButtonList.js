@@ -30,7 +30,7 @@ export class CircularButtonList extends PureComponent {
                 badge
                 vertical
                 onPress={() => {
-                  onItemSelected(item);
+                  onItemSelected(item.text);
                 }}
               >
                 {icon && (

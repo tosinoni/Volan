@@ -13,9 +13,14 @@ import { styles as stylesheet } from "../../styles/screens/create";
 import { Footer, Icon, Button } from "native-base";
 import FooterPageNavButtons from "../../components/FooterPageNavButtons";
 import { VEHICLE_TYPES } from "../../constants";
-import { CreateItemContext } from "./context";
+import { Formik } from "formik";
 
 export class CreateItem extends PureComponent {
+  state = {
+    currentIndex: 0,
+    scrollEnabled: true,
+  };
+
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
 
@@ -52,72 +57,32 @@ export class CreateItem extends PureComponent {
     }
   };
 
-  onInputChange = (key, value) => {
-    const { selectedVehicleType } = this.state;
-
-    const selectedVehicleTypeProps = this.state[selectedVehicleType] || {};
-    const newProps = {
-      ...selectedVehicleTypeProps,
-      [key]: value,
-    };
-
-    this.setState({
-      [selectedVehicleType]: newProps,
-    });
-  };
-
-  onMultipleValuesChange = (values = {}) => {
-    const { selectedVehicleType } = this.state;
-    const selectedVehicleTypeProps = this.state[selectedVehicleType] || {};
-
-    const newProps = Object.keys(values).reduce(
-      (newProps, key) => {
-        newProps[key] = values[key];
-        return newProps;
-      },
-      { ...selectedVehicleTypeProps }
-    );
-
-    this.setState({
-      [selectedVehicleType]: newProps,
-    });
-  };
-
-  onVehicleTypeChanged = (selectedVehicleType) => {
-    this.setState({ selectedVehicleType });
-  };
-
-  getVehicleProps = (selectedVehicleType) => {
-    const { [selectedVehicleType]: selectedVehicleTypeProps = {} } = this.state;
-
-    return {
-      onVehicleTypeChanged: this.onVehicleTypeChanged,
-      onInputChange: this.onInputChange,
-      onMultipleValuesChange: this.onMultipleValuesChange,
-      mode: this.props.navigation.state.params.mode,
-      ...selectedVehicleTypeProps,
-      selectedVehicleType,
-    };
-  };
-
-  state = {
-    selectedVehicleType: VEHICLE_TYPES.CAR,
-    currentIndex: 0,
-    scrollEnabled: true,
-  };
-
   render() {
-    const { currentIndex, scrollEnabled, selectedVehicleType } = this.state;
+    const { currentIndex, scrollEnabled } = this.state;
     const { params } = this.props.navigation.state;
     const { mode } = params;
     const isNextButtonDisabled = currentIndex === 5;
     const isPrevButtonDisabled = currentIndex === 0;
-    const vehicleProps = this.getVehicleProps(selectedVehicleType);
 
     const styles = stylesheet({ mode });
+    const vehicleTypesObj = Object.keys(VEHICLE_TYPES).reduce(
+      (vehicleTypesObj, key) => {
+        const value = VEHICLE_TYPES[key];
+        vehicleTypesObj[value] = {};
+
+        return vehicleTypesObj;
+      },
+      {}
+    );
 
     return (
-      <CreateItemContext.Provider value={{ ...vehicleProps }}>
+      <Formik
+        initialValues={{
+          mode,
+          selectedVehicleType: VEHICLE_TYPES.CAR,
+          ...vehicleTypesObj,
+        }}
+      >
         <View style={styles.content}>
           <Swiper
             showsPagination={false}
@@ -171,7 +136,7 @@ export class CreateItem extends PureComponent {
             </Button>
           </Footer>
         </View>
-      </CreateItemContext.Provider>
+      </Formik>
     );
   }
 }

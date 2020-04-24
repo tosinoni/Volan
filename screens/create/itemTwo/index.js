@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { VEHICLE_TYPES } from "../../../constants/";
 import CarItemTwo from "./Car";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -6,7 +6,7 @@ import { Form } from "native-base";
 import { styles } from "../../../styles/screens/create/itemTwo";
 import { View, Text } from "react-native";
 import CircularButtonList from "../../../components/CircularButtonList";
-import { withCreateItemHOC } from "../context";
+import { useFormikContext } from "formik";
 
 const colors = [
   { text: "Black", color: "black" },
@@ -21,9 +21,10 @@ const colors = [
   { text: "Beige", color: "beige" },
 ];
 
-export class CreateItemTwo extends PureComponent {
-  getDefaultView = () => {
-    const { selectedExteriorColor, onInputChange } = this.props.createItem;
+const CreateItemTwo = () => {
+  getDefaultView = (values, handleChange) => {
+    const { selectedVehicleType } = values;
+    const { selectedExteriorColor } = values[selectedVehicleType];
 
     return (
       <View style={styles.section}>
@@ -33,33 +34,32 @@ export class CreateItemTwo extends PureComponent {
             list={colors}
             isBadgeSelection
             selectedItem={selectedExteriorColor}
-            onItemSelected={(item) =>
-              onInputChange("selectedExteriorColor", item.text)
-            }
+            onItemSelected={handleChange(
+              `${selectedVehicleType}.selectedExteriorColor`
+            )}
           />
         </View>
       </View>
     );
   };
 
-  renderViewType = (selectedVehicleType) => {
+  renderViewType = () => {
+    const { values, handleChange } = useFormikContext();
+    const { selectedVehicleType } = values;
+
     switch (selectedVehicleType) {
       case VEHICLE_TYPES.CAR:
         return <CarItemTwo />;
       default:
-        return this.getDefaultView();
+        return getDefaultView(values, handleChange);
     }
   };
 
-  render() {
-    const { selectedVehicleType } = this.props.createItem;
+  return (
+    <KeyboardAwareScrollView viewIsInsideTabBar>
+      <Form>{renderViewType()}</Form>
+    </KeyboardAwareScrollView>
+  );
+};
 
-    return (
-      <KeyboardAwareScrollView viewIsInsideTabBar>
-        <Form>{this.renderViewType(selectedVehicleType)}</Form>
-      </KeyboardAwareScrollView>
-    );
-  }
-}
-
-export default withCreateItemHOC(CreateItemTwo);
+export default CreateItemTwo;

@@ -44,9 +44,7 @@ export class SelectDropDown extends PureComponent {
           style={styles.picker}
           iosIcon={<Icon name="arrow-down" style={styles.pickerIconStyle} />}
           selectedValue={selectedValue}
-          onValueChange={(value) => {
-            onValueChange(itemKey, value);
-          }}
+          onValueChange={onValueChange}
         >
           {items.map((item, index) => {
             return (

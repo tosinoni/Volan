@@ -8,7 +8,7 @@ import { View, Text } from "react-native";
 import CircularButtonList from "../../../components/CircularButtonList";
 import { Label } from "native-base";
 import SelectDropDown from "../../../components/SelectDropDown";
-import { withCreateItemHOC } from "../context";
+import { useFormikContext } from "formik";
 
 const vehicleTypes = [
   {
@@ -54,9 +54,10 @@ const years = [
   { label: "2014", value: "2014" },
 ];
 
-export class CreateItemOne extends PureComponent {
-  getDefaultView = () => {
-    const { year, mode, onInputChange } = this.props.createItem;
+const CreateItemOne = () => {
+  getDefaultView = (values, handleChange) => {
+    const { mode, selectedVehicleType } = values;
+    const { year } = values[selectedVehicleType];
 
     return (
       <View style={styles.section}>
@@ -69,7 +70,7 @@ export class CreateItemOne extends PureComponent {
               headerTitle="Select Year"
               selectedValue={year}
               items={years}
-              onValueChange={onInputChange}
+              onValueChange={handleChange(`${selectedVehicleType}.year`)}
               mode={mode}
             />
           </View>
@@ -78,43 +79,37 @@ export class CreateItemOne extends PureComponent {
     );
   };
 
-  renderViewType = (selectedVehicleType) => {
-    switch (selectedVehicleType) {
+  renderViewType = () => {
+    const { values, handleChange } = useFormikContext();
+
+    switch (values.selectedVehicleType) {
       case VEHICLE_TYPES.CAR:
         return <CarItemOne />;
       default:
-        return this.getDefaultView();
+        return getDefaultView(values, handleChange);
     }
   };
 
-  onVehicleTypeSelected = (item) => {
-    const { onVehicleTypeChanged } = this.props.createItem;
-    const selectedVehicleType = item.text;
+  const { values, handleChange } = useFormikContext();
 
-    onVehicleTypeChanged(selectedVehicleType);
-  };
-
-  render() {
-    const { selectedVehicleType } = this.props.createItem;
-    return (
-      <KeyboardAwareScrollView viewIsInsideTabBar>
-        <Form>
-          <View style={styles.section}>
-            <Text style={styles.sectionText}>VEHICLE TYPE</Text>
-            <View style={styles.circularFormSection}>
-              <CircularButtonList
-                list={vehicleTypes}
-                isButtonSelection
-                selectedItem={selectedVehicleType}
-                onItemSelected={this.onVehicleTypeSelected}
-              />
-            </View>
+  return (
+    <KeyboardAwareScrollView viewIsInsideTabBar>
+      <Form>
+        <View style={styles.section}>
+          <Text style={styles.sectionText}>VEHICLE TYPE</Text>
+          <View style={styles.circularFormSection}>
+            <CircularButtonList
+              list={vehicleTypes}
+              isButtonSelection
+              selectedItem={values.selectedVehicleType}
+              onItemSelected={handleChange("selectedVehicleType")}
+            />
           </View>
-          {this.renderViewType(selectedVehicleType)}
-        </Form>
-      </KeyboardAwareScrollView>
-    );
-  }
-}
+        </View>
+        {renderViewType()}
+      </Form>
+    </KeyboardAwareScrollView>
+  );
+};
 
-export default withCreateItemHOC(CreateItemOne);
+export default CreateItemOne;

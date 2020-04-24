@@ -1,7 +1,7 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import OptionsList from "../../../components/OptionsList";
-import { withCreateItemHOC } from "../context";
+import { useFormikContext } from "formik";
 
 const declarationOptionsList = [
   "5 Digit Odomoter",
@@ -20,17 +20,19 @@ const declarationOptionsList = [
   "Transmission Needs Repair",
 ];
 
-export class CreateItemFive extends PureComponent {
-  onItemSelected = (declarationOptions, selectedDeclarations) => {
-    const { onMultipleValuesChange } = this.props.createItem;
-    onMultipleValuesChange({ declarationOptions, selectedDeclarations });
-  };
-
+const CreateItemFive = () => {
   getDefaultView = () => {
-    const {
-      declarationOptions = declarationOptionsList,
-      selectedDeclarations,
-    } = this.props.createItem;
+    const { values, handleChange } = useFormikContext();
+    const { selectedVehicleType } = values;
+
+    const { selectedDeclarations } = values[selectedVehicleType];
+    const selectedDeclarationsList = selectedDeclarations
+      ? JSON.parse(selectedDeclarations)
+      : [];
+
+    const declarationOptions = declarationOptionsList.filter(function (item) {
+      return !selectedDeclarationsList.includes(item);
+    });
 
     return (
       <OptionsList
@@ -38,23 +40,23 @@ export class CreateItemFive extends PureComponent {
         selectedText="SELECTED"
         selectedColor="#e57067"
         initialList={declarationOptions}
-        selectedList={selectedDeclarations}
-        onItemSelected={this.onItemSelected}
+        selectedList={selectedDeclarationsList}
+        onItemSelected={handleChange(
+          `${selectedVehicleType}.selectedDeclarations`
+        )}
       />
     );
   };
 
   renderViewType = () => {
-    return this.getDefaultView();
+    return getDefaultView();
   };
 
-  render() {
-    return (
-      <KeyboardAwareScrollView viewIsInsideTabBar>
-        {this.renderViewType()}
-      </KeyboardAwareScrollView>
-    );
-  }
-}
+  return (
+    <KeyboardAwareScrollView viewIsInsideTabBar>
+      {renderViewType()}
+    </KeyboardAwareScrollView>
+  );
+};
 
-export default withCreateItemHOC(CreateItemFive);
+export default CreateItemFive;
