@@ -43,13 +43,12 @@ export class OptionsList extends PureComponent {
       selectedList = [],
     } = this.props;
 
-    const OptionItem = ({ text, type, key }) => {
+    const OptionItem = ({ text, type }) => {
       const backgroundColor = type === "selected" ? selectedColor : undefined;
       const iconName = type === "selected" ? "minus" : "plus";
 
       return (
         <Button
-          key={key}
           rounded
           style={[styles.optionButton, { backgroundColor }]}
           onPress={() => {
