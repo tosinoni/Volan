@@ -56,8 +56,7 @@ const CreateItemForm = ({ mode }) => {
   const [currentIndex = 0, setCurrentIndex] = useState(0);
   const [formValidated = fasle, setFormValidated] = useState(0);
 
-  watch(Object.values(VEHICLE_TYPES));
-  watch(["selectedVehicleType"]);
+  watch();
 
   const onIndexChanged = (index) => {
     setCurrentIndex(index);
@@ -86,7 +85,7 @@ const CreateItemForm = ({ mode }) => {
   const isFormValid = Object.keys(errors).length === 0;
   const isNextButtonDisabled = currentIndex === 5 || !isFormValid;
   const isPrevButtonDisabled = currentIndex === 0;
-  const scrollEnabled = formValidated && isFormValid;
+  const scrollEnabled = Boolean(formValidated && isFormValid);
 
   const styles = stylesheet({ mode });
   return (
