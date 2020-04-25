@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { View } from "react-native";
 import Constants from "../../constants";
 import { Colors } from "../../styles/Colors";
@@ -13,10 +13,10 @@ import { styles as stylesheet } from "../../styles/screens/create";
 import { Footer, Icon, Button } from "native-base";
 import FooterPageNavButtons from "../../components/FooterPageNavButtons";
 import { VEHICLE_TYPES } from "../../constants";
-import { Formik } from "formik";
 import { CREATE_ITEM_SCHEMA } from "./validation";
-import { useFormikContext } from "formik";
 import { withNavigation } from "react-navigation";
+import { useForm, FormContext, useFormContext } from "react-hook-form";
+import { useState } from "react";
 
 let swiperRef = React.createRef(null);
 
@@ -27,38 +27,46 @@ const CreateItem = (props) => {
   const vehicleTypesObj = Object.keys(VEHICLE_TYPES).reduce(
     (vehicleTypesObj, key) => {
       const value = VEHICLE_TYPES[key];
-      vehicleTypesObj[value] = {};
+      vehicleTypesObj[value] = { year: "" };
 
       return vehicleTypesObj;
     },
     {}
   );
+  const methods = useForm({
+    defaultValues: {
+      currentIndex: 0,
+      scrollEnabled: false,
+      mode,
+      selectedVehicleType: VEHICLE_TYPES.CAR,
+      ...vehicleTypesObj,
+      Car: {
+        carfaxUrl: "",
+        notes: "",
+        price: "",
+        vin: "",
+      },
+    },
+  });
 
   return (
-    <Formik
-      initialValues={{
-        currentIndex: 0,
-        scrollEnabled: false,
-        mode,
-        selectedVehicleType: VEHICLE_TYPES.CAR,
-        ...vehicleTypesObj,
-      }}
-      validationSchema={CREATE_ITEM_SCHEMA}
-      validateOnMount={true}
-    >
+    <FormContext {...methods}>
       <CreateItemForm mode={mode} />
-    </Formik>
+    </FormContext>
   );
 };
 
 const CreateItemForm = ({ mode }) => {
-  const { values, handleChange, errors, validateForm } = useFormikContext();
+  const { setValue, getValues, watch } = useFormContext();
+  const [currentIndex = 0, setCurrentIndex] = useState(0);
 
-  const { currentIndex: currentIndexStr, scrollEnabled } = values;
-  const currentIndex = parseInt(currentIndexStr);
+  const { currentIndex: currentIndexStr, scrollEnabled } = getValues();
+
+  watch(Object.values(VEHICLE_TYPES));
+  watch(["selectedVehicleType"]);
 
   const onIndexChanged = (index) => {
-    handleChange("currentIndex")(`${index}`);
+    setCurrentIndex(index);
   };
 
   const handleCircleClick = (index) => {
@@ -74,8 +82,7 @@ const CreateItemForm = ({ mode }) => {
     swiperRef.current.scrollBy(-1);
   };
 
-  const isNextButtonDisabled =
-    currentIndex === 5 || Object.keys(errors).length !== 0;
+  const isNextButtonDisabled = currentIndex === 5;
   const isPrevButtonDisabled = currentIndex === 0;
 
   const styles = stylesheet({ mode });
@@ -86,7 +93,6 @@ const CreateItemForm = ({ mode }) => {
         loop={false}
         onIndexChanged={onIndexChanged}
         ref={swiperRef}
-        scrollEnabled={scrollEnabled}
       >
         <CreateItemOne />
         <CreateItemTwo />

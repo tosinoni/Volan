@@ -1,7 +1,7 @@
 import React from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import OptionsList from "../../../components/OptionsList";
-import { useFormikContext } from "formik";
+import { useFormContext, Controller } from "react-hook-form";
 
 const declarationOptionsList = [
   "5 Digit Odomoter",
@@ -21,11 +21,12 @@ const declarationOptionsList = [
 ];
 
 const CreateItemFive = () => {
-  getDefaultView = () => {
-    const { values, handleChange } = useFormikContext();
-    const { selectedVehicleType } = values;
+  const { setValue, getValues } = useFormContext();
+  const values = getValues({ nest: true }) || {};
+  const { selectedVehicleType } = values;
+  const { selectedDeclarations } = values[selectedVehicleType] || {};
 
-    const { selectedDeclarations } = values[selectedVehicleType];
+  getDefaultView = () => {
     const selectedDeclarationsList = selectedDeclarations
       ? JSON.parse(selectedDeclarations)
       : [];
@@ -35,15 +36,20 @@ const CreateItemFive = () => {
     });
 
     return (
-      <OptionsList
-        initialText="DECLARATIONS"
-        selectedText="SELECTED"
-        selectedColor="#e57067"
-        initialList={declarationOptions}
-        selectedList={selectedDeclarationsList}
-        onItemSelected={handleChange(
-          `${selectedVehicleType}.selectedDeclarations`
-        )}
+      <Controller
+        as={
+          <OptionsList
+            initialText="DECLARATIONS"
+            selectedText="SELECTED"
+            selectedColor="#e57067"
+            initialList={declarationOptions}
+            selectedList={selectedDeclarationsList}
+            onItemSelected={(value) =>
+              setValue(`${selectedVehicleType}.selectedDeclarations`, value)
+            }
+          />
+        }
+        name={`${selectedVehicleType}.selectedDeclarations`}
       />
     );
   };

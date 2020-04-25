@@ -6,7 +6,7 @@ import { Form } from "native-base";
 import { styles } from "../../../styles/screens/create/itemTwo";
 import { View, Text } from "react-native";
 import CircularButtonList from "../../../components/CircularButtonList";
-import { useFormikContext } from "formik";
+import { useFormContext, Controller } from "react-hook-form";
 
 const colors = [
   { text: "Black", color: "black" },
@@ -22,21 +22,28 @@ const colors = [
 ];
 
 const CreateItemTwo = () => {
-  getDefaultView = (values, handleChange) => {
-    const { selectedVehicleType } = values;
-    const { selectedExteriorColor } = values[selectedVehicleType];
+  const { setValue, getValues } = useFormContext();
+  const values = getValues({ nest: true }) || {};
+  const { selectedVehicleType } = values;
+  const { exteriorColor } = values[selectedVehicleType] || {};
 
+  getDefaultView = () => {
     return (
       <View style={styles.section}>
         <Text style={styles.sectionText}>EXTERIOR COLOR</Text>
         <View style={styles.circularFormSection}>
-          <CircularButtonList
-            list={colors}
-            isBadgeSelection
-            selectedItem={selectedExteriorColor}
-            onItemSelected={handleChange(
-              `${selectedVehicleType}.selectedExteriorColor`
-            )}
+          <Controller
+            as={
+              <CircularButtonList
+                list={colors}
+                isBadgeSelection
+                selectedItem={exteriorColor}
+                onItemSelected={(value) =>
+                  setValue(`${selectedVehicleType}.exteriorColor`, value)
+                }
+              />
+            }
+            name={`${selectedVehicleType}.exteriorColor`}
           />
         </View>
       </View>
@@ -44,14 +51,11 @@ const CreateItemTwo = () => {
   };
 
   renderViewType = () => {
-    const { values, handleChange } = useFormikContext();
-    const { selectedVehicleType } = values;
-
     switch (selectedVehicleType) {
       case VEHICLE_TYPES.CAR:
         return <CarItemTwo />;
       default:
-        return getDefaultView(values, handleChange);
+        return getDefaultView();
     }
   };
 

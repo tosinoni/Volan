@@ -1,7 +1,7 @@
 import React from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import OptionsList from "../../../components/OptionsList";
-import { useFormikContext } from "formik";
+import { useFormContext, Controller } from "react-hook-form";
 
 const availableOptionsList = [
   "Air Conditioning",
@@ -20,11 +20,12 @@ const availableOptionsList = [
 ];
 
 const CreateItemThree = () => {
-  getDefaultView = () => {
-    const { values, handleChange } = useFormikContext();
-    const { selectedVehicleType } = values;
+  const { setValue, getValues } = useFormContext();
+  const values = getValues({ nest: true }) || {};
+  const { selectedVehicleType } = values;
+  const { selectedOptions } = values[selectedVehicleType] || {};
 
-    const { selectedOptions } = values[selectedVehicleType];
+  getDefaultView = () => {
     const selectedOptionsList = selectedOptions
       ? JSON.parse(selectedOptions)
       : [];
@@ -34,13 +35,20 @@ const CreateItemThree = () => {
     });
 
     return (
-      <OptionsList
-        initialText="AVAILABLE OPTIONS"
-        selectedText="SELECTED OPTIONS"
-        selectedColor="#1cba99"
-        initialList={availableOptions}
-        selectedList={selectedOptionsList}
-        onItemSelected={handleChange(`${selectedVehicleType}.selectedOptions`)}
+      <Controller
+        as={
+          <OptionsList
+            initialText="AVAILABLE OPTIONS"
+            selectedText="SELECTED OPTIONS"
+            selectedColor="#1cba99"
+            initialList={availableOptions}
+            selectedList={selectedOptionsList}
+            onItemSelected={(value) =>
+              setValue(`${selectedVehicleType}.selectedOptions`, value)
+            }
+          />
+        }
+        name={`${selectedVehicleType}.selectedOptions`}
       />
     );
   };

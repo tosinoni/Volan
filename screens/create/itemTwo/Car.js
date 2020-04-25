@@ -5,7 +5,7 @@ import { styles } from "../../../styles/screens/create/itemTwo/Car";
 import CircularButtonList from "../../../components/CircularButtonList";
 import SelectDropDown from "../../../components/SelectDropDown";
 import CountInput from "../../../components/CountInput";
-import { useFormikContext } from "formik";
+import { useFormContext, Controller } from "react-hook-form";
 
 const km = "km";
 const mi = "mi";
@@ -55,9 +55,12 @@ const drivetrains = [
 ];
 
 const CarItemTwo = () => {
-  const { values, handleChange } = useFormikContext();
-  const { selectedVehicleType, mode } = values;
+  const { setValue, getValues, watch, register } = useFormContext();
 
+  const values = getValues({ nest: true }) || {};
+  const selectedVehicleType = watch("selectedVehicleType");
+
+  const { mode } = values;
   const {
     numberOfCylinders,
     displacement,
@@ -70,7 +73,7 @@ const CarItemTwo = () => {
     transmission,
     drivetrain,
     fueltype,
-  } = values[selectedVehicleType];
+  } = values[selectedVehicleType] || {};
 
   const isKmSelected = mileageType === km;
   const isMiSelected = mileageType === mi;
@@ -83,34 +86,46 @@ const CarItemTwo = () => {
           <Item stackedLabel style={styles.formItem}>
             <Label style={styles.inputLabel}>Vehicle Mileage</Label>
             <View style={styles.mileageInput}>
-              <Input style={styles.input} keyboardType="numeric"></Input>
-              <Button
-                rounded
-                style={
-                  isKmSelected
-                    ? styles.selectedMileageButton
-                    : styles.unSelectedMileageButton
+              <Controller
+                as={
+                  <Input
+                    style={styles.input}
+                    keyboardType="numeric"
+                    onChangeText={(value) => setValue("Car.mileage", value)}
+                  />
                 }
-                onPress={() => {
-                  handleChange(`${selectedVehicleType}.mileageType`)("km");
-                }}
-              >
-                <Text style={styles.text}>km</Text>
-              </Button>
-              <Button
-                rounded
-                danger
-                style={
-                  isMiSelected
-                    ? styles.selectedMileageButton
-                    : styles.unSelectedMileageButton
+                name={"Car.mileage"}
+              />
+              <Controller
+                as={
+                  <Fragment>
+                    <Button
+                      rounded
+                      style={
+                        isKmSelected
+                          ? styles.selectedMileageButton
+                          : styles.unSelectedMileageButton
+                      }
+                      onPress={() => setValue("Car.mileageType", "km")}
+                    >
+                      <Text style={styles.text}>km</Text>
+                    </Button>
+                    <Button
+                      rounded
+                      danger
+                      style={
+                        isMiSelected
+                          ? styles.selectedMileageButton
+                          : styles.unSelectedMileageButton
+                      }
+                      onPress={() => setValue("Car.mileageType", "mi")}
+                    >
+                      <Text style={styles.text}>mi</Text>
+                    </Button>
+                  </Fragment>
                 }
-                onPress={() => {
-                  handleChange(`${selectedVehicleType}.mileageType`)("mi");
-                }}
-              >
-                <Text style={styles.text}>mi</Text>
-              </Button>
+                name={"Car.mileageType"}
+              />
             </View>
           </Item>
         </View>
@@ -121,12 +136,17 @@ const CarItemTwo = () => {
         <View style={styles.formSection}>
           <View stackedLabel style={styles.formItem}>
             <Label style={styles.inputLabel}>Body Type</Label>
-            <SelectDropDown
-              headerTitle="Select Body Type"
-              selectedValue={bodyType}
-              items={bodyTypes}
-              onValueChange={handleChange(`${selectedVehicleType}.bodyType`)}
-              mode={mode}
+            <Controller
+              as={
+                <SelectDropDown
+                  headerTitle="Select Body Type"
+                  selectedValue={bodyType}
+                  items={bodyTypes}
+                  onValueChange={(value) => setValue("Car.bodyType", value)}
+                  mode={mode}
+                />
+              }
+              name={"Car.bodyType"}
             />
           </View>
         </View>
@@ -135,13 +155,16 @@ const CarItemTwo = () => {
       <View style={styles.section}>
         <Text style={styles.sectionText}>EXTERIOR COLOR</Text>
         <View style={styles.circularFormSection}>
-          <CircularButtonList
-            list={colors}
-            isBadgeSelection
-            selectedItem={exteriorColor}
-            onItemSelected={handleChange(
-              `${selectedVehicleType}.exteriorColor`
-            )}
+          <Controller
+            as={
+              <CircularButtonList
+                list={colors}
+                isBadgeSelection
+                selectedItem={exteriorColor}
+                onItemSelected={(value) => setValue("Car.exteriorColor", value)}
+              />
+            }
+            name={"Car.exteriorColor"}
           />
         </View>
       </View>
@@ -149,13 +172,16 @@ const CarItemTwo = () => {
       <View style={styles.section}>
         <Text style={styles.sectionText}>INTERIOR COLOR</Text>
         <View style={styles.circularFormSection}>
-          <CircularButtonList
-            list={colors}
-            isBadgeSelection
-            selectedItem={interiorColor}
-            onItemSelected={handleChange(
-              `${selectedVehicleType}.interiorColor`
-            )}
+          <Controller
+            as={
+              <CircularButtonList
+                list={colors}
+                isBadgeSelection
+                selectedItem={interiorColor}
+                onItemSelected={(value) => setValue("Car.interiorColor", value)}
+              />
+            }
+            name={"Car.interiorColor"}
           />
         </View>
       </View>
@@ -166,81 +192,114 @@ const CarItemTwo = () => {
           <View style={styles.formItemsRow}>
             <Item stackedLabel style={styles.formItemLeft}>
               <Label style={styles.inputLabel}>Number of Doors</Label>
-              <CountInput
-                value={numberOfDoors}
-                onValueChange={handleChange(
-                  `${selectedVehicleType}.numberOfDoors`
-                )}
+              <Controller
+                as={
+                  <CountInput
+                    value={numberOfDoors}
+                    onValueChange={(value) =>
+                      setValue("Car.numberOfDoors", value)
+                    }
+                  />
+                }
+                name={"Car.numberOfDoors"}
               />
             </Item>
             <Item stackedLabel style={styles.formItemRight}>
               <Label style={styles.inputLabel}>Number of Passengers</Label>
-              <CountInput
-                value={numberOfPassengers}
-                onValueChange={handleChange(
-                  `${selectedVehicleType}.numberOfPassengers`
-                )}
+              <Controller
+                as={
+                  <CountInput
+                    value={numberOfPassengers}
+                    onValueChange={(value) =>
+                      setValue("Car.numberOfPassengers", value)
+                    }
+                  />
+                }
+                name={"Car.numberOfPassengers"}
               />
             </Item>
           </View>
           <View style={styles.formItemsRow}>
             <View stackedLabel style={styles.formItemLeft}>
               <Label style={styles.inputLabel}>Transmission</Label>
-              <SelectDropDown
-                headerTitle="Select Transmission"
-                selectedValue={transmission}
-                items={transmissions}
-                onValueChange={handleChange(
-                  `${selectedVehicleType}.transmission`
-                )}
-                mode={mode}
+              <Controller
+                as={
+                  <SelectDropDown
+                    headerTitle="Select Transmission"
+                    selectedValue={transmission}
+                    items={transmissions}
+                    onValueChange={(value) =>
+                      setValue("Car.transmission", value)
+                    }
+                    mode={mode}
+                  />
+                }
+                name={"Car.transmission"}
               />
             </View>
 
             <View stackedLabel style={styles.formItemRight}>
               <Label style={styles.inputLabel}>Drivetrain</Label>
-              <SelectDropDown
-                headerTitle="Select Drivetrain"
-                selectedValue={drivetrain}
-                items={drivetrains}
-                onValueChange={handleChange(
-                  `${selectedVehicleType}.drivetrain`
-                )}
-                mode={mode}
+              <Controller
+                as={
+                  <SelectDropDown
+                    headerTitle="Select Drivetrain"
+                    selectedValue={drivetrain}
+                    items={drivetrains}
+                    onValueChange={(value) => setValue("Car.drivetrain", value)}
+                    mode={mode}
+                  />
+                }
+                name={"Car.drivetrain"}
               />
             </View>
           </View>
           <View style={styles.formItemsRow}>
             <Item stackedLabel style={styles.formItemLeft}>
               <Label style={styles.inputLabel}>Displacement</Label>
-              <CountInput
-                increment={0.1}
-                decimals={1}
-                value={displacement}
-                onValueChange={handleChange(
-                  `${selectedVehicleType}.displacement`
-                )}
+              <Controller
+                as={
+                  <CountInput
+                    increment={0.1}
+                    decimals={1}
+                    value={displacement}
+                    onValueChange={(value) =>
+                      setValue("Car.displacement", value)
+                    }
+                  />
+                }
+                name={"Car.displacement"}
               />
             </Item>
             <Item stackedLabel style={styles.formItemRight}>
               <Label style={styles.inputLabel}>Number of Cylinders</Label>
-              <CountInput
-                value={numberOfCylinders}
-                onValueChange={handleChange(
-                  `${selectedVehicleType}.numberOfCylinders`
-                )}
+              <Controller
+                as={
+                  <CountInput
+                    value={numberOfCylinders}
+                    onValueChange={(value) =>
+                      setValue("Car.numberOfCylinders", value)
+                    }
+                  />
+                }
+                name={"Car.numberOfCylinders"}
               />
             </Item>
           </View>
           <View style={styles.formItemsRow}>
             <View stackedLabel style={styles.formItem}>
               <Label style={styles.inputLabel}>Fuel Type</Label>
-              <SelectDropDown
-                headerTitle="Select Fuel Type"
-                items={fuelTypes}
-                selectedValue={fueltype}
-                onValueChange={handleChange(`${selectedVehicleType}.fueltype`)}
-                mode={mode}
+              <Controller
+                as={
+                  <SelectDropDown
+                    headerTitle="Select Fuel Type"
+                    items={fuelTypes}
+                    selectedValue={fueltype}
+                    onValueChange={(value) => setValue("Car.fueltype", value)}
+                    mode={mode}
+                  />
+                }
+                name={"Car.fueltype"}
               />
             </View>
           </View>

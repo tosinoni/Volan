@@ -3,7 +3,7 @@ import { View, Text, Image } from "react-native";
 import { styles } from "../../../styles/screens/create/itemOne/Car";
 import { Item, Label, Input } from "native-base";
 import SelectDropDown from "../../../components/SelectDropDown";
-import { useFormikContext } from "formik";
+import { useFormContext, Controller } from "react-hook-form";
 
 const years = [
   { label: "2019", value: "2019" },
@@ -26,17 +26,21 @@ const makes = [
 ];
 
 const CarItemOne = () => {
-  const { values, handleChange, errors } = useFormikContext();
-  const { mode, selectedVehicleType } = values;
-  const { year, make, model, submodel, trim, price, vin, carfaxUrl } = values[
-    selectedVehicleType
-  ];
+  const { setValue, control, getValues, watch, register } = useFormContext();
+
+  const values = getValues({ nest: true }) || {};
+  const selectedVehicleType = watch("selectedVehicleType");
+
+  const { mode } = values;
+  const { year, make, model, submodel, trim } =
+    values[selectedVehicleType] || {};
 
   const {
     price: isPriceInputInvalid,
     year: isYearInputInvalid,
     make: isMakeInputInvalid,
-  } = errors[selectedVehicleType] || {};
+  } = {};
+  // } = errors[selectedVehicleType] || {};
 
   return (
     <Fragment>
@@ -45,10 +49,14 @@ const CarItemOne = () => {
         <View style={styles.formSection}>
           <Item stackedLabel style={styles.formItem}>
             <Label style={styles.inputLabel}>VIN</Label>
-            <Input
-              style={styles.input}
-              onChangeText={handleChange(`${selectedVehicleType}.vin`)}
-              value={vin}
+            <Controller
+              as={
+                <Input
+                  onChangeText={(value) => setValue("Car.vin", value)}
+                  style={styles.input}
+                />
+              }
+              name={"Car.vin"}
             />
           </Item>
         </View>
@@ -59,59 +67,80 @@ const CarItemOne = () => {
         <View style={styles.formSection}>
           <View style={styles.formItem}>
             <Label style={styles.inputLabel}>Year</Label>
-            <SelectDropDown
-              error={isYearInputInvalid}
-              itemKey="year"
-              headerTitle="Select Year"
-              selectedValue={year}
-              items={years}
-              onValueChange={handleChange(`${selectedVehicleType}.year`)}
-              mode={mode}
+            <Controller
+              as={
+                <SelectDropDown
+                  headerTitle="Select Year"
+                  selectedValue={year}
+                  items={years}
+                  onValueChange={(value) => setValue("Car.year", value)}
+                  mode={mode}
+                />
+              }
+              name={"Car.year"}
             />
           </View>
 
           <View style={styles.formItem}>
             <Label style={styles.inputLabel}>Make</Label>
-            <SelectDropDown
-              error={isMakeInputInvalid}
-              headerTitle="Select Make"
-              itemKey="make"
-              selectedValue={make}
-              items={makes}
-              onValueChange={handleChange(`${selectedVehicleType}.make`)}
-              mode={mode}
+            <Controller
+              as={
+                <SelectDropDown
+                  headerTitle="Select Make"
+                  selectedValue={make}
+                  items={makes}
+                  onValueChange={(value) => setValue(`Car.make`, value)}
+                  mode={mode}
+                />
+              }
+              name={`Car.make`}
             />
           </View>
 
           <View style={styles.formItem}>
             <Label style={styles.inputLabel}>Model</Label>
-            <SelectDropDown
-              headerTitle="Select Model"
-              selectedValue={model}
-              onValueChange={handleChange(`${selectedVehicleType}.model`)}
-              mode={mode}
+            <Controller
+              as={
+                <SelectDropDown
+                  headerTitle="Select Model"
+                  selectedValue={model}
+                  onValueChange={(value) => setValue(`Car.model`, value)}
+                  mode={mode}
+                />
+              }
+              name={`Car.model`}
             />
           </View>
 
           <View style={styles.formItem}>
             <Label style={styles.inputLabel}>Submodel</Label>
-            <SelectDropDown
-              itemKey="submodel"
-              headerTitle="Select Submodel"
-              selectedValue={submodel}
-              onValueChange={handleChange(`${selectedVehicleType}.submodel`)}
-              mode={mode}
+            <Controller
+              as={
+                <SelectDropDown
+                  itemKey="submodel"
+                  headerTitle="Select Submodel"
+                  selectedValue={submodel}
+                  onValueChange={(value) => setValue(`Car.submodel`, value)}
+                  mode={mode}
+                />
+              }
+              name={`Car.submodel`}
             />
           </View>
 
           <View style={styles.formItem}>
             <Label style={styles.inputLabel}>Trim</Label>
-            <SelectDropDown
-              headerTitle="Select Trim"
-              itemKey="trim"
-              selectedValue={trim}
-              onValueChange={handleChange(`${selectedVehicleType}.trim`)}
-              mode={mode}
+            <Controller
+              as={
+                <SelectDropDown
+                  headerTitle="Select Trim"
+                  itemKey="trim"
+                  selectedValue={trim}
+                  onValueChange={(value) => setValue(`Car.trim`, value)}
+                  mode={mode}
+                />
+              }
+              name={`Car.trim`}
             />
           </View>
         </View>
@@ -122,11 +151,15 @@ const CarItemOne = () => {
         <View style={styles.formSection}>
           <Item stackedLabel style={styles.formItem}>
             <Label style={styles.inputLabel}>PRICE</Label>
-            <Input
-              keyboardType="numeric"
-              style={[styles.input, isPriceInputInvalid && styles.errorInput]}
-              onChangeText={handleChange(`${selectedVehicleType}.price`)}
-              value={price}
+
+            <Controller
+              as={
+                <Input
+                  onChangeText={(value) => setValue("Car.price", value)}
+                  style={styles.input}
+                />
+              }
+              name={"Car.price"}
             />
           </Item>
         </View>
@@ -139,11 +172,16 @@ const CarItemOne = () => {
             <Label style={styles.inputLabel}>CARFAX Canada Report URL</Label>
 
             <Item style={styles.carfaxContainer}>
-              <Input
-                value={carfaxUrl}
-                style={styles.carfaxInput}
-                onChangeText={handleChange(`${selectedVehicleType}.carfaxUrl`)}
+              <Controller
+                as={
+                  <Input
+                    onChangeText={(text) => setValue("Car.carfaxUrl", text)}
+                    style={styles.carfaxInput}
+                  />
+                }
+                name={"Car.carfaxUrl"}
               />
+
               <Image
                 style={styles.carfaxLogo}
                 source={require("../../../assets/images/carfax-canada.png")}

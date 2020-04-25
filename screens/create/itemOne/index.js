@@ -8,7 +8,7 @@ import { View, Text } from "react-native";
 import CircularButtonList from "../../../components/CircularButtonList";
 import { Label } from "native-base";
 import SelectDropDown from "../../../components/SelectDropDown";
-import { useFormikContext } from "formik";
+import { useFormContext, Controller } from "react-hook-form";
 
 const vehicleTypes = [
   {
@@ -55,23 +55,31 @@ const years = [
 ];
 
 const CreateItemOne = () => {
-  getDefaultView = (values, handleChange) => {
-    const { mode, selectedVehicleType } = values;
-    const { year } = values[selectedVehicleType];
+  const { setValue, control, getValues } = useFormContext();
+  const values = getValues({ nest: true }) || {};
+  const { mode, selectedVehicleType } = values;
+  const { year } = values[selectedVehicleType] || {};
 
+  getDefaultView = () => {
     return (
       <View style={styles.section}>
         <Text style={styles.sectionText}>MAKE / MODEL</Text>
         <View style={styles.formSection}>
           <View style={styles.formItem}>
             <Label style={styles.inputLabel}>Year</Label>
-            <SelectDropDown
-              itemKey="year"
-              headerTitle="Select Year"
-              selectedValue={year}
-              items={years}
-              onValueChange={handleChange(`${selectedVehicleType}.year`)}
-              mode={mode}
+            <Controller
+              as={
+                <SelectDropDown
+                  headerTitle="Select Year"
+                  selectedValue={year}
+                  items={years}
+                  onValueChange={(value) =>
+                    setValue(`${selectedVehicleType}.year`, value)
+                  }
+                  mode={mode}
+                />
+              }
+              name={`${selectedVehicleType}.year`}
             />
           </View>
         </View>
@@ -80,29 +88,34 @@ const CreateItemOne = () => {
   };
 
   renderViewType = () => {
-    const { values, handleChange } = useFormikContext();
-
-    switch (values.selectedVehicleType) {
+    switch (selectedVehicleType) {
       case VEHICLE_TYPES.CAR:
         return <CarItemOne />;
       default:
-        return getDefaultView(values, handleChange);
+        return getDefaultView();
     }
   };
 
-  const { values, handleChange } = useFormikContext();
-
+  // const { values, handleChange } = useFormikContext();
   return (
     <KeyboardAwareScrollView viewIsInsideTabBar>
       <Form>
         <View style={styles.section}>
           <Text style={styles.sectionText}>VEHICLE TYPE</Text>
           <View style={styles.circularFormSection}>
-            <CircularButtonList
-              list={vehicleTypes}
-              isButtonSelection
-              selectedItem={values.selectedVehicleType}
-              onItemSelected={handleChange("selectedVehicleType")}
+            <Controller
+              control={control}
+              as={
+                <CircularButtonList
+                  list={vehicleTypes}
+                  isButtonSelection
+                  selectedItem={selectedVehicleType}
+                  onItemSelected={(text) => {
+                    setValue("selectedVehicleType", text);
+                  }}
+                />
+              }
+              name="selectedVehicleType"
             />
           </View>
         </View>
