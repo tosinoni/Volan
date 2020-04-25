@@ -15,14 +15,14 @@ import { styles as stylesheet } from "../styles/components/SelectDropDown";
 export class SelectDropDown extends PureComponent {
   render() {
     const {
-      itemKey,
+      error,
       headerTitle,
       mode,
       selectedValue,
       onValueChange,
       items = [],
     } = this.props;
-    const styles = stylesheet({ mode });
+    const styles = stylesheet({ mode, error });
 
     return (
       <View style={styles.pickerContainer}>

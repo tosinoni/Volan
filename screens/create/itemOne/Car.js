@@ -26,11 +26,17 @@ const makes = [
 ];
 
 const CarItemOne = () => {
-  const { values, handleChange } = useFormikContext();
+  const { values, handleChange, errors } = useFormikContext();
   const { mode, selectedVehicleType } = values;
   const { year, make, model, submodel, trim, price, vin, carfaxUrl } = values[
     selectedVehicleType
   ];
+
+  const {
+    price: isPriceInputInvalid,
+    year: isYearInputInvalid,
+    make: isMakeInputInvalid,
+  } = errors[selectedVehicleType] || {};
 
   return (
     <Fragment>
@@ -54,6 +60,7 @@ const CarItemOne = () => {
           <View style={styles.formItem}>
             <Label style={styles.inputLabel}>Year</Label>
             <SelectDropDown
+              error={isYearInputInvalid}
               itemKey="year"
               headerTitle="Select Year"
               selectedValue={year}
@@ -66,6 +73,7 @@ const CarItemOne = () => {
           <View style={styles.formItem}>
             <Label style={styles.inputLabel}>Make</Label>
             <SelectDropDown
+              error={isMakeInputInvalid}
               headerTitle="Select Make"
               itemKey="make"
               selectedValue={make}
@@ -78,7 +86,6 @@ const CarItemOne = () => {
           <View style={styles.formItem}>
             <Label style={styles.inputLabel}>Model</Label>
             <SelectDropDown
-              itemKey="model"
               headerTitle="Select Model"
               selectedValue={model}
               onValueChange={handleChange(`${selectedVehicleType}.model`)}
@@ -116,7 +123,8 @@ const CarItemOne = () => {
           <Item stackedLabel style={styles.formItem}>
             <Label style={styles.inputLabel}>PRICE</Label>
             <Input
-              style={styles.input}
+              keyboardType="numeric"
+              style={[styles.input, isPriceInputInvalid && styles.errorInput]}
               onChangeText={handleChange(`${selectedVehicleType}.price`)}
               value={price}
             />

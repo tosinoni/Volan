@@ -8,8 +8,7 @@ export const styles = (props) =>
     pickerContainer: {
       alignSelf: "stretch",
       borderWidth: 1,
-      borderColor: "#e6e6e6",
-      borderColor: "#e6e6e6",
+      borderColor: props.error ? Colors.brightRed : "#e6e6e6",
       borderRadius: 5,
       height: 40,
     },
