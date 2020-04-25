@@ -9,6 +9,7 @@ import CircularButtonList from "../../../components/CircularButtonList";
 import { Label } from "native-base";
 import SelectDropDown from "../../../components/SelectDropDown";
 import { useFormContext, Controller } from "react-hook-form";
+import { VAIDATION_FIELDS } from "../validation";
 
 const vehicleTypes = [
   {
@@ -55,7 +56,7 @@ const years = [
 ];
 
 const CreateItemOne = () => {
-  const { setValue, control, getValues } = useFormContext();
+  const { setValue, control, getValues, triggerValidation } = useFormContext();
   const values = getValues({ nest: true }) || {};
   const { mode, selectedVehicleType } = values;
   const { year } = values[selectedVehicleType] || {};
@@ -73,9 +74,9 @@ const CreateItemOne = () => {
                   headerTitle="Select Year"
                   selectedValue={year}
                   items={years}
-                  onValueChange={(value) =>
-                    setValue(`${selectedVehicleType}.year`, value)
-                  }
+                  onValueChange={(value) => {
+                    setValue(`${selectedVehicleType}.year`, value);
+                  }}
                   mode={mode}
                 />
               }
@@ -110,8 +111,9 @@ const CreateItemOne = () => {
                   list={vehicleTypes}
                   isButtonSelection
                   selectedItem={selectedVehicleType}
-                  onItemSelected={(text) => {
+                  onItemSelected={async (text) => {
                     setValue("selectedVehicleType", text);
+                    await triggerValidation(VAIDATION_FIELDS);
                   }}
                 />
               }

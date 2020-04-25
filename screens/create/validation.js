@@ -8,3 +8,5 @@ export const CREATE_ITEM_SCHEMA = Yup.object().shape({
     make: Yup.string().required(),
   }),
 });
+
+export const VAIDATION_FIELDS = ["Car.price", "Car.year", "Car.make"];

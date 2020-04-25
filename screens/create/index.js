@@ -13,7 +13,7 @@ import { styles as stylesheet } from "../../styles/screens/create";
 import { Footer, Icon, Button } from "native-base";
 import FooterPageNavButtons from "../../components/FooterPageNavButtons";
 import { VEHICLE_TYPES } from "../../constants";
-import { CREATE_ITEM_SCHEMA } from "./validation";
+import { CREATE_ITEM_SCHEMA, VAIDATION_FIELDS } from "./validation";
 import { withNavigation } from "react-navigation";
 import { useForm, FormContext, useFormContext } from "react-hook-form";
 import { useState } from "react";
@@ -40,13 +40,8 @@ const CreateItem = (props) => {
       mode,
       selectedVehicleType: VEHICLE_TYPES.CAR,
       ...vehicleTypesObj,
-      Car: {
-        carfaxUrl: "",
-        notes: "",
-        price: "",
-        vin: "",
-      },
     },
+    validationSchema: CREATE_ITEM_SCHEMA,
   });
 
   return (
@@ -57,10 +52,9 @@ const CreateItem = (props) => {
 };
 
 const CreateItemForm = ({ mode }) => {
-  const { setValue, getValues, watch } = useFormContext();
+  const { watch, errors, triggerValidation } = useFormContext();
   const [currentIndex = 0, setCurrentIndex] = useState(0);
-
-  const { currentIndex: currentIndexStr, scrollEnabled } = getValues();
+  const [formValidated = fasle, setFormValidated] = useState(0);
 
   watch(Object.values(VEHICLE_TYPES));
   watch(["selectedVehicleType"]);
@@ -70,11 +64,18 @@ const CreateItemForm = ({ mode }) => {
   };
 
   const handleCircleClick = (index) => {
-    const offset = index - currentIndex;
-    swiperRef.current.scrollBy(offset);
+    if (formValidated) {
+      const offset = index - currentIndex;
+      swiperRef.current.scrollBy(offset);
+    }
   };
 
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
+    if (!formValidated) {
+      const errors = await triggerValidation(VAIDATION_FIELDS);
+      setFormValidated(true);
+      if (!errors) return;
+    }
     swiperRef.current.scrollBy(1);
   };
 
@@ -82,8 +83,10 @@ const CreateItemForm = ({ mode }) => {
     swiperRef.current.scrollBy(-1);
   };
 
-  const isNextButtonDisabled = currentIndex === 5;
+  const isFormValid = Object.keys(errors).length === 0;
+  const isNextButtonDisabled = currentIndex === 5 || !isFormValid;
   const isPrevButtonDisabled = currentIndex === 0;
+  const scrollEnabled = formValidated && isFormValid;
 
   const styles = stylesheet({ mode });
   return (
@@ -93,6 +96,7 @@ const CreateItemForm = ({ mode }) => {
         loop={false}
         onIndexChanged={onIndexChanged}
         ref={swiperRef}
+        scrollEnabled={scrollEnabled}
       >
         <CreateItemOne />
         <CreateItemTwo />

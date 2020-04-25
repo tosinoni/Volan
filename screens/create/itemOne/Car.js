@@ -26,12 +26,11 @@ const makes = [
 ];
 
 const CarItemOne = () => {
-  const { setValue, control, getValues, watch, register } = useFormContext();
+  const { setValue, getValues, errors } = useFormContext();
 
   const values = getValues({ nest: true }) || {};
-  const selectedVehicleType = watch("selectedVehicleType");
 
-  const { mode } = values;
+  const { mode, selectedVehicleType } = values;
   const { year, make, model, submodel, trim } =
     values[selectedVehicleType] || {};
 
@@ -39,8 +38,7 @@ const CarItemOne = () => {
     price: isPriceInputInvalid,
     year: isYearInputInvalid,
     make: isMakeInputInvalid,
-  } = {};
-  // } = errors[selectedVehicleType] || {};
+  } = errors[selectedVehicleType] || {};
 
   return (
     <Fragment>
@@ -70,10 +68,11 @@ const CarItemOne = () => {
             <Controller
               as={
                 <SelectDropDown
+                  error={isYearInputInvalid}
                   headerTitle="Select Year"
                   selectedValue={year}
                   items={years}
-                  onValueChange={(value) => setValue("Car.year", value)}
+                  onValueChange={(value) => setValue("Car.year", value, true)}
                   mode={mode}
                 />
               }
@@ -86,10 +85,11 @@ const CarItemOne = () => {
             <Controller
               as={
                 <SelectDropDown
+                  error={isMakeInputInvalid}
                   headerTitle="Select Make"
                   selectedValue={make}
                   items={makes}
-                  onValueChange={(value) => setValue(`Car.make`, value)}
+                  onValueChange={(value) => setValue(`Car.make`, value, true)}
                   mode={mode}
                 />
               }
@@ -155,8 +155,12 @@ const CarItemOne = () => {
             <Controller
               as={
                 <Input
-                  onChangeText={(value) => setValue("Car.price", value)}
-                  style={styles.input}
+                  keyboardType="numeric"
+                  onChangeText={(value) => setValue("Car.price", value, true)}
+                  style={[
+                    styles.input,
+                    isPriceInputInvalid && styles.errorInput,
+                  ]}
                 />
               }
               name={"Car.price"}

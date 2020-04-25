@@ -7,11 +7,11 @@ import { useFormContext, Controller } from "react-hook-form";
 
 const CreateItemSix = () => {
   getDefaultView = () => {
-    const { setValue, getValues, watch } = useFormContext();
+    const { setValue, getValues } = useFormContext();
 
     // const { values, handleChange } = useFormikContext();
     const values = getValues({ nest: true });
-    const selectedVehicleType = watch("selectedVehicleType");
+    const { selectedVehicleType } = values;
     const { notes } = values[selectedVehicleType] || {};
 
     return (

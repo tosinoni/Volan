@@ -55,12 +55,11 @@ const drivetrains = [
 ];
 
 const CarItemTwo = () => {
-  const { setValue, getValues, watch, register } = useFormContext();
+  const { setValue, getValues } = useFormContext();
 
   const values = getValues({ nest: true }) || {};
-  const selectedVehicleType = watch("selectedVehicleType");
 
-  const { mode } = values;
+  const { mode, selectedVehicleType } = values;
   const {
     numberOfCylinders,
     displacement,
