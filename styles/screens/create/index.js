@@ -23,6 +23,10 @@ export const genericCreateItemStyles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
 
+  iconDisabled: {
+    opacity: 0.5,
+  },
+
   sectionText: {
     fontWeight: "bold",
     color: Colors.darkGrey,

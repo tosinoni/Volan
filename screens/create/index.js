@@ -9,7 +9,11 @@ import CreateItemThree from "./itemThree";
 import CreateItemFour from "./itemFour";
 import CreateItemFive from "./itemFive";
 import CreateItemSix from "./itemSix";
-import { styles as stylesheet } from "../../styles/screens/create";
+import {
+  styles as stylesheet,
+  genericCreateItemStyles,
+  styles,
+} from "../../styles/screens/create";
 import { Footer, Icon, Button } from "native-base";
 import FooterPageNavButtons from "../../components/FooterPageNavButtons";
 import { VEHICLE_TYPES } from "../../constants";
@@ -20,8 +24,8 @@ import { useState } from "react";
 
 let swiperRef = React.createRef(null);
 
-const CreateItem = (props) => {
-  const { params } = props.navigation.state;
+const CreateItem = ({ navigation }) => {
+  const { params } = navigation.state;
   const { mode } = params;
 
   const vehicleTypesObj = Object.keys(VEHICLE_TYPES).reduce(
@@ -46,15 +50,15 @@ const CreateItem = (props) => {
 
   return (
     <FormContext {...methods}>
-      <CreateItemForm mode={mode} />
+      <CreateItemForm mode={mode} navigation={navigation} />
     </FormContext>
   );
 };
 
-const CreateItemForm = ({ mode }) => {
-  const { watch, errors, triggerValidation } = useFormContext();
-  const [currentIndex = 0, setCurrentIndex] = useState(0);
-  const [formValidated = fasle, setFormValidated] = useState(0);
+const CreateItemForm = ({ mode, navigation }) => {
+  const { watch, errors, triggerValidation, getValues } = useFormContext();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [formValidated, setFormValidated] = useState(false);
 
   watch();
 
@@ -82,12 +86,21 @@ const CreateItemForm = ({ mode }) => {
     swiperRef.current.scrollBy(-1);
   };
 
-  const isFormValid = Object.keys(errors).length === 0;
-  const isNextButtonDisabled = currentIndex === 5 || !isFormValid;
+  const formHasErrors = Object.keys(errors).length !== 0;
+  const isNextButtonDisabled = currentIndex === 5 || formHasErrors;
   const isPrevButtonDisabled = currentIndex === 0;
-  const scrollEnabled = Boolean(formValidated && isFormValid);
+  const isFormValid = Boolean(formValidated && !formHasErrors);
 
   const styles = stylesheet({ mode });
+  const saveAndCloseForm = () => {
+    console.log(getValues({ nest: true }));
+    navigation.navigate("Inventory");
+  };
+
+  React.useEffect(() => {
+    navigation.setParams({ saveAndCloseForm: saveAndCloseForm, isFormValid });
+  }, [isFormValid]);
+
   return (
     <View style={styles.content}>
       <Swiper
@@ -95,14 +108,14 @@ const CreateItemForm = ({ mode }) => {
         loop={false}
         onIndexChanged={onIndexChanged}
         ref={swiperRef}
-        scrollEnabled={scrollEnabled}
+        scrollEnabled={isFormValid}
       >
         <CreateItemOne />
         <CreateItemTwo />
         <CreateItemThree />
         <CreateItemFour />
         <CreateItemFive />
-        <CreateItemSix />
+        <CreateItemSix saveAndCloseForm={saveAndCloseForm} />
       </Swiper>
 
       <Footer style={styles.footer}>
@@ -145,14 +158,31 @@ const CreateItemForm = ({ mode }) => {
   );
 };
 
-CreateItem.navigationOptions = ({ navigation }) => {
-  const { params } = navigation.state;
+CreateItem.navigationOptions = (props) => {
+  const { params } = props.navigation.state;
+  const { mode, saveAndCloseForm, isFormValid } = params;
 
-  const isBuyer = params.mode === Constants.BUYER;
+  const isBuyer = mode === Constants.BUYER;
   return {
     title: isBuyer ? "Add Wishlist" : "Add Inventory",
     headerStyle: {
       backgroundColor: isBuyer ? Colors.brightBlue : Colors.brightRed,
+    },
+    headerRight: () => {
+      return (
+        <Button
+          light
+          transparent
+          onPress={saveAndCloseForm}
+          disabled={!isFormValid}
+        >
+          <Icon
+            type="MaterialIcons"
+            name="save"
+            style={!isFormValid ? genericCreateItemStyles.iconDisabled : {}}
+          />
+        </Button>
+      );
     },
     headerTintColor: Colors.white,
   };

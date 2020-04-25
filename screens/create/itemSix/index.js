@@ -5,11 +5,10 @@ import { View, Text } from "react-native";
 import { Textarea, Button, Form } from "native-base";
 import { useFormContext, Controller } from "react-hook-form";
 
-const CreateItemSix = () => {
+const CreateItemSix = ({ closeCreateForm }) => {
   getDefaultView = () => {
     const { setValue, getValues } = useFormContext();
 
-    // const { values, handleChange } = useFormikContext();
     const values = getValues({ nest: true });
     const { selectedVehicleType } = values;
     const { notes } = values[selectedVehicleType] || {};
@@ -34,7 +33,12 @@ const CreateItemSix = () => {
           />
         </View>
         <View style={styles.sectionText}>
-          <Button full light style={styles.saveButton}>
+          <Button
+            full
+            light
+            style={styles.saveButton}
+            onPress={closeCreateForm}
+          >
             <Text style={[styles.text, styles.bold]}>SAVE AND CLOSE</Text>
           </Button>
         </View>
