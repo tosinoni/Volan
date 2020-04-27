@@ -59,7 +59,7 @@ const CarItemTwo = () => {
 
   const values = getValues({ nest: true }) || {};
 
-  const { mode, selectedVehicleType } = values;
+  const { mode, vehicleType } = values;
   const {
     numberOfCylinders,
     displacement,
@@ -72,7 +72,7 @@ const CarItemTwo = () => {
     transmission,
     drivetrain,
     fueltype,
-  } = values[selectedVehicleType] || {};
+  } = values[vehicleType] || {};
 
   const isKmSelected = mileageType === km;
   const isMiSelected = mileageType === mi;

@@ -7,7 +7,7 @@ import Constants from "../constants";
 
 export class SellerBottomNav extends PureComponent {
   state = {
-    currentRouteName: "Inventory"
+    currentRouteName: "Inventory",
   };
   navigateToTabComponent = (routeName, options = {}) => {
     this.props.navigation.navigate(routeName, options);
@@ -18,9 +18,8 @@ export class SellerBottomNav extends PureComponent {
     this.props.navigation.dispatch(DrawerActions.openDrawer());
   };
 
-  isRouteActive = routeName => {
-    const { currentRouteName } = this.state;
-    return currentRouteName === routeName;
+  isRouteActive = (routeIndex) => {
+    return this.props.navigation.state.index === routeIndex;
   };
 
   render() {
@@ -31,7 +30,7 @@ export class SellerBottomNav extends PureComponent {
         <FooterTab style={styles.footerTab}>
           <Button
             badge
-            active={this.isRouteActive("Inventory")}
+            active={this.isRouteActive(0)}
             vertical
             onPress={() => {
               this.navigateToTabComponent("Inventory");
@@ -45,7 +44,7 @@ export class SellerBottomNav extends PureComponent {
           </Button>
           <Button
             style={styles.button}
-            active={this.isRouteActive("Research")}
+            active={this.isRouteActive(1)}
             vertical
             onPress={() => {
               this.navigateToTabComponent("Research");
@@ -63,7 +62,7 @@ export class SellerBottomNav extends PureComponent {
           </Button>
           <Button
             style={styles.button}
-            active={this.isRouteActive("Connections")}
+            active={this.isRouteActive(2)}
             badge
             vertical
             onPress={() => {

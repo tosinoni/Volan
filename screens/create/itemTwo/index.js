@@ -24,8 +24,8 @@ const colors = [
 const CreateItemTwo = () => {
   const { setValue, getValues } = useFormContext();
   const values = getValues({ nest: true }) || {};
-  const { selectedVehicleType } = values;
-  const { exteriorColor } = values[selectedVehicleType] || {};
+  const { vehicleType } = values;
+  const { exteriorColor } = values[vehicleType] || {};
 
   getDefaultView = () => {
     return (
@@ -39,11 +39,11 @@ const CreateItemTwo = () => {
                 isBadgeSelection
                 selectedItem={exteriorColor}
                 onItemSelected={(value) =>
-                  setValue(`${selectedVehicleType}.exteriorColor`, value)
+                  setValue(`${vehicleType}.exteriorColor`, value)
                 }
               />
             }
-            name={`${selectedVehicleType}.exteriorColor`}
+            name={`${vehicleType}.exteriorColor`}
           />
         </View>
       </View>
@@ -51,7 +51,7 @@ const CreateItemTwo = () => {
   };
 
   renderViewType = () => {
-    switch (selectedVehicleType) {
+    switch (vehicleType) {
       case VEHICLE_TYPES.CAR:
         return <CarItemTwo />;
       default:

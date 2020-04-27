@@ -10,8 +10,8 @@ const CreateItemSix = ({ closeCreateForm }) => {
     const { setValue, getValues } = useFormContext();
 
     const values = getValues({ nest: true });
-    const { selectedVehicleType } = values;
-    const { notes } = values[selectedVehicleType] || {};
+    const { vehicleType } = values;
+    const { notes } = values[vehicleType] || {};
 
     return (
       <View style={[styles.section, { flex: 1 }]}>
@@ -25,11 +25,11 @@ const CreateItemSix = ({ closeCreateForm }) => {
                 placeholder=""
                 style={styles.textArea}
                 onChangeText={(value) => {
-                  setValue(`${selectedVehicleType}.notes`, value);
+                  setValue(`${vehicleType}.notes`, value);
                 }}
               />
             }
-            name={`${selectedVehicleType}.notes`}
+            name={`${vehicleType}.notes`}
           />
         </View>
         <View style={styles.sectionText}>

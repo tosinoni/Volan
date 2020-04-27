@@ -31,7 +31,7 @@ export class OptionsList extends PureComponent {
       newSelectedList = this.removeItemFromList(selectedList, text);
     }
 
-    onItemSelected(JSON.stringify(newSelectedList));
+    onItemSelected(newSelectedList);
   };
 
   render() {

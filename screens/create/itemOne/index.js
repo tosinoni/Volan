@@ -58,8 +58,8 @@ const years = [
 const CreateItemOne = () => {
   const { setValue, control, getValues, triggerValidation } = useFormContext();
   const values = getValues({ nest: true }) || {};
-  const { mode, selectedVehicleType } = values;
-  const { year } = values[selectedVehicleType] || {};
+  const { mode, vehicleType } = values;
+  const { year } = values[vehicleType] || {};
 
   getDefaultView = () => {
     return (
@@ -75,12 +75,12 @@ const CreateItemOne = () => {
                   selectedValue={year}
                   items={years}
                   onValueChange={(value) => {
-                    setValue(`${selectedVehicleType}.year`, value);
+                    setValue(`${vehicleType}.year`, value);
                   }}
                   mode={mode}
                 />
               }
-              name={`${selectedVehicleType}.year`}
+              name={`${vehicleType}.year`}
             />
           </View>
         </View>
@@ -89,7 +89,7 @@ const CreateItemOne = () => {
   };
 
   renderViewType = () => {
-    switch (selectedVehicleType) {
+    switch (vehicleType) {
       case VEHICLE_TYPES.CAR:
         return <CarItemOne />;
       default:
@@ -110,14 +110,14 @@ const CreateItemOne = () => {
                 <CircularButtonList
                   list={vehicleTypes}
                   isButtonSelection
-                  selectedItem={selectedVehicleType}
+                  selectedItem={vehicleType}
                   onItemSelected={async (text) => {
-                    setValue("selectedVehicleType", text);
+                    setValue("vehicleType", text);
                     await triggerValidation(VAIDATION_FIELDS);
                   }}
                 />
               }
-              name="selectedVehicleType"
+              name="vehicleType"
             />
           </View>
         </View>

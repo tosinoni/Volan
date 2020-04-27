@@ -30,15 +30,14 @@ const CarItemOne = () => {
 
   const values = getValues({ nest: true }) || {};
 
-  const { mode, selectedVehicleType } = values;
-  const { year, make, model, submodel, trim } =
-    values[selectedVehicleType] || {};
+  const { mode, vehicleType } = values;
+  const { year, make, model, submodel, trim } = values[vehicleType] || {};
 
   const {
     price: isPriceInputInvalid,
     year: isYearInputInvalid,
     make: isMakeInputInvalid,
-  } = errors[selectedVehicleType] || {};
+  } = errors[vehicleType] || {};
 
   return (
     <Fragment>

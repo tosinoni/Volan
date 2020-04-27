@@ -22,16 +22,14 @@ const availableOptionsList = [
 const CreateItemThree = () => {
   const { setValue, getValues } = useFormContext();
   const values = getValues({ nest: true }) || {};
-  const { selectedVehicleType } = values;
-  const { selectedOptions } = values[selectedVehicleType] || {};
+  const { vehicleType } = values;
+  const { options } = values[vehicleType] || {};
 
   getDefaultView = () => {
-    const selectedOptionsList = selectedOptions
-      ? JSON.parse(selectedOptions)
-      : [];
+    const optionsList = options || [];
 
     const availableOptions = availableOptionsList.filter(function (item) {
-      return !selectedOptionsList.includes(item);
+      return !optionsList.includes(item);
     });
 
     return (
@@ -42,13 +40,13 @@ const CreateItemThree = () => {
             selectedText="SELECTED OPTIONS"
             selectedColor="#1cba99"
             initialList={availableOptions}
-            selectedList={selectedOptionsList}
+            selectedList={optionsList}
             onItemSelected={(value) =>
-              setValue(`${selectedVehicleType}.selectedOptions`, value)
+              setValue(`${vehicleType}.options`, value)
             }
           />
         }
-        name={`${selectedVehicleType}.selectedOptions`}
+        name={`${vehicleType}.options`}
       />
     );
   };

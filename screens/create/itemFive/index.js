@@ -23,16 +23,14 @@ const declarationOptionsList = [
 const CreateItemFive = () => {
   const { setValue, getValues } = useFormContext();
   const values = getValues({ nest: true }) || {};
-  const { selectedVehicleType } = values;
-  const { selectedDeclarations } = values[selectedVehicleType] || {};
+  const { vehicleType } = values;
+  const { declarations } = values[vehicleType] || {};
 
   getDefaultView = () => {
-    const selectedDeclarationsList = selectedDeclarations
-      ? JSON.parse(selectedDeclarations)
-      : [];
+    const declarationsList = declarations || [];
 
     const declarationOptions = declarationOptionsList.filter(function (item) {
-      return !selectedDeclarationsList.includes(item);
+      return !declarationsList.includes(item);
     });
 
     return (
@@ -43,13 +41,13 @@ const CreateItemFive = () => {
             selectedText="SELECTED"
             selectedColor="#e57067"
             initialList={declarationOptions}
-            selectedList={selectedDeclarationsList}
+            selectedList={declarationsList}
             onItemSelected={(value) =>
-              setValue(`${selectedVehicleType}.selectedDeclarations`, value)
+              setValue(`${vehicleType}.declarations`, value)
             }
           />
         }
-        name={`${selectedVehicleType}.selectedDeclarations`}
+        name={`${vehicleType}.declarations`}
       />
     );
   };
