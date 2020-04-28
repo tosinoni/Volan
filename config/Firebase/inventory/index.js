@@ -1,5 +1,3 @@
-import { db } from "../firebase";
-
 export const InventoryFirebaseFunctions = (db) => {
   return {
     getAllInventories: (uid) => {

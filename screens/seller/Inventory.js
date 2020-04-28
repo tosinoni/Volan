@@ -1,12 +1,18 @@
 import React, { PureComponent } from "react";
-import { View, Text } from "react-native";
+import { View, Image } from "react-native";
 import Header from "../../components/Header";
 import Constants from "../../constants";
 import DropdownAlert from "react-native-dropdownalert";
+import { Tab, Tabs, ScrollableTab, TabHeading, Text } from "native-base";
+import InventoryTab from "./tabs/Inventory";
+import { styles } from "../../styles/screens/seller/Inventory";
+import { VEHICLE_TYPES_WITH_ICONS } from "../../constants";
 
 export class Inventory extends PureComponent {
   static navigationOptions = {
-    header: (props) => <Header mode={Constants.SELLER} title="Inventory" />,
+    header: (props) => (
+      <Header mode={Constants.SELLER} title="Inventory" hasTabs={true} />
+    ),
   };
 
   fetchInventory = () => {};
@@ -37,9 +43,32 @@ export class Inventory extends PureComponent {
 
   render() {
     return (
-      <View>
-        <Text>Inventory</Text>
-
+      <View style={{ flex: 1 }}>
+        <Tabs
+          renderTabBar={() => <ScrollableTab style={styles.tabs} />}
+          tabBarUnderlineStyle={styles.tabsUnderlineColor}
+        >
+          {VEHICLE_TYPES_WITH_ICONS.map(({ text, icon }, index) => {
+            return (
+              <Tab
+                key={index}
+                heading={
+                  <TabHeading
+                    style={styles.tab}
+                    activeTextStyle={styles.activeText}
+                  >
+                    <View style={styles.iconView}>
+                      <Image source={icon} style={styles.tabImage} />
+                    </View>
+                    <Text style={styles.tabText}>{text}</Text>
+                  </TabHeading>
+                }
+              >
+                <InventoryTab />
+              </Tab>
+            );
+          })}
+        </Tabs>
         <DropdownAlert
           ref={(ref) => (this.dropDownAlertRef = ref)}
           showCancel

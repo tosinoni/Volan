@@ -35,14 +35,14 @@ export class Header extends PureComponent {
   };
 
   render() {
-    const { mode, title, isSearchDisabled } = this.props;
+    const { mode, title, isSearchDisabled, hasTabs = false } = this.props;
     const { selectedMode, showModal } = this.state;
 
     const styles = Stylesheet(this.props);
     const isEnabled = mode === Constants.SELLER;
 
     return (
-      <HeaderNativeBase style={styles.container}>
+      <HeaderNativeBase style={styles.container} hasTabs={hasTabs}>
         <Left style={styles.titleView}>
           <Title style={styles.title}>{title}</Title>
         </Left>
