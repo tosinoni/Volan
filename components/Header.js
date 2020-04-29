@@ -42,18 +42,25 @@ export class Header extends PureComponent {
     const isEnabled = mode === Constants.SELLER;
 
     return (
-      <HeaderNativeBase style={styles.container} hasTabs={hasTabs}>
+      <HeaderNativeBase
+        style={styles.container}
+        hasTabs={hasTabs}
+        searchBar={true}
+      >
         <Left style={styles.titleView}>
           <Title style={styles.title}>{title}</Title>
         </Left>
         <Body></Body>
         <Right style={styles.iconsView}>
-          {!isSearchDisabled && (
+          <Button transparent light>
+            <Icon name="filter-1" type="MaterialIcons" />
+          </Button>
+          {/* {!isSearchDisabled && (
             <Button transparent light>
               <Icon name="search" />
             </Button>
-          )}
-          <View style={styles.switchView}>
+          )} */}
+          {/* <View style={styles.switchView}>
             <Switch
               value={isEnabled}
               style={styles.switch}
@@ -62,7 +69,7 @@ export class Header extends PureComponent {
               ios_backgroundColor={Colors.white}
               onValueChange={this.onToggleSelected}
             />
-          </View>
+          </View> */}
         </Right>
 
         <ToggleModal

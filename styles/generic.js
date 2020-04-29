@@ -3,18 +3,21 @@ import { Colors } from "./Colors";
 export const genericStyles = StyleSheet.create({
   safeView: {
     flex: 1,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   bold: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   text: {
-    color: Colors.white
+    color: Colors.white,
   },
   flexRow: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
   flexColumn: {
-    flexDirection: "column"
-  }
+    flexDirection: "column",
+  },
+  inputColor: {
+    color: "#87868a",
+  },
 });

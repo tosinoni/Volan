@@ -14,6 +14,12 @@ export const VEHICLE_TYPES = {
   AIRCRAFT: "Aircraft",
 };
 
+export const VEHICLE_STATES = {
+  ALL: "ALL",
+  PENDING: "IN PROGRESS",
+  COMPLETED: "COMPLETED",
+};
+
 export const VEHICLE_TYPES_WITH_ICONS = [
   {
     text: VEHICLE_TYPES.CAR,

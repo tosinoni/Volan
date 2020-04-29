@@ -1,12 +1,22 @@
 import React, { PureComponent } from "react";
-import { View, Image } from "react-native";
+import { View } from "react-native";
 import Header from "../../components/Header";
 import Constants from "../../constants";
 import DropdownAlert from "react-native-dropdownalert";
-import { Tab, Tabs, ScrollableTab, TabHeading, Text } from "native-base";
+import {
+  Input,
+  Tab,
+  Tabs,
+  ScrollableTab,
+  TabHeading,
+  Text,
+  Item,
+  Icon,
+  Button,
+} from "native-base";
 import InventoryTab from "./tabs/Inventory";
 import { styles } from "../../styles/screens/seller/Inventory";
-import { VEHICLE_TYPES_WITH_ICONS } from "../../constants";
+import { VEHICLE_STATES } from "../../constants";
 
 export class Inventory extends PureComponent {
   static navigationOptions = {
@@ -43,12 +53,22 @@ export class Inventory extends PureComponent {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <View style={styles.searchView}>
+          <Item style={styles.searchItem}>
+            <Icon name="search" style={styles.searchIcon} />
+            <Input
+              style={styles.searchInput}
+              placeholder="Search All"
+              placeholderTextColor={styles.inputColor.color}
+            />
+          </Item>
+        </View>
         <Tabs
           renderTabBar={() => <ScrollableTab style={styles.tabs} />}
           tabBarUnderlineStyle={styles.tabsUnderlineColor}
         >
-          {VEHICLE_TYPES_WITH_ICONS.map(({ text, icon }, index) => {
+          {Object.keys(VEHICLE_STATES).map((state, index) => {
             return (
               <Tab
                 key={index}
@@ -57,10 +77,8 @@ export class Inventory extends PureComponent {
                     style={styles.tab}
                     activeTextStyle={styles.activeText}
                   >
-                    <View style={styles.iconView}>
-                      <Image source={icon} style={styles.tabImage} />
-                    </View>
-                    <Text style={styles.tabText}>{text}</Text>
+                    <Text style={styles.countText}>0</Text>
+                    <Text style={styles.stateText}>{state}</Text>
                   </TabHeading>
                 }
               >
