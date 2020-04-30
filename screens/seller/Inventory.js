@@ -93,10 +93,7 @@ export class Inventory extends PureComponent {
             />
           </Item>
         </View>
-        <Tabs
-          renderTabBar={() => <ScrollableTab style={styles.tabs} />}
-          tabBarUnderlineStyle={styles.tabsUnderlineColor}
-        >
+        <Tabs tabBarUnderlineStyle={styles.tabsUnderlineColor}>
           {Object.keys(VEHICLE_STATES).map((state, index) => {
             const data = this.getDataGivenInventoryState(state);
 
