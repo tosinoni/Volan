@@ -18,14 +18,12 @@ import InventoryTab from "./tabs/Inventory";
 import { styles } from "../../styles/screens/seller/Inventory";
 import { VEHICLE_STATES } from "../../constants";
 import { withFirebaseHOC } from "../../config/Firebase";
-import { UserContext } from "../../providers/user";
+import { withUserHOC } from "../../providers/user";
 
 export class Inventory extends PureComponent {
   state = {
     inventories: [],
   };
-
-  static contextType = UserContext;
 
   static navigationOptions = {
     header: (props) => (
@@ -34,13 +32,12 @@ export class Inventory extends PureComponent {
   };
 
   fetchInventory = async () => {
-    const { uid } = this.context || {};
+    const { uid } = this.props.user || {};
 
     if (uid) {
       const inventories = await this.props.firebase.getAllInventories(uid);
-      if (inventories) {
-        this.setState({ inventories });
-      }
+
+      this.setState({ inventories });
     }
   };
 
@@ -71,6 +68,12 @@ export class Inventory extends PureComponent {
         this.fetchInventory();
       }
     );
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.user.uid !== this.props.user.uid) {
+      this.fetchInventory();
+    }
   }
 
   componentWillUnmount() {
@@ -124,4 +127,4 @@ export class Inventory extends PureComponent {
   }
 }
 
-export default withFirebaseHOC(Inventory);
+export default withFirebaseHOC(withUserHOC(Inventory));
