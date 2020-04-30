@@ -17,6 +17,7 @@ import { VAIDATION_FIELDS } from "./validation";
 import { withNavigation } from "react-navigation";
 import { useFormContext } from "react-hook-form";
 import { withFirebaseHOC } from "../../config/Firebase";
+import { VEHICLE_STATES } from "../../constants";
 
 let swiperRef = React.createRef(null);
 
@@ -54,7 +55,10 @@ const CreateItemForm = ({ navigation, firebase }) => {
     swiperRef.current.scrollBy(-1);
   };
 
-  const formHasErrors = Object.keys(errors).length !== 0;
+  const values = getValues({ nest: true });
+  const { vehicleType } = values || {};
+
+  const formHasErrors = Object.keys(errors[vehicleType] || {}).length !== 0;
   const isNextButtonDisabled = currentIndex === 5 || formHasErrors;
   const isPrevButtonDisabled = currentIndex === 0;
   const isFormValid = Boolean(formValidated && !formHasErrors);
@@ -71,6 +75,8 @@ const CreateItemForm = ({ navigation, firebase }) => {
       vehicleType,
       ...values[vehicleType],
       uid,
+      state: VEHICLE_STATES.PENDING,
+      createdAt: new Date().toISOString(),
     };
 
     let isSuccess;

@@ -17,15 +17,41 @@ import {
 import InventoryTab from "./tabs/Inventory";
 import { styles } from "../../styles/screens/seller/Inventory";
 import { VEHICLE_STATES } from "../../constants";
+import { withFirebaseHOC } from "../../config/Firebase";
+import { UserContext } from "../../providers/user";
 
 export class Inventory extends PureComponent {
+  state = {
+    inventories: [],
+  };
+
+  static contextType = UserContext;
+
   static navigationOptions = {
     header: (props) => (
       <Header mode={Constants.SELLER} title="Inventory" hasTabs={true} />
     ),
   };
 
-  fetchInventory = () => {};
+  fetchInventory = async () => {
+    const { uid } = this.context || {};
+
+    if (uid) {
+      const inventories = await this.props.firebase.getAllInventories(uid);
+      if (inventories) {
+        this.setState({ inventories });
+      }
+    }
+  };
+
+  getDataGivenInventoryState = (inventoryState) => {
+    const { inventories } = this.state;
+
+    if (inventoryState === VEHICLE_STATES.ALL) return inventories;
+
+    return inventories.filter(({ state }) => state === inventoryState);
+  };
+
   showNotification = ({ type, msg, desc }) => {
     this.dropDownAlertRef.alertWithType(type, msg, desc);
   };
@@ -69,6 +95,8 @@ export class Inventory extends PureComponent {
           tabBarUnderlineStyle={styles.tabsUnderlineColor}
         >
           {Object.keys(VEHICLE_STATES).map((state, index) => {
+            const data = this.getDataGivenInventoryState(state);
+
             return (
               <Tab
                 key={index}
@@ -77,12 +105,12 @@ export class Inventory extends PureComponent {
                     style={styles.tab}
                     activeTextStyle={styles.activeText}
                   >
-                    <Text style={styles.countText}>0</Text>
+                    <Text style={styles.countText}>{data.length}</Text>
                     <Text style={styles.stateText}>{state}</Text>
                   </TabHeading>
                 }
               >
-                <InventoryTab />
+                <InventoryTab data={data} />
               </Tab>
             );
           })}
@@ -96,4 +124,4 @@ export class Inventory extends PureComponent {
   }
 }
 
-export default Inventory;
+export default withFirebaseHOC(Inventory);

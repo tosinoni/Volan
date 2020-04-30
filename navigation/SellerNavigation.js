@@ -13,41 +13,41 @@ import ImageBrowser from "../screens/ImageBrowser";
 
 const InventoryNavigatorStack = createStackNavigator({
   Inventory: {
-    screen: Inventory
-  }
+    screen: Inventory,
+  },
 });
 
 const ResearchNavigatorStack = createStackNavigator({
   Research: {
-    screen: Research
-  }
+    screen: Research,
+  },
 });
 
 const ConnectionsNavigatorStack = createStackNavigator({
   Connections: {
-    screen: Connections
-  }
+    screen: Connections,
+  },
 });
 
 const SellerBottomNavigation = createBottomTabNavigator(
   {
     InventoryPage: InventoryNavigatorStack,
     ResearchPage: ResearchNavigatorStack,
-    ConnectionsPage: ConnectionsNavigatorStack
+    ConnectionsPage: ConnectionsNavigatorStack,
   },
   {
     initialRouteName: "InventoryPage",
-    tabBarComponent: SellerBottomNav
+    tabBarComponent: SellerBottomNav,
   }
 );
 
 const DrawerNavigation = createDrawerNavigator(
   {
-    Tabs: SellerBottomNavigation
+    Tabs: SellerBottomNavigation,
   },
   {
     contentComponent: Sidebar,
-    drawerPosition: "right"
+    drawerPosition: "right",
   }
 );
 
@@ -55,15 +55,15 @@ const SellerNavigation = createStackNavigator({
   Drawer: {
     screen: DrawerNavigation,
     navigationOptions: {
-      headerShown: false
-    }
+      headerShown: false,
+    },
   },
   Profile: { screen: Profile },
   Subscription: { screen: Subscription },
   Create: { screen: CreateItem },
   ImageBrowser: {
-    screen: ImageBrowser
-  }
+    screen: ImageBrowser,
+  },
 });
 
 export default SellerNavigation;

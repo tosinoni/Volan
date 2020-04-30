@@ -1,7 +1,26 @@
 export const InventoryFirebaseFunctions = (db) => {
   return {
     getAllInventories: (uid) => {
-      return db.collection("inventory").where("uid", "==", uid);
+      return db
+        .collection("inventory")
+        .where("uid", "==", uid)
+        .orderBy("createdAt", "desc")
+        .get()
+        .then((data) => {
+          let inventories = [];
+          data.forEach((doc) => {
+            const inventoryData = doc.data();
+            inventories.push({
+              id: doc.id,
+              ...inventoryData,
+            });
+          });
+
+          return inventories;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
 
     addInventory: (inventoryData) => {
