@@ -49,18 +49,18 @@ export default class VehicleInfoCardList extends PureComponent {
                       />
                       <Body>
                         <View style={styles.cardBody}>
-                          <View>
+                          <View style={styles.textBlock}>
                             <Text uppercase style={styles.yearAndMake}>
                               {yearAndMake}
                             </Text>
-                            <Text uppercase note style={styles.modelAndTrim}>
-                              {modelAndTrim}
+                            <Text uppercase style={styles.price}>
+                              {formattedPrice}
                             </Text>
                           </View>
 
-                          <View>
-                            <Text uppercase style={styles.price}>
-                              {formattedPrice}
+                          <View style={styles.textBlock}>
+                            <Text uppercase note style={styles.modelAndTrim}>
+                              {modelAndTrim}
                             </Text>
                             <Text uppercase note style={styles.mileage}>
                               {mileageAndType}
