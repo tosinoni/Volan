@@ -16,7 +16,7 @@ export const VEHICLE_TYPES = {
 
 export const VEHICLE_STATES = {
   ALL: "ALL",
-  PENDING: "IN PROGRESS",
+  PENDING: "PENDING",
   COMPLETED: "COMPLETED",
 };
 

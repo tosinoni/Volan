@@ -7,18 +7,17 @@ import {
   Input,
   Tab,
   Tabs,
-  ScrollableTab,
   TabHeading,
   Text,
   Item,
   Icon,
   Button,
 } from "native-base";
-import InventoryTab from "./tabs/Inventory";
 import { styles } from "../../styles/screens/seller/Inventory";
 import { VEHICLE_STATES } from "../../constants";
 import { withFirebaseHOC } from "../../config/Firebase";
 import { withUserHOC } from "../../providers/user";
+import VehicleInfoCardList from "../../components/cards/VehicleInfoCardList";
 
 export class Inventory extends PureComponent {
   state = {
@@ -110,7 +109,7 @@ export class Inventory extends PureComponent {
                   </TabHeading>
                 }
               >
-                <InventoryTab data={data} />
+                <VehicleInfoCardList data={data} />
               </Tab>
             );
           })}
